@@ -44,13 +44,13 @@ jobs:
           envi: ${{ secrets.envi }}
           run:
             python new.py > new.txt
-      - name: Read and assig
-        id: output_test
-        run: |
-          input_file="new.txt"
-          while read line
-          do
-          file_text=$line
-          done < "$input_file"
-          echo ::set-output name=new_value::$file_text
-      - run: echo ${​​​​{​​​​​​​​​​​ steps.output_test.outputs.new_value }​​​​​​​​​​​}​​​​​​​​​​​​​​​​​​
+#       - name: Read and assig
+#         id: output_test
+#         run: |
+#           input_file="new.txt"
+#           while read line
+#           do
+#           file_text=$line
+#           done < "$input_file"
+#           echo ::set-output name=new_value::$file_text
+#       - run: echo ${​​​​{​​​​​​​​​​​ steps.output_test.outputs.new_value }​​​​​​​​​​​}​​​​​​​​​​​​​​​​​​
