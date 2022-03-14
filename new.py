@@ -1,4 +1,4 @@
-model = ['HSI INT' , 'HSI QA']
-envi = ['Apple','Water']
+model = ['HSI INT']
+envi = ['Apple']
 # for i in range(len(model)):
-print(str(model)+'='+str(envi))
+print (str(model)+'='+str(envi))
