@@ -34,7 +34,6 @@ jobs:
         run: echo "hello"
       - name: hsh
         run: |
-          sh(
             print("re_deploy = false")
             sh "python3 prepare_new_deployment.py"
             Text = sh returnStdout:true, script: "python3 new.py"
@@ -52,5 +51,5 @@ jobs:
                 }
               }
             }
-            )
+            
         
