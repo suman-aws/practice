@@ -5,51 +5,36 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      Deployment_type: 
-        type: choice
-        description: "Select the deployment type"   
-        required: true
-        options:
-          - Deploy
-          - Redeploy
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        java: [ 8.0.192, 8, 11.0.3, 17, 18-ea ]
+      fail-fast: false
+      max-parallel: 4
+    name: Test HelloWorld on JDK ${{ matrix.java }}, ${{ matrix.os }}
     steps:
-      - name: Checkout
-        run: echo "hello"
-      - name: hsh
-        run: |
-            #print("re_deploy = false")
-            python new.py
-            Text = sh returnStdout:true, script: "python new.py"
-            for(int i = 0;i<Text.readLines().size();i++) {
-              String[] parts = Text.readLines().get(i).split("=")
-              for(j =0; j<parts.size();j++){
-                switch(j) {            
-                  case 0: 
-                    envi.add(parts[j])
-                    break;
-                  case 1: 
-                    model.add(parts[j])
-                    break;
+      - uses: actions/checkout@v2
+      - name: Set up JDK ${{ matrix.java }} ${{ matrix.os }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+          java-package: jdk # optional (jdk, jre, jdk+fx or jre+fx) - defaults to jdk
 
-                }
-              }
-            }
-            
-        
+      - name: Verify with Maven
+        env:
+          SOME_PASSWORD: ${{ secrets.MY_PASSWORD }}
+          USERNAME: ${{ github.actor }}
+          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn verify
