@@ -42,14 +42,15 @@ jobs:
         env: 
           ModelName : ${{ secrets.ModelName }}
           envi: ${{ secrets.envi }}
+          run:
+            python new.py > new.txt
+      - name: Read and assig
+        id: output_test
         run: |
-           python new.py
-           echo -e 'outputtemp = list("${{ env.model }}".split("="))\nprint ( "::set-output name=model::", outputtemp )' | python3
-    outputs:
-      model: ${{ steps.step1.outputs.model }}
-#       # Runs a set of commands using the runners shell
-#       - name: Run a multi-line script
-#         run: |
-#           if [[ $env == *"DSP INT"* ]]; then
-#           python3 vertica_connect.py  '${{env}}' '${{context}}' '${{model}}' '${{version}}' '${{hsiuidlist}}'
-        
+          input_file="new.txt"
+          while read line
+          do
+          file_text=$line
+          done < "$input_file"
+          echo ::set-output name=new_value::$file_text
+      - run: echo ${​​​​{​​​​​​​​​​​ steps.output_test.outputs.new_value }​​​​​​​​​​​}​​​​​​​​​​​​​​​​​​
