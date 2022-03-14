@@ -32,25 +32,3 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-#       # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         run: |
-#           echo Hello, world!
-#           output=$(python new.py v2.21)   
-      - name: execute py script # run new.py to get the latest data
-        env: 
-          ModelName : ${{ secrets.ModelName }}
-          envi: ${{ secrets.envi }}
-          run:
-            python new.py > new.txt
-#       - name: Read and assig
-#         id: output_test
-#         run: |
-#           input_file="new.txt"
-#           while read line
-#           do
-#           file_text=$line
-#           done < "$input_file"
-#           echo ::set-output name=new_value::$file_text
-#       - run: echo ${​​​​{​​​​​​​​​​​ steps.output_test.outputs.new_value }​​​​​​​​​​​}​​​​​​​​​​​​​​​​​​
