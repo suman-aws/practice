@@ -34,4 +34,19 @@ jobs:
         run: |
           python new.py > output.txt
           cat output.txt
+          for(int i = 0;i<Text.readLines().size();i++) {
+            String[] parts = Text.readLines().get(i).split("=")
+            for(j =0; j<parts.size();j++){
+              switch(j) {  
+                case 0: 
+                    envi.add(parts[j])
+                    break;
+                case 1: 
+                    model.add(parts[j])
+                    break;
+              
+              }
+            }
+          }
 
+  
