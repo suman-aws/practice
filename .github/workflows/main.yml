@@ -31,7 +31,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Warming up deployment
-        shell: bash
+        shell: python
         run: |
             python3 new.py
             Text = sh returnStdout:true, script: "python3 new.py"
