@@ -32,18 +32,10 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Warming up deployment
         run: |
-          while IFS='=' read -r col1 col2
-          do 
-          echo "$col1"
-          echo "$col2"
-          echo "$col3"
-          echo "$col4"
-          echo "$col5"
-          echo "$col6"
-          done <sample
-#         shell: python
-#         run: python3 new.py
-      
+           while IFS="=" read line val
+           do 
+            echo $line : $val; 
+           done < sample 
             
           
   
