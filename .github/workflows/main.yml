@@ -33,9 +33,6 @@ jobs:
       - name: Warming up deployment
         shell: bash
         run: |
-            
-            // NOTE: This is a fresh model deployment activity
-             print("re_deploy = false")
             sh "python3 new.py"
             Text = sh returnStdout:true, script: "python3 new.py"
             for(int i = 0;i<Text.readLines().size();i++) {
