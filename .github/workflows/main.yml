@@ -33,7 +33,7 @@ jobs:
       - name: Warming up deployment
         shell: bash
         run: |
-            sh "python3 new.py"
+            python3 new.py
             Text = sh returnStdout:true, script: "python3 new.py"
             for(int i = 0;i<Text.readLines().size();i++) {
               String[] parts = Text.readLines().get(i).split("=")
