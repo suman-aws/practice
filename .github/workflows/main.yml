@@ -31,32 +31,16 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Warming up deployment
+        id: output_test
         run: |
-           for(int i = 0;i<Text.readLines().size();i++) {
-              String[] parts = Text.readLines().get(i).split("=")
-              for(j =0; j<parts.size();j++){
-                switch(j) {            
-                  case 0: 
-                    env.add(parts[j])
-                    break;
-                  case 1: 
-                    context.add(parts[j])
-                    break;
-                  case 2: 
-                    model.add(parts[j])  
-                    break;
-                  case 3:
-                    version.add(parts[j])
-                    break;
-                  case 4:
-                    sysuid.add(parts[j])
-                    break;
-                  case 5:
-                    testingtime.add(parts[j])
-                }
-              }
-            }
-          
-            
+          input_file="sample.txt"
+          while read line
+          do
+          file_text=$line
+          done < "$input_file"
+          echo ::set-output name=new_value::$file_text
+
+      # test to see if done correctly - should echo "value"
+      - run: echo ${{ steps.output_test.outputs.new_value }}           
           
   
