@@ -42,6 +42,9 @@ jobs:
       - name: Echo release version from  Env variable
         run: |
              echo -e 'outputtemp = list("${{ env.cfapp }}".split("="))\nprint ( "::set-output name=cf_app::", outputtemp )' | python3
+      - run: |
+            print(env.cfapp)
+        
             
           
   
