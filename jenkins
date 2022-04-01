@@ -1,3 +1,12 @@
 #!/usr/bin/env groovy
-def failedmodels = new File('failed.txt') as String[]
-print "failedmodel details:" + failedmodels
+
+/* Hello World in Groovy */
+def collection1 = ["test", "a"]
+def collection2 = ["test", "b"]
+def commons = collection1.intersect(collection2)
+def difference = collection1.plus(collection2)
+difference.removeAll(commons)
+print "Model Names:" + difference
+
+// def failedmodels = new File('failed.txt') as String[]
+// print "failedmodel details:" + failedmodels
