@@ -1,13 +1,9 @@
-import sys 
-model = ['INT']
-envi = ['Apple']
-stdoutOrigin=sys.stdout 
-sys.stdout = open("model_list.txt", "w")
-
-# for i in range(len(model)):
-print (str(model)+'='+str(envi))
-sys.stdout.close()
-sys.stdout=stdoutOrigin
+model=['Apple','Water']
+version=[1.0,2.0]
+hsiuid=[1,2]
+tableName=['Mango','Tango','Charlie','delta']
+for i in range(len(model)):
+    print(str(model[i])+'='+str(version[i])+'='+str(hsiuid[i]))
 
 
 
