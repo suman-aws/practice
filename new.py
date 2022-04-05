@@ -8,3 +8,6 @@ sys.stdout = open("model_list.txt", "w")
 print (str(model)+'='+str(envi))
 sys.stdout.close()
 sys.stdout=stdoutOrigin
+
+
+
