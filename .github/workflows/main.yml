@@ -35,7 +35,8 @@ jobs:
         run: |
           echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split(","))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3
     outputs:
-      cf_applications: ${{ steps.step1.outputs.cf_applications}}
+      echo cf_applications: ${{ steps.step1.outputs.cf_applications}}
+      # Runs a single command using the runners shell
 
 
             
