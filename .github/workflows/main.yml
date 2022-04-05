@@ -33,11 +33,9 @@ jobs:
       - name: Warming up deployment
         id: step1
         run: |
-          echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split(","))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3
-          echo outputtemp
-    outputs:
-      echo cf_applications: ${{ steps.step1.outputs.cf_applications}}
-      # Runs a single command using the runners shell
+          output=$(python new.py)
+          echo "::set-output name=changelog::$output"
+
 
 
             
