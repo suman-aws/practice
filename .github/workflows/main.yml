@@ -31,9 +31,10 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Warming up deployment
-        id: output_test
+        id: step1
         run: |
           echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split(","))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3
+          echo outputtemp
     outputs:
       echo cf_applications: ${{ steps.step1.outputs.cf_applications}}
       # Runs a single command using the runners shell
