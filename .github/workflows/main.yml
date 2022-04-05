@@ -41,7 +41,7 @@ jobs:
           echo "::set-output name=new_value::$(input_file)"
           echo "$input_file"
       -  run: |
-           $output=python new.py =~ /Merry/)?$ENV{GREETING}:$ENV{HEY};')
+           $output=python new.py 'print ($ENV{BODY} =~ =~ /Merry/)?$ENV{GREETING}:$ENV{HEY};')
            Write-Output "::set-output name=GREET::$output"
 
 
