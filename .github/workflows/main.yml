@@ -39,6 +39,7 @@ jobs:
            file_text=$line
           done < "$input_file"
           echo "::set-output name=new_value::$(file_text)"
+          echo "$file_text"
 
 
             
