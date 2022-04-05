@@ -34,6 +34,7 @@ jobs:
         id: step1
         run: |
          echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split("="))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3 new.py
+         echo outputtemp
 
 
 
