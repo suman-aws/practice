@@ -36,15 +36,11 @@ jobs:
           input_file="sample.txt"
           while read line
           do
-          file_text=$line
+           file_text=$line
           done < "$input_file"
-          echo ::set-output name=new_value::$file_text
-      - name: Echo release version from  Env variable
-        run: |
-             echo -e 'outputtemp = list("${{ env.cfapp }}".split("="))\nprint ( "::set-output name=cf_app::", outputtemp )' | python3
-      - run: |
-            print(env.cfapp)
-        
+          echo "::set-output name=new_value::$"(file_text)"
+
+
             
           
   
