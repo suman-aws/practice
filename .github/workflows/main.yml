@@ -39,7 +39,7 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.models_list }}"
-          IFS=',' read -r -a array <<< "${{ env.models_list }}"
+          IFS='[,]' read -r -a array <<< "${{ env.models_list }}"
           echo "${array[0]}"
           
 
