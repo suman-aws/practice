@@ -39,15 +39,11 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.models_list }}" 
-#       - name: Set the value
-#         id: step_one
-#         run: |
-#           echo "models_list=$(python3 new.py)" >> $GITHUB_ENV
-#       - name: Use the value
-#         id: step_two
-#         run: |
-#           echo "${{ env.models_list }}"
-
+          IFS=-
+          set ${{ env.models_list }}
+          model=$1
+          version=$2
+          id=$3
       
       
 
