@@ -35,7 +35,12 @@ jobs:
         run: |
          echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split("="))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
          #echo ${{ github.event.inputs.model }}
+      - name: Prepare CF applications list to deploy
+        id: step2
+        run: |
+          echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split("="))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3 new.py
     outputs:
+        cf_apps: ${{ steps.step2.outputs.cf_apps }}
         model_list: ${{ steps.step1.outputs.model_list}}
 
       
