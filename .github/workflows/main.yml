@@ -38,7 +38,7 @@ jobs:
 #     outputs:
 #        model_list: ${{ steps.step1.outputs.model_list}}
       - run: |
-          output=$(python new.py)
+          output=python new.py
           echo "::set-output name=model::$output"
 
       
