@@ -34,7 +34,7 @@ jobs:
         id: step1
         run: |
           echo "::set-output name=models_list::$(python3 new.py )"
-          echo  "$models_list"
+          echo  $models_list
 #         echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split(","))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
           
     outputs:
