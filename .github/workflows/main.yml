@@ -38,7 +38,7 @@ jobs:
       - name: Prepare CF applications list to deploy
         id: step2
         run: |
-          echo -e 'outputtemp = list("${{ github.event.inputs.cfapp }}".split("="))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3 new.py
+          echo -e 'outputtemp = list("${{ github.event.inputs.cfapp(0) }}".split("="))\nprint ( "::set-output name=cf_apps::", outputtemp )' | python3 new.py
     outputs:
         cf_apps: ${{ steps.step2.outputs.cf_apps }}
         model_list: ${{ steps.step1.outputs.model_list}}
