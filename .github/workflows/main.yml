@@ -30,17 +30,17 @@ jobs:
         run: echo Hello, world!
 
 #       # Runs a set of commands using the runners shell
-#       - name: Warming up deployment
-#         id: step1
-#         run: |
-#          echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split("="))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
-#          echo  "output: $outputtemp"
-#     outputs:
-#        model_list: ${{ steps.step1.outputs.model_list}}
-      - name: run python script
+      - name: Warming up deployment
+        id: step1
         run: |
-           output=$(python new.py)
-           echo "::set-output name=model::$output"
+         echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split("="))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
+         echo  "output: $outputtemp"
+    outputs:
+       model_list: ${{ steps.step1.outputs.model_list}}
+#       - name: run python script
+#         run: |
+#            output=$(python new.py)
+#            echo "::set-output name=model::$output"
 
       
       
