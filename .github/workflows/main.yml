@@ -39,12 +39,8 @@ jobs:
         id: step_two
         run: |
           #echo "${{ env.models_list }}" 
-          IFS=,
-          set ${{ env.models_list }}
-          model=$1
-          version=$2
-          id=$3
-          echo "model"
+          var1=$(echo ${{ env.models_list }} | cut ,f1 ,d,)
+          echo "$var1"
       
 
          
