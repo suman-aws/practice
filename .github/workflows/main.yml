@@ -44,7 +44,7 @@ jobs:
           model=$1
           version=$2
           id=$3
-      
+          echo "model"
       
 
          
