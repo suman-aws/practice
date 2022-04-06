@@ -39,9 +39,6 @@ jobs:
 #        model_list: ${{ steps.step1.outputs.model_list}}
       - run: |
           output=$(python new.py)
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
           echo "::set-output name=model::$output"
 
       
