@@ -31,18 +31,15 @@ jobs:
 
 #       # Runs a set of commands using the runners shell
       - name: Warming up deployment
-        id: step1
+
+      - name: Set the value
+        id: step_one
         run: |
-          echo "::set-output name=models_list::$(python3 new.py )"
-          echo  $models_list
-#         echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split(","))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
-          
-    outputs:
-       models_list: ${{ steps.step1.outputs.models_list}}
-#       - name: run python script
-#         run: |
-#            output=$(python new.py)
-#            echo "::set-output name=model::$output"
+          echo "models_list=$(python3 new.py)" >> $GITHUB_ENV
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.models_list }}"
 
       
       
