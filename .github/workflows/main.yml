@@ -38,10 +38,8 @@ jobs:
       - name: Use the value
         id: step_two
         run: |
-          #echo "${{ env.models_list }}" 
-          var1=$(echo ${{ env.models_list }} | cut ,f1 ,d,)
-          echo "$var1"
-      
+          echo "${{ env.models_list }}" 
+
 
          
           
