@@ -37,9 +37,10 @@ jobs:
 #          echo  "output: $outputtemp"
 #     outputs:
 #        model_list: ${{ steps.step1.outputs.model_list}}
-      - run: |
-          output=python new.py
-          echo "::set-output name=model::$output"
+      - name: Hello World
+        run: |
+           output=python new.py
+           echo "::set-output name=model::$output"
 
       
       
