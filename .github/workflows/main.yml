@@ -33,8 +33,7 @@ jobs:
       - name: Warming up deployment
         id: step1
         run: |
-         //echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split("="))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
-         echo -e 'outputtemp = list(::set-output name=model_details::", outputtemp) | python3 new.py
+         echo -e 'outputtemp = list("${{ github.event.inputs.model }}".split("="))\nprint ( "::set-output name=model_details::", outputtemp )' | python3 new.py
          echo  "output: $outputtemp"
     outputs:
        model_list: ${{ steps.step1.outputs.model_list}}
