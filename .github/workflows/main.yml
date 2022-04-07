@@ -39,16 +39,11 @@ jobs:
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-          const input = 'john smith~123 Street~Apt 4~New York~NY~12345';
-          const [name, street, unit, city, state, zip] = input.split('~');
-          console.log(name); 
-          console.log(street);
-          console.log(unit);
-          console.log(city); 
-          console.log(state); 
-          console.log(zip); 
-          echo "console.log(name)"
-          
+          var s = 'john smith~123 Street~Apt 4~New York~NY~12345';
+          var fields = s.split(/~/);
+          var name = fields[0];
+          var street = fields[1];
+          echo "name"
           
 
 
