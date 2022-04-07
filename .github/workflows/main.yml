@@ -39,12 +39,6 @@ jobs:
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-      - name: use the value
-        id: step3
-        run: |
-          echo "model details :"${{ env.models_list }}"
-          #echo -e 'models = list("${{ env.models_list}}".split(","))\nprint
-          #echo "${{ env.models }}""
-          
+
 
 
