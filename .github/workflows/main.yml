@@ -35,10 +35,16 @@ jobs:
         id: step1
         run: |
           echo "models_list=$(python3 new.py)" >> $GITHUB_ENV
-      - name: Use the value
+      - name: get the value
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
- 
+      - name: use the value
+        id: step3
+        run: |
+          echo "model details :"${{ env.models_list }}""
+          echo -e 'models = list("${{ env.models_list}}".split(","))\nprint
+          echo "${{ env.models }}""
+          
 
 
