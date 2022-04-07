@@ -39,11 +39,8 @@ jobs:
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-          var s = 'john smith~123 Street~Apt 4~New York~NY~12345';
-          var fields = s.split(/~/);
-          var name = fields[0];
-          var street = fields[1];
-          echo "name"
+          echo "var fields = s.split(/,/);
+          echo "fields"
           
 
 
