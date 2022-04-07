@@ -39,10 +39,6 @@ jobs:
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-      - name: get values
-        id: step_3
-        run: |
-          Text = sh returnStdout:true, script: "python3 new.py"
           
           
 
