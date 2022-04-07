@@ -38,7 +38,7 @@ jobs:
       - name: Use the value
         id: step_two
         run: |
-          echo "model values :"${{ env.models_list }}""
+          echo "model details :"${{ env.models_list }}""
         #  IFS=',' read -r -a array <<< "${{ env.models_list }}"
          # echo "${array}"
           
