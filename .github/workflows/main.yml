@@ -32,15 +32,18 @@ jobs:
 #       # Runs a set of commands using the runners shell
 
       - name: Set the value
-        id: step_one
+        id: step1
         run: |
           echo "models_list=$(python3 new.py)" >> $GITHUB_ENV
       - name: Use the value
-        id: step_two
+        id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-        #  IFS=',' read -r -a array <<< "${{ env.models_list }}"
-         # echo "${array}"
+      - name: get values
+        id: step_3
+        run: |
+          Text = sh returnStdout:true, script: "python3 new.py"
+          
           
 
 
