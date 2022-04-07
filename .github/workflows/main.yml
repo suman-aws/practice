@@ -38,7 +38,7 @@ jobs:
       - name: get the value
         id: step2
         run: |
-          echo "model details :"${{ env.models_list }}""
+          echo "model_details :"${{ env.models_list }}""
 
 
 
