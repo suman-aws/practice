@@ -39,8 +39,6 @@ jobs:
         id: step2
         run: |
           echo "model details :"${{ env.models_list }}""
-          echo "var fields = s.split(/,/);
-          echo "fields"
-          
+ 
 
 
