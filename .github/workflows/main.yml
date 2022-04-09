@@ -34,11 +34,11 @@ jobs:
       - name: Set the value
         id: step1
         run: |
-          echo "models_list=$(python3 new.py)" >> $GITHUB_ENV
+          echo "models_list=list($(python3 new.py))" >> $GITHUB_ENV
       - name: get the value
         id: step2
         run: |
-          echo "model_details :"${{ env.models_list }}""
+          echo "model_details :"list(${{ env.models_list }})""
 
 
 
