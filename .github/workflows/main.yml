@@ -43,7 +43,7 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
-          $CharArray ="${{ steps.step1.outputs.model_details }}".Split("=")
+          $CharArray =$(echo"${{ steps.step1.outputs.model_details }}".Split("="))
           $String1= $CharArray[0]
           $String2= $CharArray[4] 
          # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
