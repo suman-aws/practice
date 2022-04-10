@@ -7,7 +7,7 @@ model_details = []
 # for i in range(len(model)):
 #   print(envir[i]+'='+model[i]+'='+str(version[i]))
 print(model)
-print(envi)
+print(envir)
 print(version)
 
 # print("model details:",model)
