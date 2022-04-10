@@ -1,5 +1,5 @@
 model=['Apple','Water']
-# envir=['dev','qa','prod']
+envir=['dev','qa','prod']
 version=[1.0,2.0]
 hsiuid=[1,2]
 tableName=['Mango','Tango','Charlie','delta']
