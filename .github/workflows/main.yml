@@ -43,7 +43,7 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
-          mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "]" "\n")
+          mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
           for addr in $mails
           do
           echo "> [$addr]"
