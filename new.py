@@ -4,17 +4,17 @@ version=[1.0,2.0]
 hsiuid=[1,2]
 tableName=['Mango','Tango','Charlie','delta']
 model_details = []
-# for i in range(len(model)):
-#   print(envir[i]+'='+model[i]+'='+str(version[i]))
+for i in range(len(model)):
+  print(envir[i]+'='+model[i]+'='+str(version[i]))
 # print("model details",model)
 # print("environment",envir)
 # print("versions",version)
 # print("tablename",tableName)
-model_details.append(model)
-model_details.append(envir)
-model_details.append(version)
-model_details.append(tableName)
-print(model_details)
+# model_details.append(model)
+# model_details.append(envir)
+# model_details.append(version)
+# model_details.append(tableName)
+# print(model_details)
 
 # print("model details:",model)
 # # print("environment:",envir)
