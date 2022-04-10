@@ -9,6 +9,7 @@ model_details = []
 print(model)
 print(envir)
 print(version)
+print(tablename)
 
 # print("model details:",model)
 # # print("environment:",envir)
