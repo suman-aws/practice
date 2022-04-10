@@ -5,9 +5,13 @@ hsiuid=[1,2]
 tableName=['Mango','Tango','Charlie','delta']
 model_details = []
 
-print('model details:',model)
-print('environment:',envi)
-print('version details:',version)
+print(model)
+print(envi)
+print(version)
+
+# print('model details:',model)
+# print('environment:',envi)
+# print('version details:',version)
 
 # for i in range(len(model)):
 #     # print(str(model[i])+'='+str(version[i])+'='+str(hsiuid[i]))
