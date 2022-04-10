@@ -11,7 +11,7 @@ model_details = []
 # print(version)
 
 print("model details:",model)
-print("environment:",envi)
+print("environment:",envir)
 print("version details:",version)
 
 # for i in range(len(model)):
