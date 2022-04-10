@@ -40,6 +40,11 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
+          while [ "${{ steps.step1.outputs.model_details }}" ] ;do
+          echo "> ["${{ steps.step1.outputs.model_details }}"]"
+          # slice the array 
+          fields=("${fields[@]:1}")
+          done
 
 
 
@@ -51,6 +56,7 @@ jobs:
 #         id: step2
 #         run: |
 #           echo "model_details :"${{ env.models_list }}""
+      
 
 
 
