@@ -1,5 +1,5 @@
 model=['Apple','Water']
-envir=['dev','qa','prod']
+# envir=['dev','qa','prod']
 version=[1.0,2.0]
 hsiuid=[1,2]
 tableName=['Mango','Tango','Charlie','delta']
@@ -11,7 +11,7 @@ model_details = []
 # print(version)
 
 print("model details:",model)
-print("environment:",envir)
+# print("environment:",envir)
 print("version details:",version)
 
 # for i in range(len(model)):
