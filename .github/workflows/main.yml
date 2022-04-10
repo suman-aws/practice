@@ -34,17 +34,15 @@ jobs:
         run: |
           output=$(python new.py v2.21)
           output="modeldetails:${output//'%'/'%25'}" 
-          output1="${output//$'\n'/'%0A'}"
-          output2="${output//$'\r'/'%0D'}" 
+          output="environment:${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}" 
           echo "::set-output name=modelname::$output"
-          echo "::set-output1 name=environment::$output1"
-          echo "::set-output2 name=version::$output2"
+
         id: step1
       - name: Print changelog
         run: |
           echo "${{ steps.step1.outputs.modelname }}"
-          echo "${{ steps.step1.outputs1.environment }}"
-          echo "${{ steps.step1.outputs2.version }}"
+
 
 
 #       - name: Set the value
