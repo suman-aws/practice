@@ -43,6 +43,8 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
+          output= "${{ steps.step1.outputs.model_details }}" | grep model details
+          echo "::set-output name=models::$output"
 
 #       - name: Set the value
 #         id: step1
