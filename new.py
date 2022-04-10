@@ -6,10 +6,10 @@ tableName=['Mango','Tango','Charlie','delta']
 model_details = []
 # for i in range(len(model)):
 #   print(envir[i]+'='+model[i]+'='+str(version[i]))
-print(model)
-print(envir)
-print(version)
-print(tableName)
+print("model details",model)
+print("environment",envir)
+print("versions",version)
+print("tablename",tableName)
 
 # print("model details:",model)
 # # print("environment:",envir)
