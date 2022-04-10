@@ -37,14 +37,14 @@ jobs:
           output1="${output//$'\n'/'%0A'}"
           output2="${output//$'\r'/'%0D'}" 
           echo "::set-output name=modelname::$output"
-          echo "::set-output name=environment::$output1"
-          echo "::set-output name=version::$output2"
+          echo "::set-output1 name=environment::$output1"
+          echo "::set-output2 name=version::$output2"
         id: step1
       - name: Print changelog
         run: |
           echo "${{ steps.step1.outputs.modelname }}"
-          echo "${{ steps.step1.outputs.environment }}"
-          echo "${{ steps.step1.outputs.version }}"
+          echo "${{ steps.step1.outputs1.environment }}"
+          echo "${{ steps.step1.outputs2.version }}"
 
 
 #       - name: Set the value
