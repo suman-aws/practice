@@ -33,7 +33,7 @@ jobs:
       - name: get
         run: |
           output=$(python new.py v2.21)
-          output="modeldetails:${output//'%'/'%25'}" >>
+          output="modeldetails:${output//'%'/'%25'}" 
           output1="${output//$'\n'/'%0A'}"
           output2="${output//$'\r'/'%0D'}" 
           echo "::set-output name=modelname::$output"
