@@ -47,14 +47,14 @@ jobs:
         id: step1
         run: |
           output=$(python new.py)
-          OUTPUT="${output[@]}"
-          #echo "$OUTPUT"
+          OUTPUT=(${output[@]})
+          echo "$OUTPUT"
           model="${OUTPUT[0]}" 
           envir="${OUTPUT[1]}"
           version="${OUTPUT[2]}"
           table="${OUTPUT[3]}"
-          #echo "Model_Details:$model"
-          echo "Environment:$envir"
+          echo "Model_Details:$model"
+          #echo "Environment:$envir"
           
           #echo "Table_details:$table"
           #echo "::set-model name=model_details::$model"
