@@ -68,7 +68,7 @@ jobs:
              echo "No INT models present; hence not authenticating for  7"
            fi
            if [[ $env == *"QA"* ]]; then
-             echo "No QA models present; hence  authenticating for  5"
+             echo "QA models present; hence  authenticating for  5"
            else
              echo "No QA models present; hence not authenticating for  5"
            fi
