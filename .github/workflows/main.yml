@@ -88,8 +88,8 @@ jobs:
           model: ${{steps.step1.outputs.models_to_be_deployed}}
 
         run: |        
-         if [[ $model[i] == *"Apple"* ]]; then
-            echo "$model[i]"
+         if [[ $model == *"Apple"* ]]; then
+            echo "$model"
          fi
 
  
