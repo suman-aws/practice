@@ -49,8 +49,8 @@ jobs:
           output=$(python new.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
-          echo "${Models}"
-          echo "Model_Details:${Models[0]}"
+          #echo "${Models}"
+          echo "${Models[0]}"
           #echo "${Models[1]}"
           #echo "${Models[2]}"
           #echo "${Models[3]}"
