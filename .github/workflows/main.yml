@@ -1,22 +1,19 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
+name: Models-to-deploy
 # Controls when the workflow will run
 on:
-
-
-  # Triggers the workflow on push or pull request events but only for the main branch
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
+# Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
+      models_to_be_deployed:
+        description: "Models to deploy"
+        required: true
+        default: "Model1,Model2"  
+      Model_version :
+        description: "Model version"
+        required: true
+        default: "1.o,2.0"
       environ:
-        description: "Env of the deployment(Int,qa or prod) as suffix" 
+        description: "Env of the deployment(INT,QA or PROD) as suffix" 
         type: choice
         required: true
         options:
@@ -26,38 +23,44 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
 
+  ################################
+  # preRequest                   #
+  ################################
+  envPrepare:
+    runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Prepare applications list to deploy
+        id: step1
+        run: |
+          echo -e 'outputtemp = list("${{ github.event.inputs.models_to_be_deployed }}".split(","))\nprint ( "::set-output name=models_to_be_deployed::", outputtemp )' | python3
+     - name: Prepare CF applications list to deploy
+       id: step2
+       run: |
+         echo -e 'outputtemp = list("${{ github.event.inputs.Model_version }}".split(","))\nprint ( "::set-output name=Model_version::", outputtemp )' | python3
+    outputs:
+      Model_version: ${{ steps.step2.outputs.Model_version }}
+      models_to_be_deployed: ${{ steps.step1.outputs.models_to_be_deployed}}
+################################
+# Download Artefacts           #
+################################
+
+  downloadArtefacts:
+    name: Artefacts
+    runs-on: ubuntu-latest
+    needs: envPrepare
+
+    strategy:
+      fail-fast: false
+      matrix:
+        models_to_be_deployed: ${{fromJson(needs.envPrepare.outputs.models_to_be_deployed)}}
+        Model_version: ${{fromJson(needs.envPrepare.outputs.Model_version)}}
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-#       # Runs a set of commands using the runners shell
-      - name: get
-        run: |
-          output=$(python new.py )
-          output="${output//'%'/'%25'}" 
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
-
-          echo "::set-output name=model_details::$output"
-        id: step1
-      - name: Print model_details
-        run: |
-          echo "${{ steps.step1.outputs.model_details }}"
-         # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
-          #for addr in $mails
-          #do
-          #echo "> [$addr]"
-          #done
       - name: Performing  authentication
         shell: bash
         env:
@@ -78,24 +81,5 @@ jobs:
            else
              echo "No PROD models present; hence not authenticating for  5"
            fi
-      - name: Upload the model code to env
-        shell: bash
-        env:
-          env: ${{steps.step1.outputs.model_details}}
-        run: |
-           if [[ $env == *"Apple"* ]]; then
-             echo "$env"
-             
-           else
-             echo "No INT models present; hence not authenticating for  7"
-           fi
-            
-#       - name: Set the value
-#         id: step1
-#         run: |
-#           echo "models_list= $(python3 new.py)" >> $GITHUB_ENV
-#       - name: get the value
-#         id: step2
-#         run: |
-#           echo "model_details :"${{ env.models_list }}""
-      
+
+ 
