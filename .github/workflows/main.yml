@@ -65,7 +65,7 @@ jobs:
       - name: Print model_details
         run: |
           #echo "${{ steps.step1.outputs.model_details }}"
-          echo "${{ steps.step1.outputs.env_details }}"
+          echo "${{ steps.step1.output.env_details }}"
           #echo "${{ steps.step1.outputs.tablenames_details }}"
    
           
@@ -98,6 +98,8 @@ jobs:
            fi
       - name: Upload the model code to env
         shell: bash
+        env:
+          model: ${{github.event.outputs.model}}
         run: |        
          if [[ $model == *"Apple"* ]]; then
            echo "models present"
