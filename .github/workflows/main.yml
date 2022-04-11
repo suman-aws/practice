@@ -24,14 +24,7 @@ on:
           - INT
           - QA
           - PROD
-      models_to_be_deployed:
-        description: "Models to deploy"
-        required: true
-        default: "INT Models, QA Modles"
-      Model_Version:
-        description: "Second set of applications to deploy"
-        required: true
-        default: "1.0,2.0"  
+ 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -91,7 +84,7 @@ jobs:
            else
              echo "No PROD models present; hence not authenticating for  5"
            fi
-      - name: Upload the model code to HSI env
-        shell: bash
-        run: |        
-         if [[ $model[i] == *"Apple"* ]]; then
+#       - name: Upload the model code to env
+#         shell: bash
+#         run: |        
+#          if [[ $model[i] == *"Apple"* ]]; then
