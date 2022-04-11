@@ -35,9 +35,9 @@ jobs:
         id: step1
         run: |
           echo -e 'outputtemp = list("${{ github.event.inputs.models_to_be_deployed }}".split(","))\nprint ( "::set-output name=models_to_be_deployed::", outputtemp )' | python3
-     - name: Prepare CF applications list to deploy
-       id: step2
-       run: |
+      - name: Prepare CF applications list to deploy
+        id: step2
+        run: |
          echo -e 'outputtemp = list("${{ github.event.inputs.Model_version }}".split(","))\nprint ( "::set-output name=Model_version::", outputtemp )' | python3
     outputs:
       Model_version: ${{ steps.step2.outputs.Model_version }}
@@ -53,9 +53,9 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        models_to_be_deployed: ${{fromJson(needs.envPrepare.outputs.models_to_be_deployed)}}
-        Model_version: ${{fromJson(needs.envPrepare.outputs.Model_version)}}
+#       matrix:
+#         models_to_be_deployed: ${{fromJson(needs.envPrepare.outputs.models_to_be_deployed)}}
+#         Model_version: ${{fromJson(needs.envPrepare.outputs.Model_version)}}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
