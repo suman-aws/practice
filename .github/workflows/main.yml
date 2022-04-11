@@ -52,7 +52,7 @@ jobs:
           model="${OUTPUT[0]}" 
           envir="${OUTPUT[1]}"
           table="${OUTPUT[2]}"
-          echo "$model"
+          echo "Model_Details:$model"
           echo "$envir"
           echo "$table"
           echo "::set-model name=model_details::$model"
