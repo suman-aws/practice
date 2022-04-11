@@ -14,7 +14,7 @@ deployment_models = []
     # deployment_models.append(version[i])
     # deployment_models.append(sysuid[i])
     # deployment_models.append(testingtime[i])
-print (str(deployment_models))
+# print (str(deployment_models))
 print(model)
 print(envir)
 print(version)
