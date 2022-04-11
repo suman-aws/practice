@@ -23,6 +23,14 @@ on:
           - INT
           - QA
           - PROD
+      models_to_be_deployed:
+        description: "Models to deploy"
+        required: true
+        default: "INT Models, QA Modles"
+      Model_Version:
+        description: "Second set of applications to deploy"
+        required: true
+        default: "1.0,2.0"  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -42,58 +50,54 @@ jobs:
 
 #       # Runs a set of commands using the runners shell
       - name: get
-        run: |
-          output=$(python new.py )
-          output="${output//'%'/'%25'}" 
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
-          echo "::set-output name=model_details::$output"
-
-
         id: step1
-      - name: Print model_details
+      - name: Prepare applications1 list to deploy
         run: |
-          echo "${{ steps.step1.outputs.model_details }}"
-
-         # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
-          #for addr in $mails
-          #do
-          #echo "> [$addr]"
-          #done
-
-      - name: Performing  authentication
-        shell: bash
-        env:
-          env: ${{github.event.inputs.environ}}
+          echo -e 'outputtemp1 = list("${{ github.event.inputs.models_to_be_deployed }}".split(","))\nprint ( "::set-output name=applications1_to_be_deployed::", outputtemp1 )' | python3
+      - name: Prepare applications2 list to deploy
+        id: step2
         run: |
-           if [[ $env == *"INT"* ]]; then
-             echo "INT models present; Authenticating for  7"
+          echo -e 'outputtemp2 = list("${{ github.event.inputs.Model_Version }}".split(","))\nprint ( "::set-output name=applications2_to_be_deployed::", outputtemp2 )' | python3
+    outputs:
+      models_to_be_deployed: ${{ steps.step1.outputs.applications1_to_be_deployed}}
+      Model_Version: ${{ steps.step2.outputs.applications2_to_be_deployed}}
 
-           else
-             echo "No INT models present; hence not authenticating for  7"
-           fi
-           if [[ $env == *"QA"* ]]; then
-             echo "No QA models present; hence  authenticating for  5"
-           else
-             echo "No QA models present; hence not authenticating for  5"
-           fi
-           if [[ $env == *"PROD"* ]]; then
-             echo "PROD models present; Authenticating for  5"
-           else
-             echo "No PROD models present; hence not authenticating for  5"
-           fi
-      #  - name: Upload the model code to HSI env
-  #    shell: bash 
-  #    run: | 
+#   - name: Performing  authentication
+#     shell: bash
+#     env:
+#       env: ${{github.event.inputs.environ}}
+#       run: |
+#         if [[ $env == *"INT"* ]]; then
+#            echo "INT models present; Authenticating for  7"
 
-#       - name: Set the value
-#         id: step1
-#         run: |
-#           echo "models_list= $(python3 new.py)" >> $GITHUB_ENV
-#       - name: get the value
-#         id: step2
-#         run: |
-#           echo "model_details :"${{ env.models_list }}""
+#         else
+#            echo "No INT models present; hence not authenticating for  7"
+#         fi
+#         if [[ $env == *"QA"* ]]; then
+#            echo "No QA models present; hence  authenticating for  5"
+#         else
+#            echo "No QA models present; hence not authenticating for  5"
+#         fi
+#         if [[ $env == *"PROD"* ]]; then
+#            echo "PROD models present; Authenticating for  5"
+#         else
+#            echo "No PROD models present; hence not authenticating for  5"
+#         fi
+#   - name: Upload the model code to HSI env
+#     shell: bash
+#     env:
+#       env: ${{github.event.inputs.environ}}
+#     run: |        
+#       if [[ $model[i] == *"Apple"* ]]; then
+      
+# #       - name: Set the value
+# #         id: step1
+# #         run: |
+# #           echo "models_list= $(python3 new.py)" >> $GITHUB_ENV
+# #       - name: get the value
+# #         id: step2
+# #         run: |
+# #           echo "model_details :"${{ env.models_list }}""
       
 
 
