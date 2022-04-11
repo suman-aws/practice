@@ -82,4 +82,14 @@ jobs:
              echo "No PROD models present; hence not authenticating for  5"
            fi
 
+      - name: Upload the model code to  env
+        shell: bash
+        env:
+          model: ${{steps.step1.outputs.models_to_be_deployed}}
+
+        run: |        
+         if [[ $model[i] == *"Apple"* ]]; then
+            echo "$model[i]"
+         fi
+
  
