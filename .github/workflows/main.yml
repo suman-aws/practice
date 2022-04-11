@@ -106,11 +106,14 @@ jobs:
            fi
       - name: Upload the model code to env
         shell: bash
-        env:
-          models: ${{github.event.outputs.model_details}}
+#         env:
+#           models: ${{github.event.outputs.model_details}}
         run: |        
          if [[ $models[i] == *"Apple"* ]]; then
            echo "models present"
          else
            echo "No models present"
          fi
+         with:
+            models: ${{github.event.outputs.model_details}}
+          
