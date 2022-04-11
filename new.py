@@ -4,12 +4,22 @@ version=[1.0,2.0]
 hsiuid=[1,2]
 tableName=['Mango','Tango']
 model_details = []
+deployment_models = []
 # for i in range(len(model)):
 #   print(envir[i]+'='+model[i]+'='+str(version[i]))
-print(model)
+
+for i in range(len(modellist)):
+    deployment_models.append([str(env[i])+','+str(context[i])+','+str(modellist[i])+','+str(version[i])])
+    # deployment_models.append(context[i])
+    # deployment_models.append(modellist[i])
+    # deployment_models.append(version[i])
+    # deployment_models.append(sysuid[i])
+    # deployment_models.append(testingtime[i])
+print (str(deployment_models))
+# print(model)
 # print("environment",envir)
-print(version)
-print(tableName)
+# print(version)
+# print(tableName)
 # model_details.append(model)
 # model_details.append(envir)
 # model_details.append(version)
