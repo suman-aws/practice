@@ -48,7 +48,7 @@ jobs:
         run: |
           output=$(python new.py)
           OUTPUT="${output[@]}"
-          echo "$OUTPUT"
+          #echo "$OUTPUT"
           model="${OUTPUT[0]}" 
           envir="${OUTPUT[1]}"
           version="${OUTPUT[2]}"
