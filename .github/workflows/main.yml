@@ -49,7 +49,7 @@ jobs:
           output=$(python new.py)
           STRINGTEST="${output[@]}"
           readarray -t lines < <(echo "$STRINGTEST")
-          echo "${lines[0]}"
+          echo "${lines[1]}"
           OUTPUT="${output[@]}"
           #echo "$OUTPUT"
           model="${OUTPUT[0]}" 
