@@ -7,8 +7,7 @@ model_details = []
 deployment_models = []
 # for i in range(len(model)):
 #   print(envir[i]+'='+model[i]+'='+str(version[i]))
-
-for i in range(len(modellist)):
+for i in range(len(model)):
     deployment_models.append([str(env[i])+','+str(context[i])+','+str(modellist[i])+','+str(version[i])])
     # deployment_models.append(context[i])
     # deployment_models.append(modellist[i])
