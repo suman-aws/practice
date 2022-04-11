@@ -54,9 +54,7 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
-          $CharArray =$(echo"${{ steps.step1.outputs.model_details }}".Split("="))
-          $String1= $CharArray[0]
-          $String2= $CharArray[4] 
+
          # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
           #for addr in $mails
           #do
