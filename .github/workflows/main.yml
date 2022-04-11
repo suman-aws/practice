@@ -48,12 +48,17 @@ jobs:
         run: |
           output=$(python new.py)
           OUTPUT=(${output[@]})
+          readarray -t Models < <(echo "$OUTPUT")
+          echo "${Models[1]}"
+          echo "${Models[2]}"
+          echo "${Models[3]}"
+          echo "${Models[4]}"
           echo "$OUTPUT"
           model="${OUTPUT[0]}" 
           envir="${OUTPUT[1]}"
           version="${OUTPUT[2]}"
           table="${OUTPUT[3]}"
-          echo "Model_Details:$model"
+          #echo "Model_Details:$model"
           #echo "Environment:$envir"
           
           #echo "Table_details:$table"
