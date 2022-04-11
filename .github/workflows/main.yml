@@ -51,9 +51,9 @@ jobs:
           readarray -t Models < <(echo "$OUTPUT")
           echo "${Models}"
           echo "${Models[1]}"
-          echo "${Models[2]}"
-          echo "${Models[3]}"
-          echo "${Models[4]}"
+          #echo "${Models[2]}"
+          #echo "${Models[3]}"
+          #echo "${Models[4]}"
           echo "$OUTPUT"
           model="${OUTPUT[0]}" 
           envir="${OUTPUT[1]}"
