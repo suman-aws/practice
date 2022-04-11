@@ -50,7 +50,7 @@ jobs:
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
           #echo "${Models}"
-          echo "${Models[0]}"
+          echo "${Models[1]}"
           #echo "${Models[1]}"
           #echo "${Models[2]}"
           #echo "${Models[3]}"
