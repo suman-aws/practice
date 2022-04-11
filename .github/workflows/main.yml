@@ -44,9 +44,10 @@ jobs:
       - name: get
         run: |
           output=$(python new.py )
-          output="${output//'%'/'%25'}" 
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
+          import subprocess
+          with open("output.txt", "w+") as output:
+          subprocess.call(["python", "./python new.py"], stdout=output);
+
           echo "::set-output name=model_details::$output"
         id: step1
       - name: Print model_details
