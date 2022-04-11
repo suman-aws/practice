@@ -7,18 +7,18 @@ model_details = []
 deployment_models = []
 # for i in range(len(model)):
 #   print(envir[i]+'='+model[i]+'='+str(version[i]))
-for i in range(len(model)):
-    deployment_models.append([str(model[i])+','+str(version[i])])
+# for i in range(len(model)):
+#     deployment_models.append([str(model[i])+','+str(version[i])])
     # deployment_models.append(context[i])
     # deployment_models.append(modellist[i])
     # deployment_models.append(version[i])
     # deployment_models.append(sysuid[i])
     # deployment_models.append(testingtime[i])
 print (str(deployment_models))
-# print(model)
-# print("environment",envir)
-# print(version)
-# print(tableName)
+print(model)
+print(envir)
+print(version)
+print(tableName)
 # model_details.append(model)
 # model_details.append(envir)
 # model_details.append(version)
