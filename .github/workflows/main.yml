@@ -44,9 +44,9 @@ jobs:
       - name: get
         run: |
           output=$(python new.py v2.21)
-          output="modeldetails:${output//'%'/'%25'}" 
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
+          output="${output//'%'/'%25'}" 
+          #output="${output//$'\n'/'%0A'}"
+          #output="${output//$'\r'/'%0D'}" 
           echo "::set-output name=model_details::$output"
 
 
