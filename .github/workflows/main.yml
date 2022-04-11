@@ -48,15 +48,15 @@ jobs:
           output=$(python new.py)
           OUTPUT="${output[@]}"
           echo "$OUTPUT"
-          envir="${OUTPUT[0]}"
+          envir="${OUTPUT[0]}" 
           model="${OUTPUT[1]}"
           table="${OUTPUT[2]}"
           echo "$envir"
           echo "$model"
           echo "$table"
-          #echo "::set-output name=envir_details::$envir"
-          #echo "::set-output name=model_details::$model"
-          #echo "::set-output name=tablenames_details::$table"
+          echo "::set-output name=envir_details::$envir"
+          echo "::set-output name=model_details::$model"
+          echo "::set-output name=tablenames_details::$table"
           #echo "::set-output name=enviro_details::$output"
           
 
@@ -64,6 +64,8 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.envir_details }}"
+          echo "${{ steps.step1.outputs.model_details }}"
+          echo "${{ steps.step1.outputs.tablenames_details }}"
    
           
          # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
