@@ -47,9 +47,6 @@ jobs:
         id: step1
         run: |
           output=$(python new.py)
-          STRINGTEST="${output[@]}"
-          readarray -t lines < <(echo "$STRINGTEST")
-          echo "${lines[1]}"
           OUTPUT="${output[@]}"
           #echo "$OUTPUT"
           model="${OUTPUT[0]}" 
