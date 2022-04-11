@@ -101,4 +101,6 @@ jobs:
         run: |        
          if [[ $model == *"Apple"* ]]; then
            echo "models present"
+         else
+           echo "No models present"
          fi
