@@ -64,7 +64,7 @@ jobs:
         
       - name: Print model_details
         run: |
-          echo "${{ steps.step1.outputs.model_details }}"
+          #echo "${{ steps.step1.outputs.model_details }}"
           echo "${{ steps.step1.outputs.env_details }}"
           #echo "${{ steps.step1.outputs.tablenames_details }}"
    
