@@ -46,13 +46,15 @@ jobs:
       - name: get
         run: |
           output=$(python new.py)
-          env=$(sed -n '1p' "${output}") 
-          model=$(sed -n '2p' "${output}") 
-          table=$(sed -n '3p' "${output}")  
-          echo "::set-output name=envir_details::$env"
+          OUTPUT=(${output[@]})
+          envir="${OUTPUT[0]}"
+          model="${OUTPUT[1]}"
+          table="${OUTPUT[0]}"
+          echo "::set-output name=envir_details::$envir"
           echo "::set-output name=model_details::$model"
           echo "::set-output name=tablenames_details::$table"
           echo "::set-output name=enviro_details::$output"
+          
 
         id: step1
       - name: Print model_details
