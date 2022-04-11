@@ -78,7 +78,7 @@ jobs:
            else
              echo "No PROD models present; hence not authenticating for  5"
            fi
-      - name: Upload the model code to HSI env
+      - name: Upload the model code to env
         shell: bash
         env:
           env: ${{steps.step1.outputs.model_details}}
