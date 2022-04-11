@@ -64,8 +64,8 @@ jobs:
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.envir_details }}"
-          echo "${{ steps.step1.outputs.model_details }}"
-          echo "${{ steps.step1.outputs.tablenames_details }}"
+          echo "${{ steps.step1.model.model_details }}"
+          echo "${{ steps.step1.table.tablenames_details }}"
    
           
          # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
