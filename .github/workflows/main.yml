@@ -4,14 +4,25 @@ name: CI
 
 # Controls when the workflow will run
 on:
+
+
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      environ:
+        description: "Env of the deployment(Int,qa or prod) as suffix" 
+        type: choice
+        required: true
+        options:
+          - INT
+          - QA
+          - PROD
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -52,7 +63,30 @@ jobs:
           #echo "> [$addr]"
           #done
 
+      - name: Performing HSI authentication
+        shell: bash
+        env:
+          
+        run: |
+           if [[ $env == *"INT"* ]]; then
+             echo "INT models present; Authenticating for HSI 7"
 
+           else
+             echo "No INT models present; hence not authenticating for HSI 7"
+           fi
+           if [[ $env == *"QA"* ]]; then
+             echo "No QA models present; hence  authenticating for  5"
+             echo "No QA models present; hence not authenticating for  5"
+           fi
+           if [[ $env == *"PROD"* ]]; then
+             echo "PROD models present; Authenticating for  5"
+
+           else
+             echo "No PROD models present; hence not authenticating for  5"
+           fi
+      #  - name: Upload the model code to HSI env
+  #    shell: bash 
+  #    run: | 
 
 #       - name: Set the value
 #         id: step1
