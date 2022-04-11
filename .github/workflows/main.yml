@@ -99,6 +99,6 @@ jobs:
       - name: Upload the model code to env
         shell: bash
         run: |        
-         if [[ $model[i] == *"Apple"* ]]; then
+         if [[ $model == *"Apple"* ]]; then
            echo "models present"
          fi
