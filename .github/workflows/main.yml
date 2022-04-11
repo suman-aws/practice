@@ -81,22 +81,24 @@ jobs:
           env: ${{github.event.inputs.environ}}
         run: |
            if [[ $env == *"INT"* ]]; then
-             echo "INT models present; Authenticating for  7"
+             echo "INT models present"
 
            else
-             echo "No INT models present; hence not authenticating for  7"
+             echo "No INT models present"
            fi
            if [[ $env == *"QA"* ]]; then
-             echo "No QA models present; hence  authenticating for  5"
+             echo "No QA models present"
            else
-             echo "No QA models present; hence not authenticating for  5"
+             echo "No QA models present"
            fi
            if [[ $env == *"PROD"* ]]; then
-             echo "PROD models present; Authenticating for  5"
+             echo "PROD models present"
            else
-             echo "No PROD models present; hence not authenticating for  5"
+             echo "No PROD models present"
            fi
-#       - name: Upload the model code to env
-#         shell: bash
-#         run: |        
-#          if [[ $model[i] == *"Apple"* ]]; then
+      - name: Upload the model code to env
+        shell: bash
+        run: |        
+         if [[ $model[i] == *"Apple"* ]]; then
+           echo "models present"
+         fi
