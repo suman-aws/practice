@@ -44,6 +44,7 @@ jobs:
 
 #       # Runs a set of commands using the runners shell
       - name: get
+        id: step1
         run: |
           output=$(python new.py)
           OUTPUT="${output[@]}"
@@ -60,12 +61,12 @@ jobs:
           #echo "::set-output name=enviro_details::$output"
           
 
-        id: step1
+        
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.envir_details }}"
-          echo "${{ steps.step1.model.model_details }}"
-          echo "${{ steps.step1.table.tablenames_details }}"
+          #echo "${{ steps.step1.model.model_details }}"
+          #echo "${{ steps.step1.table.tablenames_details }}"
    
           
          # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
