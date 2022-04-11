@@ -84,10 +84,12 @@ jobs:
           env: ${{steps.step1.outputs.model_details}}
         run: |
            if [[ $env == *"Apple"* ]]; then
-             echo "INT models present; Authenticating for  7"
+             echo "$env"
+             
            else
              echo "No INT models present; hence not authenticating for  7"
            fi
+            
 #       - name: Set the value
 #         id: step1
 #         run: |
