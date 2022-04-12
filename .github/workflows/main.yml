@@ -89,6 +89,7 @@ jobs:
           OUTPUT="${envir[@]}"
           readarray -t Models < <(echo "$OUTPUT")
           environment="${Models[2]}"
+          echo "environment_Details:$environment"
           
            if [[ $env == *"INT"* ]]; then
              echo "INT models present"
