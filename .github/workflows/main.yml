@@ -86,6 +86,10 @@ jobs:
       - name: Performing  authentication
         shell: bash
         run: |
+          IFS= 
+          set $envir
+          var1=$1
+          $env=$2
            if [[ $env == *"INT"* ]]; then
              echo "INT models present"
 
@@ -102,6 +106,9 @@ jobs:
            else
              echo "No PROD models present"
            fi
+           with:
+             envi: ${{ steps.step1.output.env_details }}
+            
       - name: Upload the model code to env
         shell: bash
         env:
