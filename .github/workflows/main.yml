@@ -86,9 +86,10 @@ jobs:
 
       - name: Performing  authentication
         shell: bash
-        env:
-          envir : ${{ steps.step1.output.env_details }}
+        env :
+            envir: ${{ steps.step1.outputs.env_details }}
         run: |
+          echo "$envir"
 
            if [[ $envir == *"abc int"* ]]; then
              echo "INT models present"
