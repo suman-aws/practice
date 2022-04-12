@@ -62,13 +62,14 @@ jobs:
           echo "Model_Details:$model"
           #echo "Environment:$envir"
           environment="${envir[@]}"
+          echo "$environment"
           readarray -t environ < <(echo "$environment")
           envirs="${environ[2]}"
           echo "$envirs"
           
           #echo "Table_details:$table"
           echo "::set-output name=model_details::$model"
-          echo "::set-output name=env_details::$envir"
+          echo "::set-output name=env_details::$envirs"
           #echo "::set-table name=table_details::$table"
           #echo "::set-output name=enviro_details::$output"
           
