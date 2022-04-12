@@ -85,6 +85,7 @@ jobs:
           #done
 
       - name: Performing  authentication
+        shell: python
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
