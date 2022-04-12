@@ -90,10 +90,10 @@ jobs:
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
           print(envir)
-          if envir[0].find("INT") >= 0: 
+          if envir[0].find("qa") >= 0: 
             print("qa models presnt")
           else:
-          print("NO qa models presnt")
+            print("NO qa models presnt")
 
            
             
