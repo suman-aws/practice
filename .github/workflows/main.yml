@@ -89,15 +89,10 @@ jobs:
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
-          var=int
-          for item in "${envir[@]}"; do
-           [[ $var == "$item" ]] && echo "$var present in the array"
-          done
-          var1=qa
-          for item in "${envir[@]}"; do
-            [[ $var1 == "$item" ]] && echo "$var1 present in the array"
-          done
-          
+          if [[ ${envir[@]} == *"abc qa"* ]]; then
+            echo "qa present"
+          else:
+            echo "qa not present"
 
 
            
