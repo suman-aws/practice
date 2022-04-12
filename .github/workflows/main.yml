@@ -98,6 +98,7 @@ jobs:
             echo "qa present"
           else
             echo "qa not present"
+          fi
           if [[ ${envir[@]} == *"abc prod"* ]]; then
             echo "prod present"
           else
