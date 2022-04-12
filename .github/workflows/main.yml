@@ -89,10 +89,19 @@ jobs:
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
+          if [[ ${envir[@]} == *"abc int"* ]]; then
+            echo "int present"
+          else
+            echo "int not present"
+          fi
           if [[ ${envir[@]} == *"abc qa"* ]]; then
             echo "qa present"
           else
             echo "qa not present"
+          if [[ ${envir[@]} == *"abc prod"* ]]; then
+            echo "prod present"
+          else
+            echo "prod not present"
           fi
 
            
