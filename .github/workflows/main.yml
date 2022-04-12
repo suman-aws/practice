@@ -85,29 +85,16 @@ jobs:
           #done
 
       - name: Performing  authentication
-        shell: bash
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
           echo "$envir"
+          if $envir[0].find("INT") >= 0:
+            print("qa models presnt")
+          else:
+          print("NO qa models presnt")
 
-           if [[ $envir == *"abc int"* ]]; then
-             echo "INT models present"
-
-           else
-             echo "No INT models present"
-           fi
-           if [[ $envir == *"abc qa"* ]]; then
-             echo "No QA models present"
-           else
-             echo "No QA models present"
-           fi
-           if [[ $envir == *"abc prod"* ]]; then
-             echo "PROD models present"
-           else
-             echo "No PROD models present"
-           fi
- 
+           
             
       - name: Upload the model code to env
         shell: bash
