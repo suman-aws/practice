@@ -85,8 +85,6 @@ jobs:
 
       - name: Performing  authentication
         shell: bash
-        env:
-          env: ${{github.event.inputs.environ}}
         run: |
            if [[ $env == *"INT"* ]]; then
              echo "INT models present"
@@ -94,7 +92,7 @@ jobs:
            else
              echo "No INT models present"
            fi
-           if [[ $env == *"QA"* ]]; then
+           if [[ $envir == *"QA"* ]]; then
              echo "No QA models present"
            else
              echo "No QA models present"
