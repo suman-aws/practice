@@ -110,8 +110,8 @@ jobs:
            else
              echo "No PROD models present"
            fi
-           with:
-             envir: ${{ steps.step1.output.env_details }}
+          with:
+            envir: ${{ steps.step1.output.env_details }}
             
       - name: Upload the model code to env
         shell: bash
