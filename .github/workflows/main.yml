@@ -86,9 +86,10 @@ jobs:
       - name: Performing  authentication
         shell: bash
         run: |
-          OUTPUT="${envir[@]}"
-          readarray -t Models < <(echo "$OUTPUT")
-          environment="${Models[2]}"
+          OUTPUTS="${envir[@]}"
+          echo "$OUTPUT"
+          readarray -t enviro < <(echo "$OUTPUTS")
+          environment="${enviro[2]}"
           echo "environment_Details:$environment"
           
            if [[ $env == *"INT"* ]]; then
