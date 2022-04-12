@@ -91,7 +91,7 @@ jobs:
         run: |
           if [[ ${envir[@]} == *"abc qa"* ]]; then
             echo "qa present"
-          else:
+          else
             echo "qa not present"
           fi
 
