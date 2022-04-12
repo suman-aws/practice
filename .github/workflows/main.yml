@@ -85,11 +85,9 @@ jobs:
           #done
 
       - name: Performing  authentication
-        shell: python
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
-          
           if envir[0].find("qa") >= 0: 
             print("qa models presnt")
           else:
