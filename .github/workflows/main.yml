@@ -85,10 +85,10 @@ jobs:
 
       - name: Performing  authentication
         shell: bash
-        env:
-          envir : ${{ steps.step1.output.env_details }}
+#         env:
+#           envir : ${{ steps.step1.output.env_details }}
         run: |
-          OUTPUTS="${envir[@]}"
+          OUTPUTS="${{ steps.step1.output.env_details }}"
           echo "$OUTPUT"
           readarray -t enviro < <(echo "$OUTPUTS")
           environment="${enviro[2]}"
@@ -110,8 +110,8 @@ jobs:
            else
              echo "No PROD models present"
            fi
-         #  with:
-            # envir: ${{ steps.step1.output.env_details }}
+           with:
+             envir: ${{ steps.step1.output.env_details }}
             
       - name: Upload the model code to env
         shell: bash
