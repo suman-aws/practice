@@ -85,6 +85,8 @@ jobs:
 
       - name: Performing  authentication
         shell: bash
+        env:
+          envir : ${{ steps.step1.output.env_details }}
         run: |
           OUTPUTS="${envir[@]}"
           echo "$OUTPUT"
