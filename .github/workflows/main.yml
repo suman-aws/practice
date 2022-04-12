@@ -89,7 +89,7 @@ jobs:
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
-          print($envir)
+          
           if envir[0].find("qa") >= 0: 
             print("qa models presnt")
           else:
