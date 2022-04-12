@@ -86,11 +86,11 @@ jobs:
 
       - name: Performing  authentication
         shell: bash
-#         env:
-#           envir : ${{ steps.step1.output.env_details }}
+        env:
+          envir : ${{ steps.step1.output.env_details }}
         run: |
 
-           if [[ $env == *"abc int"* ]]; then
+           if [[ $envir == *"abc int"* ]]; then
              echo "INT models present"
 
            else
@@ -101,7 +101,7 @@ jobs:
            else
              echo "No QA models present"
            fi
-           if [[ $env == *"abc prod"* ]]; then
+           if [[ $envir == *"abc prod"* ]]; then
              echo "PROD models present"
            else
              echo "No PROD models present"
