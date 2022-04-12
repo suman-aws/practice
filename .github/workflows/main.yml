@@ -14,16 +14,16 @@ on:
 #     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      environ:
-        description: "Env of the deployment(Int,qa or prod) as suffix" 
-        type: choice
-        required: true
-        options:
-          - INT
-          - QA
-          - PROD
+#   workflow_dispatch:
+#     inputs:
+#       environ:
+#         description: "Env of the deployment(Int,qa or prod) as suffix" 
+#         type: choice
+#         required: true
+#         options:
+#           - INT
+#           - QA
+#           - PROD
  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
