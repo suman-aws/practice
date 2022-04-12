@@ -59,14 +59,10 @@ jobs:
           #envir="${OUTPUT[1]}"
           #version="${OUTPUT[2]}"
           #table="${OUTPUT[3]}"
-          echo "Model_Details:$model"
+          #echo "Model_Details:$model"
           #echo "Environment:$envir"
-          environment="${envir[@]}"
-          echo "$environment"
-          readarray -t environ < <(echo "$environment")
-          envirs="${environ[2]}"
-          echo "$envirs"
-          
+
+
           #echo "Table_details:$table"
           echo "::set-output name=model_details::$model"
           echo "::set-output name=env_details::$envirs"
@@ -94,18 +90,18 @@ jobs:
 #           envir : ${{ steps.step1.output.env_details }}
         run: |
 
-           if [[ $env == *"INT"* ]]; then
+           if [[ $env == *"abc int"* ]]; then
              echo "INT models present"
 
            else
              echo "No INT models present"
            fi
-           if [[ $envir == *"QA"* ]]; then
+           if [[ $envir == *"abc qa"* ]]; then
              echo "No QA models present"
            else
              echo "No QA models present"
            fi
-           if [[ $env == *"PROD"* ]]; then
+           if [[ $env == *"abc prod"* ]]; then
              echo "PROD models present"
            else
              echo "No PROD models present"
