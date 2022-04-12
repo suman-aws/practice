@@ -85,14 +85,20 @@ jobs:
           #done
 
       - name: Performing  authentication
-        shell: python
+        shell: bash
         env :
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
-          if $envir[0].find("qa") >= 0: 
-            print("qa models presnt")
-          else:
-            print("NO qa models presnt")
+          var=int
+          for item in "${envir[@]}"; do
+           [[ $var == "$item" ]] && echo "$var present in the array"
+          done
+          var1=qa
+          for item in "${envir[@]}"; do
+            [[ $var1 == "$item" ]] && echo "$var1 present in the array"
+          done
+          
+
 
            
             
