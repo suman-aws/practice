@@ -1,5 +1,5 @@
 model=['Apple','Water']
-envir=['qa','qa']
+envir=['abc qa','abc qa']
 version=[1.0,2.0]
 hsiuid=[1,2]
 tableName=['Mango','Tango']
