@@ -93,7 +93,7 @@ jobs:
             echo "qa present"
           else:
             echo "qa not present"
-
+          fi
 
            
             
