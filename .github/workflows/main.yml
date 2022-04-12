@@ -60,7 +60,11 @@ jobs:
           #version="${OUTPUT[2]}"
           #table="${OUTPUT[3]}"
           echo "Model_Details:$model"
-          echo "Environment:$envir"
+          #echo "Environment:$envir"
+          environment="${envir[@]}"
+          readarray -t environ < <(echo "$environment")
+          envirs="${environ[2]}"
+          echo "$envirs"
           
           #echo "Table_details:$table"
           echo "::set-output name=model_details::$model"
@@ -88,12 +92,7 @@ jobs:
 #         env:
 #           envir : ${{ steps.step1.output.env_details }}
         run: |
-          OUTPUTS="${{ steps.step1.output.env_details }}"
-          echo "$OUTPUT"
-          readarray -t enviro < <(echo "$OUTPUTS")
-          environment="${enviro[2]}"
-          echo "environment_Details:$environment"
-          
+
            if [[ $env == *"INT"* ]]; then
              echo "INT models present"
 
@@ -110,8 +109,7 @@ jobs:
            else
              echo "No PROD models present"
            fi
-          with:
-            envir: ${{ steps.step1.output.env_details }}
+ 
             
       - name: Upload the model code to env
         shell: bash
