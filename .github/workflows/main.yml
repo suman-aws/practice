@@ -78,11 +78,7 @@ jobs:
           #echo "${{ steps.step1.outputs.tablenames_details }}"
    
           
-         # mails=$(echo "${{ steps.step1.outputs.model_details }}" | tr "=" "\n")
-          #for addr in $mails
-          #do
-          #echo "> [$addr]"
-          #done
+
 
       - name: Performing  authentication
         shell: bash
