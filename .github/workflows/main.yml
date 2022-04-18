@@ -106,7 +106,7 @@ jobs:
         env:
            models_id: ${{steps.step1.outputs.model_details}}
         run: |
-          arrIN=(${$envir// / })
+          arrIN=(${envir// / })
           echo ${arrIN[1]}  
           #echo "$models_id"
           #if [[ ${models_id[@]} == *"Apple"* ]] ; then
