@@ -63,7 +63,7 @@ jobs:
           #echo "Environment:$envir"
           ENVI="${envir[@]}"
           readarray -t Environm < <(echo "$ENVI")
-          Environ="${Environm[0]}"
+          Environ="${Environm[1]}"
           echo "$Environ"
 
 
