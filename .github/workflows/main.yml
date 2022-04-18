@@ -61,7 +61,7 @@ jobs:
           #table="${OUTPUT[3]}"
           #echo "Model_Details:$model"
           #echo "Environment:$envir"
-          ENVI ="${envir[@]}"
+          ENVI="${envir[@]}"
           readarray -t Environm < <(echo "$ENVI")
           Environ =  "${Environm[0]}"
           echo "$Environ"
