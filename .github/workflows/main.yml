@@ -109,7 +109,7 @@ jobs:
            models_id: ${{steps.step1.outputs.model_details}}
         run: |
           ENVI ="${envir[@]}"
-          readarray -t Environm < <(echo "$OUTPUT")
+          readarray -t Environm < <(echo "$ENVI")
           Environ =  "${Environm[0]}"
           echo "$Environ"
           echo "$models_id"
