@@ -106,10 +106,12 @@ jobs:
         env:
            models_id: ${{steps.step1.outputs.model_details}}
         run: |
-          echo "$models_id"
-          if [[ ${models_id[@]} == *"Apple"* ]] ; then
-           echo "models present"
-          else
-           echo "No models present"
-          fi
+          arrIN=(${$envir// / })
+          echo ${arrIN[1]}  
+          #echo "$models_id"
+          #if [[ ${models_id[@]} == *"Apple"* ]] ; then
+           #echo "models present"
+          #else
+           #echo "No models present"
+          #fi
               
