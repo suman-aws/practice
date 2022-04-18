@@ -61,6 +61,10 @@ jobs:
           #table="${OUTPUT[3]}"
           #echo "Model_Details:$model"
           #echo "Environment:$envir"
+          ENVI ="${envir[@]}"
+          readarray -t Environm < <(echo "$ENVI")
+          Environ =  "${Environm[0]}"
+          echo "$Environ"
 
 
 
@@ -108,10 +112,6 @@ jobs:
            envir: ${{ steps.step1.outputs.env_details }}
            models_id: ${{steps.step1.outputs.model_details}}
         run: |
-          ENVI ="${envir[@]}"
-          readarray -t Environm < <(echo "$ENVI")
-          Environ =  "${Environm[0]}"
-          echo "$Environ"
           echo "$models_id"
           if [[ ${models_id[@]} == *"Apple"* ]] ; then
            echo "models present"
