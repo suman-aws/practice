@@ -124,6 +124,7 @@ jobs:
           for i in range(len(e)):
               f = e[i].split(",")
           print(f)
-          with:envir: ${{ steps.step1.outputs.env_details }}  
+          with:
+             envir: ${{ steps.step1.outputs.env_details }}  
 
           
