@@ -73,17 +73,12 @@ jobs:
           echo "::set-output name=env_details::$envir"
           echo "::set-output name=table_details::$table"
           #echo "::set-output name=enviro_details::$output"
-          
-
-        
+ 
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
           echo "${{ steps.step1.outputs.env_details }}"
           echo "${{ steps.step1.outputs.table_details }}"
-   
-          
-
 
       - name: Performing  authentication
         shell: bash
@@ -131,9 +126,9 @@ jobs:
              f = e[i].split(",")
           # print(str(f))
           if "INT" in f:
-            host.append('hsi7.natlab.research.philips.com')
+             host.append('hsi7.natlab.research.philips.com')
           elif "QA" in f:
-            host.append('hsi3.natlab.research.philips.com')
+             host.append('hsi3.natlab.research.philips.com')
           elif "PROD" in f:
-            host.append('hsi5.natlab.research.philips.com')
+             host.append('hsi5.natlab.research.philips.com')
           print(host)
