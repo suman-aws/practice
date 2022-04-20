@@ -117,7 +117,7 @@ jobs:
       - name: genertate the host
         shell: python
         env:
-          envir: ${{ steps.step1.outputs.env_details }}      
+           envir: ${{ steps.step1.outputs.env_details }}      
         run: |
           print(envir)
           
