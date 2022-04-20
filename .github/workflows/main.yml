@@ -119,5 +119,17 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          print($envir)
+          host = []
+          for i in range(len($envir)):
+             e = env[i].split(" ")
+          for i in range(len(e)):
+             f = e[i].split(",")
+          # print(str(f))
+          if "INT" in f:
+              host.append('hsi7.natlab.research.philips.com')
+          elif "QA" in f:
+              host.append('hsi3.natlab.research.philips.com')
+          elif "PROD" in f:
+            host.append('hsi5.natlab.research.philips.com')
+          print(host)
           
