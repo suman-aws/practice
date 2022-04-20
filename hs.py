@@ -17,4 +17,4 @@ elif "QA" in f:
 elif "PROD" in f:
     host.append('abc.host.5')
     
-print(host)
+print(str(host))
