@@ -115,16 +115,10 @@ jobs:
           fi
 
       - name: genertate the host
-        shell: python
+        shell: bash
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          for i in range(len(envir)):
-              e = envir[i].split(" ")
-          for i in range(len(e)):
-              f = e[i].split(",")
-          print(f)
-          with:
-             envir: ${{ steps.step1.outputs.env_details }}  
-
+          sample=$(python3 hs.py $envir)
+          echo = "$sample"
           
