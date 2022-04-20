@@ -119,5 +119,5 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          print(envir)
+          print($envir)
           
