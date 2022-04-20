@@ -115,7 +115,7 @@ jobs:
           fi
 
       - name: genertate the host
-        id: step3
+        shell: python
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
