@@ -123,6 +123,6 @@ jobs:
               e = envir[i].split(" ")
           for i in range(len(e)):
               f = e[i].split(",")
-          echo "$f"
+          print(f)
 
           
