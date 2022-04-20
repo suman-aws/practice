@@ -119,11 +119,10 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          echo "$envir"
           for i in range(len(envir)):
-             e = envir[i].split(" ")
+              e = envir[i].split(" ")
           for i in range(len(e)):
-             f = e[i].split(",")
+              f = e[i].split(",")
           echo "$f"
 
           
