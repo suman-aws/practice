@@ -1,12 +1,12 @@
 import sys
 n = len(sys.argv[1])
-env = sys.argv[1][1 : n - 1]
-env = env.split(", ")
+envir = sys.argv[1][1 : n - 1]
+envir = env.split(", ")
 
 # e = []
 host = []
-for i in range(len(env)):
-    e = env[i].split(" ")
+for i in range(len(envir)):
+    e = envir[i].split(" ")
 for i in range(len(e)):
     f = e[i].split(",")
 # print(str(f))
