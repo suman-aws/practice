@@ -119,7 +119,7 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          for i in range(len(envir)):
+          for i in range(len($envir)):
               e = envir[i].split(" ")
           for i in range(len(e)):
               f = e[i].split(",")
