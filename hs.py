@@ -1,7 +1,7 @@
 import sys
 n = len(sys.argv[1])
 envir = sys.argv[1][1 : n - 1]
-envir = env.split(", ")
+envir = envir.split(", ")
 
 # e = []
 host = []
