@@ -120,6 +120,7 @@ jobs:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
           echo "$envir"
-           python hs.py $envir
+          sample=$(python hs.py $envir)
+          echo "$sample"
 
           
