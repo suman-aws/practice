@@ -120,8 +120,10 @@ jobs:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
           echo "$envir"
-          sample=$(python hs.py $envir)
-          SAMPLE="${sample[@]}"
-          echo "$SAMPLE"
+          for i in range(len($envir)):
+             e = $envir[i].split(" ")
+          for i in range(len(e)):
+             f = e[i].split(",")
+          echo "$f"
 
           
