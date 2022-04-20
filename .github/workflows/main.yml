@@ -119,6 +119,6 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          output=$(python hs.py $envir)
+          python hs.py $envir
 
           
