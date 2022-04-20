@@ -121,6 +121,7 @@ jobs:
         run: |
           echo "$envir"
           sample=$(python hs.py $envir)
-          echo "$sample"
+          SAMPLE="${sample[@]}"
+          echo "$SAMPLE"
 
           
