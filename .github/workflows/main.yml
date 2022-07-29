@@ -86,19 +86,19 @@ jobs:
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
           if [[ ${envir[@]} == *"abc int"* ]]; then
-            echo "int present"
+            echo " INT models present"
           else
-            echo "int not present"
+            echo "No INT models present"
           fi
           if [[ ${envir[@]} == *"abc qa"* ]]; then
-            echo "qa present"
+            echo "QA models present"
           else
-            echo "qa not present"
+            echo "No QA models present"
           fi
           if [[ ${envir[@]} == *"abc prod"* ]]; then
-            echo "prod present"
+            echo "PROD models present"
           else
-            echo "prod not present"
+            echo "No PROD models present"
           fi
 
       - name: Upload the model code to env
@@ -109,7 +109,7 @@ jobs:
         run: |
           echo "$models_id"
           if [[ ${models_id[@]} == *"Apple"* ]] ; then
-           echo "models present"
+           echo "models present in "
           else
             echo "No models present"
           fi
