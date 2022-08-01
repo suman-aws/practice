@@ -119,6 +119,6 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          sample=$(python3 hs.py $envir)
-          echo="$sample"
+          python3 hs.py $envir
+       
           
