@@ -3,6 +3,11 @@ n = len(sys.argv[1])
 envir = sys.argv[1][1 : n - 1]
 envir = envir.split(", ")
 print(envir)
+n = len(sys.argv[2])
+models_id = sys.argv[2][1 : n - 1]
+models_id = models_id.split(", ")
+print(envir)
+print(models_id)
 # # e = []
 # host = []
 # for i in range(len(envir)):
