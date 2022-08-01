@@ -109,7 +109,7 @@ jobs:
         run: |
           echo "$models_id"
           if [[ ${models_id[@]} == *"Apple"* ]] ; then
-           echo "models present in "
+           echo "models present in  qa"
           else
             echo "No models present"
           fi
@@ -119,6 +119,6 @@ jobs:
         env:
            envir: ${{ steps.step1.outputs.env_details }}      
         run: |
-          python3 hs.py @$envir
+          python3 hs.py $envir[@]
        
           
