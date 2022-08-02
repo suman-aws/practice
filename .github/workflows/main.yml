@@ -118,7 +118,7 @@ jobs:
         shell: bash
 
         run: |
-          'python hs.py $envir $models_id'
+          ${models_id[@]} python hs.py 
         env:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
