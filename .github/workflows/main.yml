@@ -116,11 +116,11 @@ jobs:
 
       - name: genertate the host
         shell: bash
+
+        run: python3 hs.py 
         env:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
-        run: |
-          python3 hs.py ${envir[@]} ${models_id[@]}
           
        
           
