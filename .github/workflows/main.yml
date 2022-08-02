@@ -117,8 +117,7 @@ jobs:
       - name: genertate the host
         shell: bash
 
-        run: |
-          ${models_id[@]} python hs.py 
+        run: python hs.py ${{ steps.step1.outputs.env_details }} ${{steps.step1.outputs.model_details}}
         env:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
