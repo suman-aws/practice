@@ -130,7 +130,9 @@ jobs:
           echo "testing the models"
           readarray -t Mod < <(echo "$envir")
           mod="${Mod[1]}"
-          echo "${mod[@]}"          
+          echo "${mod[@]}"
+          echo "::set-output name=envi_det::$mod"
+          echo "${{ steps.step1.outputs.envi_det }}"
           
           
        
