@@ -129,7 +129,7 @@ jobs:
         run: |
           echo "testing the models"
           readarray -t Mod < <(echo "$envir")
-          mod="${Mod[0]}"
+          mod="${Mod[1]}"
           echo "${mod[@]}"          
           
           
