@@ -15,10 +15,29 @@ deployment_models = []
     # deployment_models.append(sysuid[i])
     # deployment_models.append(testingtime[i])
 # print (str(deployment_models))
+# envr = []
+# def environement(envir):
+
+#     if "qa" in envir:
+#         env.append("QA") 
+#     return env
+# envi = []
+for i in range(len(envir)):
+    
+    if envir[i].find("INT") >= 0:
+        envi ="int"
+    if envir[i].find("qa") >= 0:
+        envi ="qa"
+    if envir[i].find("prod") >= 0:
+        envi ="prod"
+        
+    
 print(model)
 print(envir)
 print(version)
 print(tableName)
+print(envi)
+
 # model_details.append(model)
 # model_details.append(envir)
 # model_details.append(version)
