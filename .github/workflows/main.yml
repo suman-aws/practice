@@ -130,10 +130,15 @@ jobs:
           echo "testing the models"
           readarray -t Mod < <(echo "$envir")
           mod="${Mod[1]}"
-          echo "${mod[@]}"
-          echo "::set-output name=envi_det::$mod"
-          echo "${{ steps.step1.outputs.envi_det }}"
-          
+          arr=(${mod})
+
+           # Print each value of the array by using the loop
+           for val in "${arr[@]}";
+            do
+
+          printf "mode name is = $val\n"
+          done
+
           
        
           
