@@ -130,9 +130,9 @@ jobs:
           echo "testing the models"
           readarray -t Mod < <(echo "$envir")
           mod="${Mod[1]}"
-          for((i=0;i<env.size();i++))
+          for((i=0;i<mod.size();i++))
           do
-            String[] parts = mod[i].split(" ");
+             String[] parts = ${Mod[1]}.split(" ");
           done
 
           
