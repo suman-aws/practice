@@ -132,7 +132,7 @@ jobs:
            if [[ ${models_id[@]} =~ Apple.* ]] ; then
               echo "test the apple models"
            fi
-           if [[${models_id[@]} =~ Water.*  ]] ; then
+           if [[ ${models_id[@]} =~ Water.* ]] ; then
               echo "test the Water models"
            fi
            
