@@ -85,19 +85,19 @@ jobs:
       - name: Performing  authentication
         shell: bash
         env :
-            envir: ${{ steps.step1.outputs.env_details }}
+            envir: ${{ steps.step1.outputs.enviro_details }}
         run: |
-          if [[ ${envir[@]} == *"abc int"* ]]; then
+          if [[ ${envir[@]} == *"int"* ]]; then
             echo " INT models present"
           else
             echo "No INT models present"
           fi
-          if [[ ${envir[@]} == *"abc qa"* ]]; then
+          if [[ ${envir[@]} == *"qa"* ]]; then
             echo "QA models present"
           else
             echo "No QA models present"
           fi
-          if [[ ${envir[@]} == *"abc prod"* ]]; then
+          if [[ ${envir[@]} == *"prod"* ]]; then
             echo "PROD models present"
           else
             echo "No PROD models present"
@@ -129,13 +129,13 @@ jobs:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
         run: |
-          echo "testing the models"
-          readarray -t Mod < <(echo "$envir")
-          mod="${Mod[1]}"
-          for((i=0;i<mod.size();i++))
-          do
-             String[] parts = ${Mod[1]}.split(" ");
-          done
+           if [[ ${models_id[@]} == *"Apple"* ]] ; then
+              echo "test the apple models"
+           fi
+           if [[ ${models_id[@]} == *"Water"* ]] ; then
+              echo "test the Water models"
+           fi
+           
 
           
        
