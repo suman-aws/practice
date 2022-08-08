@@ -130,7 +130,7 @@ jobs:
            models_id: "${{steps.step1.outputs.model_details}}"
         run: |
          if [[ ${models_id[@]} == *"Water."* ]] ; then
-            echo "test the apple models"
+            echo "test the water models"
          else
             echo "no models "
          fi
