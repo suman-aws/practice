@@ -1,4 +1,4 @@
-model=['Water.wa','sample.Water.s']
+model=['Water.wa','sample.apple.s']
 envir=['abc qa','abc qa']
 version=[1.0,2.0]
 hsiuid=[1,2]
