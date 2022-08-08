@@ -134,7 +134,12 @@ jobs:
          else
             echo "no models "
          fi
-          
+         if [[ ${models_id[@]} == *"apple."* ]] ; then
+            echo "test the apple models"
+         else
+            echo "no models "
+         fi
+                    
                    
 
           
