@@ -129,7 +129,7 @@ jobs:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
         run: |
-          if [[  ${models_id[@]} = \apple* ]] ; then
+          if [[  ${models_id[@]} = \Water* ]] ; then
             echo " echo "test the apple models""
           fi
           
