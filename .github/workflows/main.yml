@@ -128,8 +128,11 @@ jobs:
         env:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
-           if: startsWith (${models_id[@]} == Apple*)
-        run: echo "test the apple models"
+        run: |
+          if [[  ${models_id[@]} = \apple* ]] ; then
+            echo " echo "test the apple models""
+          fi
+          
                    
 
           
