@@ -129,7 +129,7 @@ jobs:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
         run: |
-         for(i=0;i<envir.size();i++) do
+         for((i=0;i<envir.size();i++)) do
             if [[ ${models_id[@]} == *"orange."* ]] ; then
               echo "test the orange models"
             else
