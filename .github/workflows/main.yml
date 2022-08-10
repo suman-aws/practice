@@ -55,20 +55,6 @@ jobs:
           version="${Models[2]}"
           table="${Models[3]}"
           envirmode="${Models[4]}"
-          #echo "$OUTPUT"
-          #model="${OUTPUT[0]}" 
-          #envir="${OUTPUT[1]}"
-          #version="${OUTPUT[2]}"
-          #table="${OUTPUT[3]}"
-          #echo "Model_Details:$model"
-          #echo "Environment:$envir"
-          #ENVI="${envir[@]}"
-          #readarray -t Environm < <(echo "$ENVI")
-          #Environ="${Environm[1]}"
-          #echo "$Environ"
-
-
-
           #echo "Table_details:$table"
           echo "::set-output name=model_details::$model"
           echo "::set-output name=env_details::$envir"
