@@ -131,6 +131,7 @@ jobs:
          done 
          pwd
          mkdir new
+         ls -la
                     
                    
 
