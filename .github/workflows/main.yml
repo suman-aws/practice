@@ -129,6 +129,7 @@ jobs:
               echo "no models "
             fi
          done 
+         pwd
                     
                    
 
