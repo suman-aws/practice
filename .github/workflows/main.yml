@@ -130,8 +130,13 @@ jobs:
             fi
          done 
          pwd
+         rm -r new
          mkdir new
          ls -la
+         if [ -d "new" ]; then
+            touch sam
+            cat sam
+         fi
                     
                    
 
