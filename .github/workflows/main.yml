@@ -132,11 +132,11 @@ jobs:
          pwd
         
          mkdir new
-         ls -la
-         if [ -d "new" ]; then
+         if [[ -d "new" ]]; then
             touch sam
             cat sam
          fi
+                  
                     
                    
 
