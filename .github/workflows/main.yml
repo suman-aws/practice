@@ -130,7 +130,7 @@ jobs:
             fi
          done 
          pwd
-         sudo rm -r new
+        
          mkdir new
          ls -la
          if [ -d "new" ]; then
