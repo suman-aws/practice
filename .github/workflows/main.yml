@@ -126,6 +126,8 @@ jobs:
             fi
           }
           cmd
+          echo "::set-output name=Host_details::cmd"
+          echo "${{ steps.step1.outputs.Host_details }}"
 
       - name: test the models 
         shell: bash
