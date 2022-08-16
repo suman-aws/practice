@@ -113,7 +113,7 @@ jobs:
         id: step2
         shell: bash
         env:
-            envir: ${{ steps.step1.outputs.enviro_details }}
+            envir: ${{ steps.step1.outputs.env_details }}
         run: |
           sh ./host.sh "${envir[@]}"
           #hostd=$(sh ./host.sh "${envir[@]}")
