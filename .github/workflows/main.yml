@@ -124,7 +124,7 @@ jobs:
             if [[ ${envir[@]} == *"PROD"* ]]; then
              echo "PROD.host"           
             fi
-
+          }
           cmd 
 
       - name: test the models 
