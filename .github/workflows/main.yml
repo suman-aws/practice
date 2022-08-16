@@ -125,7 +125,7 @@ jobs:
              echo "PROD.host"           
             fi
           }
-          cmd 
+          echo "cmd"
 
       - name: test the models 
         shell: bash
