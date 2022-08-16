@@ -1,15 +1,18 @@
 
 #!/bin/bash
 
+envir=$1
+echo $envir
+
 cmd() {
-            if [[ $1 == *"int"* ]]; then
-              echo "INT.host"           
-            fi
-            if [[ $1 == *"qa"* ]]; then
-              echo "QA.host"           
-            fi
-            if [[ $1 == *"PROD"* ]]; then
-             echo "PROD.host"           
-            fi
-        }
-cmd
+        if [[ $envir == *"int"* ]]; then
+          echo "INT.host"           
+        fi
+        if [[ $envir == *"qa"* ]]; then
+          echo "QA.host"           
+        fi
+        if [[ $envir == *"PROD"* ]]; then
+         echo "PROD.host"           
+        fi
+      }
+cmd        
