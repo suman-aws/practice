@@ -116,7 +116,7 @@ jobs:
             envir: ${{ steps.step1.outputs.env_details }}
         run: |
           sh ./host.sh "${envir[@]}"
-          #hostd=$(sh ./host.sh "${envir[@]}")
+          #hostd=$(sh ./host.sh )
           #echo "${hostd}"
 
       - name: test the models 
