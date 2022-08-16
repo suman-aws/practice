@@ -110,6 +110,7 @@ jobs:
 #         run: python hs.py "${models_id[@]}" "${envir[@]}"
 
       - name: genertate the host
+        id: step2
         shell: bash
         env:
             envir: ${{ steps.step1.outputs.enviro_details }}
@@ -127,7 +128,7 @@ jobs:
           }
           cmd
           echo "::set-output name=Host_details::cmd"
-          echo "${{ steps.step1.outputs.Host_details }}"
+          echo "${{ steps.step2.outputs.Host_details }}"
 
       - name: test the models 
         shell: bash
