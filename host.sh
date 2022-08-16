@@ -2,13 +2,13 @@
 #!/bin/bash
 
 cmd() {
-            if [[ ${envir[@]} == *"int"* ]]; then
+            if [[ $1 == *"int"* ]]; then
               echo "INT.host"           
             fi
-            if [[ ${envir[@]} == *"qa"* ]]; then
+            if [[ $1 == *"qa"* ]]; then
               echo "QA.host"           
             fi
-            if [[ ${envir[@]} == *"PROD"* ]]; then
+            if [[ $1 == *"PROD"* ]]; then
              echo "PROD.host"           
             fi
         }
