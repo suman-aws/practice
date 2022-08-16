@@ -2,7 +2,7 @@
 #!/bin/bash
 
 envir=$1
-echo $envir
+# echo $envir
 
 cmd() {
         if [[ $envir == *"int"* ]]; then
