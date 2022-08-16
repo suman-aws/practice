@@ -112,7 +112,7 @@ jobs:
       - name: genertate the host
         shell: bash
         env:
-           envir: "${{ steps.step1.outputs.env_details }}"
+            envir: ${{ steps.step1.outputs.enviro_details }}
         run: |
           cmd() {
             if [[ ${envir[@]} == *"int"* ]]; then
@@ -125,7 +125,7 @@ jobs:
              echo "PROD.host"           
             fi
           }
-          echo $cmd
+          cmd
 
       - name: test the models 
         shell: bash
