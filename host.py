@@ -24,13 +24,16 @@ with open("Model_details.yml") as f:
     doc = yaml.safe_load(f)
 
 Host = []
-Env_Details = []
+Envi_details = []
 for key, value in doc.items():
     for k,v in value.items():
             if k == 'ServiceURL':
                 Host.append(v)
             if k == 'Environment':
-                Host.append(v)
-                
+                Envi_details.append(v)
+
+
 print(Host[0])
-print(Env_Details[0])
+print(Envi_details[0])
+
+
