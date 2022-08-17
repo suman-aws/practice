@@ -113,7 +113,7 @@ jobs:
         id: step2
         shell: bash
         run: |
-          output=$(python new.py)
+          output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
           echo "${Models}"
