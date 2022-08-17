@@ -118,7 +118,7 @@ jobs:
           readarray -t Models < <(echo "$OUTPUT")
           echo "${Models}"
           host="${Models[0]}"
-          Env_details="${Models[0]}"
+          Env_details="${Models[1]}"
           #sh ./host.sh "${envir[@]}"
           #hostd=$(sh ./host.sh )
           #echo "${host}"
