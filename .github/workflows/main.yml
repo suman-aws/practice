@@ -112,12 +112,15 @@ jobs:
       - name: genertate the host
         id: step2
         shell: bash
-        env:
-            envir: ${{ steps.step1.outputs.env_details }}
         run: |
+          output=$(python new.py)
+          OUTPUT="${output[@]}"
+          readarray -t Models < <(echo "$OUTPUT")
+          echo "${Models}"
+          host="${Models[0]}"
           #sh ./host.sh "${envir[@]}"
-          hostd=$(sh ./host.sh )
-          echo "${hostd}"
+          #hostd=$(sh ./host.sh )
+          #echo "${hostd}"
 
       - name: test the models 
         shell: bash
