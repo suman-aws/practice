@@ -24,9 +24,13 @@ with open("Model_details.yml") as f:
     doc = yaml.safe_load(f)
 
 Host = []
-testingtime = []
+Env_Details = []
 for key, value in doc.items():
     for k,v in value.items():
             if k == 'ServiceURL':
                 Host.append(v)
+            if k == 'Environment':
+                Host.append(v)
+                
 print(Host[0])
+print(Env_Details[0])
