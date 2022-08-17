@@ -117,10 +117,14 @@ jobs:
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
           echo "${Models}"
-          host="${Models[0]}"
+          #host="${Models[0]}"
           #sh ./host.sh "${envir[@]}"
           #hostd=$(sh ./host.sh )
-          echo "${host}"
+          #echo "${host}"
+          echo "::set-output name=Host_details::$Models"
+      - name: Print Host_details
+        run: |
+          echo "${{ steps.step2.outputs.Host_details }}"
 
       - name: test the models 
         shell: bash
