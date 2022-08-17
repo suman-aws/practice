@@ -29,4 +29,4 @@ for key, value in doc.items():
     for k,v in value.items():
             if k == 'ServiceURL':
                 Host.append(v)
-print(Host)
+print(Host[0])
