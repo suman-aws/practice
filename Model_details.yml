@@ -1,0 +1,12 @@
+823:
+  ModelName: orange.wa
+  ModelUID: orange.wa
+  ServiceAction: It depends on alerts (coming from outputs)
+  ServiceURL: https://abc.qa.com
+
+824:
+  ModelName: apple.s
+  ModelUID: apple.s
+  ServiceAction: It depends on alerts (coming from outputs)
+  ServiceURL: https://abc.qa.com
+
