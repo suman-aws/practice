@@ -120,7 +120,7 @@ jobs:
           host="${Models[0]}"
           #sh ./host.sh "${envir[@]}"
           #hostd=$(sh ./host.sh )
-          #echo "${hostd}"
+          echo "${host}"
 
       - name: test the models 
         shell: bash
