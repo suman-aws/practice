@@ -166,9 +166,12 @@ jobs:
         run: |
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               
-             /usr/bin/git  git clone git@github.com:suman-aws/practice.git
-             cd /usr/bin/git 
-             ls -lrt
+             #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
+             #cd /usr/bin/git 
+              x="ls | wc"
+              eval "$x"
+              y=$(eval "$x")
+              echo "$y"
            fi 
 
         
