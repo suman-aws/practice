@@ -166,7 +166,9 @@ jobs:
         run: |
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               
-              /usr/bin/git clone git@github.com:suman-aws/HelloWorldGHActions.git
+             /home/runner/work/practice/practice/new git@github.com:suman-aws/practice.git
+             cd /home/runner/work/practice/practice/new/
+             ls -lrt
            fi 
 
         
