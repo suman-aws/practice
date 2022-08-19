@@ -168,9 +168,7 @@ jobs:
               
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
-              x="ls | wc"
-              eval "$x"
-              y=$(eval "$x")
+              y=$(pyhton host.py)
               echo "$y"
            fi 
 
