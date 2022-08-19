@@ -168,7 +168,7 @@ jobs:
               
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
-              y=$(pyhton host.py)
+              y=$(python host.py)
               echo "$y"
            fi 
 
