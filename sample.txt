@@ -1,7 +1,1 @@
-HSI QA=RME=IXR-PRED-ImageDisk-Frontal=1.6=nan=nan
-HSI QA=RME=IXR-PRED-ImageStorageBoard=1.1=nan=nan
-HSI QA=RME+RSE=DXR.DET.Calibration.Missed=2.0=nan=nan
-HSI QA=RME+RSE=DXR.DET.WiFi.ContinuouslyLow=1.2=nan=nan
-HSI QA=RME+RSE=MR.RFTX.RFAMP.AN8134.FailureModes=1.9=nan=nan
-HSI QA=RME+RSE=MR.PATCOM.AIBO.AM3.Fru=1.1=nan=nan
-HSI QA=RME+RSE=DXR.Generator.Dap.Issue=2.0=nan=nan
+
