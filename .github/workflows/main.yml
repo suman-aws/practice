@@ -168,8 +168,11 @@ jobs:
               
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
-              y=$(python host.py)
-              echo "$y"
+             result=$(ls -l 
+                      pwd
+                      
+             )
+             echo $result
            fi 
 
         
