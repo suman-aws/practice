@@ -157,7 +157,20 @@ jobs:
             touch sam
             cat sam
          fi
-                  
+      - name: test the models 
+        shell: bash
+        env:
+           envir: "${{ steps.step1.outputs.env_details }}"
+           models_id: "${{steps.step1.outputs.model_details}}"
+           envir_details: "${{ steps.step2.outputs.Environment_details }}"      
+        run: |
+           if [[ ${models_id[@]} == *"orange."* ]] ; then
+              
+              /usr/bin/git clone git@github.com:suman-aws/HelloWorldGHActions.git
+           fi 
+
+        
+        
                     
                    
 
