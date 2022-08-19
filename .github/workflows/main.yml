@@ -166,7 +166,7 @@ jobs:
         run: |
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               
-             /usr/bin/git  git@github.com:suman-aws/practice.git
+             /usr/bin/git  git clone git@github.com:suman-aws/practice.git
              cd /usr/bin/git 
              ls -lrt
            fi 
