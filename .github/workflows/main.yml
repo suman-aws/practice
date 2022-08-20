@@ -165,7 +165,8 @@ jobs:
            envir_details: "${{ steps.step2.outputs.Environment_details }}"      
         run: |
            if [[ ${models_id[@]} == *"orange."* ]] ; then
-              
+              mkdir /home/runner/work/practice/practice/orange
+              cd /home/runner/work/practice/practice/orange git clone https://github.com/wakaleo/game-of-life.git
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
              pwd 
