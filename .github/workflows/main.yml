@@ -183,6 +183,7 @@ jobs:
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
              pwd 
+             cd ..
              result=$(python host.py 
                       
              )
