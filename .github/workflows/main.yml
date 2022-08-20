@@ -167,8 +167,10 @@ jobs:
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               ls -lrt 
               mkdir /home/runner/work/practice/practice/orange
+              pwd 
               ls -lrt 
               rm -rf /home/runner/work/practice/practice/orange/*
+              pwd 
               ls -lrt
               cd /home/runner/work/practice/practice/orange && git clone https://github.com/wakaleo/game-of-life.git
              #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
