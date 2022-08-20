@@ -169,7 +169,7 @@ jobs:
               mkdir /home/runner/work/practice/practice/orange
               pwd 
               ls -lrt 
-              cd /home/runner/work/practice/practice/orange/*
+              cd /home/runner/work/practice/practice/orange/
               
               rm -rf /home/runner/work/practice/practice/orange/*
               pwd 
