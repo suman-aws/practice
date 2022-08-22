@@ -185,7 +185,7 @@ jobs:
              pwd 
              cd ..
              result=$(python host.py 
-                      
+             pwd     
              )
              echo $result
              echo "::set-output name=uid_details::$result"
