@@ -195,7 +195,8 @@ jobs:
             sample() {
             python host.py
             }
-            ARRAY+=sample
+            $new=(sample)
+            ARRAY+=$new
             #echo "${{ env.sample }}" 
             echo $ARRAY
             echo "${ARRAY[@]}"
