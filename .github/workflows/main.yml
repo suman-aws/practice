@@ -189,9 +189,12 @@ jobs:
              pwd     
              )
              ARRAY+=$result
-             echo $result
-             echo $ARRAY
-             echo "::set-output name=uid_details::$ARRAY"
+             #echo $result
+             #echo $ARRAY
+             New="${ARRAY[@]}"
+             echo $New
+             echo "::set-output name=uid_details::$New"
+
            fi 
            #ARRAY=()
            #sample() { python host.py
