@@ -157,7 +157,8 @@ jobs:
             touch sam
             cat sam
          fi
-      - name: test the models 
+      - name: check the models 
+        id: step3
         shell: bash
         env:
            envir: "${{ steps.step1.outputs.env_details }}"
@@ -187,12 +188,17 @@ jobs:
                       
              )
              echo $result
+             echo "::set-output name=uid_details::$result"
            fi 
-            sample() {
-            python host.py
-            }
-            sample >> $GITHUB_ENV
-            echo "${{ env.sample }}"       
+           # sample() {
+            #python host.py
+            #}
+            #sample >> $GITHUB_ENV
+            #echo "${{ env.sample }}" 
+      - name: Print Model_details
+        run: |
+             echo "${{ steps.step3.outputs.uid_details }}"
+
         
                     
                    
