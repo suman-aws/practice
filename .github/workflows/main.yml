@@ -195,7 +195,7 @@ jobs:
             sample() {
             python host.py
             }
-            $new=(sample)
+            $new=$(sample)
             ARRAY+=$new
             #echo "${{ env.sample }}" 
             echo $ARRAY
