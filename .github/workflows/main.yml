@@ -191,8 +191,8 @@ jobs:
             sample() {
             python host.py
             }
-            sample
-        
+            sample >> $GITHUB_ENV
+            echo "${{ env.sample }}"       
         
                     
                    
