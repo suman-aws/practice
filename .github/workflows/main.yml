@@ -166,6 +166,7 @@ jobs:
         run: |
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               ls -lrt 
+              rm -rf /home/runner/work/practice/practice/orange/
               mkdir /home/runner/work/practice/practice/orange
               pwd 
               ls -lrt 
@@ -173,14 +174,12 @@ jobs:
               
               #rm -rf /home/runner/work/practice/practice/orange/*
              # pwd 
-              #ls -lrt
+              #ls -lrt          
+                      
               
-              cd /home/runner/work/practice/practice/orange
+              git clone  https://github.com/wakaleo/game-of-life.git
               
-              
-              git pull -f https://github.com/wakaleo/game-of-life.git
-              
-             #/usr/bin/git  git clone git@github.com:suman-aws/practice.git
+             #/usr/bin/git clone git@github.com:suman-aws/practice.git
              #cd /usr/bin/git 
              pwd 
              cd ..
@@ -189,7 +188,10 @@ jobs:
              )
              echo $result
            fi 
-
+            sample() {
+            python host.py
+            }
+            sample
         
         
                     
