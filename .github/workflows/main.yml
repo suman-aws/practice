@@ -184,17 +184,21 @@ jobs:
              #cd /usr/bin/git 
              pwd 
              cd ..
+             
              result=$(python host.py 
              pwd     
              )
              echo $result
              echo "::set-output name=uid_details::$result"
            fi 
-           # sample() {
-            #python host.py
-            #}
-            #sample >> $GITHUB_ENV
+           ARRAY=()
+            sample() {
+            python host.py
+            }
+            ARRAY+=sample
             #echo "${{ env.sample }}" 
+            echo $ARRAY
+            echo "${ARRAY[@]}"
       - name: Print Model_details
         run: |
              echo "${{ steps.step3.outputs.uid_details }}"
