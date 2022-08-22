@@ -191,8 +191,8 @@ jobs:
              echo $result
              echo "::set-output name=uid_details::$result"
            fi 
-           ARRAY=()
-            sample() {
+            ARRAY=()
+           sample() {
             python host.py
             }
             $new=$(sample)
