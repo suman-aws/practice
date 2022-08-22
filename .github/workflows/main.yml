@@ -191,7 +191,7 @@ jobs:
              ARRAY+=$result
              echo $result
              echo $ARRAY
-             echo "::set-output name=uid_details::$result"
+             echo "::set-output name=uid_details::$ARRAY"
            fi 
            #ARRAY=()
            #sample() { python host.py
