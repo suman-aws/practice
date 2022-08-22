@@ -191,15 +191,14 @@ jobs:
              echo $result
              echo "::set-output name=uid_details::$result"
            fi 
-            ARRAY=()
-           sample() {
-            python host.py
+           ARRAY=()
+           sample() { python host.py
             }
-            $new=$(sample)
-            ARRAY+=$new
-            #echo "${{ env.sample }}" 
-            echo $ARRAY
-            echo "${ARRAY[@]}"
+           $new=$(sample)
+           ARRAY+=$new
+           #echo "${{ env.sample }}" 
+           echo $ARRAY
+           echo "${ARRAY[@]}"
       - name: Print Model_details
         run: |
              echo "${{ steps.step3.outputs.uid_details }}"
