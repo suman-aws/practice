@@ -165,6 +165,7 @@ jobs:
            models_id: "${{steps.step1.outputs.model_details}}"
            envir_details: "${{ steps.step2.outputs.Environment_details }}"      
         run: |
+          ARRAY=()
            if [[ ${models_id[@]} == *"orange."* ]] ; then
               ls -lrt 
               rm -rf /home/runner/work/practice/practice/orange/
@@ -184,9 +185,9 @@ jobs:
              #cd /usr/bin/git 
              pwd 
              cd ..
-             ARRAY=()
+            #ARRAY=()
              result=$(python host.py 
-             pwd     
+             #pwd     
              )
              ARRAY+=$result
              #echo $result
@@ -194,7 +195,7 @@ jobs:
              New="${ARRAY[@]}"
              echo $New
              echo "::set-output name=uid_details::$New"
-
+             
            fi 
            #ARRAY=()
            #sample() { python host.py
@@ -204,9 +205,20 @@ jobs:
            #echo "${{ env.sample }}" 
            #echo $ARRAY
            #echo "${ARRAY[@]}"
+          if [[ ${models_id[@]} == *"apple."* ]] ; then
+            result=$(#python host.py 
+             pwd     
+             )
+             ARRAY+=$result
+             #echo $result
+             #echo $ARRAY
+             New="${ARRAY[@]}"
+             echo $New
+          fi
       - name: Print Model_details
         run: |
              echo "${{ steps.step3.outputs.uid_details }}"
+           
 
         
                     
