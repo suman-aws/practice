@@ -38,16 +38,3 @@ print(version)
 print(tableName)
 print(envi)
 
-# model_details.append(model)
-# model_details.append(envir)
-# model_details.append(version)
-# model_details.append(tableName)
-# print(model_details)
-
-# print("model details:",model)
-# # print("environment:",envir)
-# print("version details:",version)
-
-# for i in range(len(model)):
-#     # print(str(model[i])+'='+str(version[i])+'='+str(hsiuid[i]))
-#     print(envi[i]+'='+(model[i]) +'='+str(version[i]))ion)
