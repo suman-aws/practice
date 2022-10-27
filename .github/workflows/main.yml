@@ -56,7 +56,7 @@ jobs:
           table="${Models[3]}"
           envirmode="${Models[4]}"
           #echo "Table_details:$table"
-          echo "::set-output name=model_details::$model"
+          echo "model_details=$model" >> $GITHUB_OUTPUT
           echo "::set-output name=env_details::$envir"
           echo "::set-output name=table_details::$table"
           echo "::set-output name=enviro_details::$envirmode"
