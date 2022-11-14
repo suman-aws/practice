@@ -95,6 +95,7 @@ jobs:
            envir: "${{ steps.step1.outputs.env_details }}"
            models_id: "${{steps.step1.outputs.model_details}}"
         run: |
+          python host.py
           echo "$models_id"
           if [[ ${models_id[@]} == *"Apple"* ]] ; then
            echo "models present in  qa"
