@@ -60,7 +60,10 @@ jobs:
           echo "env_details=$envir" >> $GITHUB_OUTPUT
           echo "table_details=$table" >> $GITHUB_OUTPUT
           echo "enviro_details=$envirmode" >> $GITHUB_OUTPUT
-
+          ulist=()
+          
+          list=$(python new.py)
+          ulist+=(list)
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
@@ -114,7 +117,7 @@ jobs:
         id: step2
         shell: bash
         run: |
-          list = []
+          list=[]
           output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
