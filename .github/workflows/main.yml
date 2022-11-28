@@ -64,6 +64,7 @@ jobs:
           
           list=$(python new.py)
           ulist+=(list)
+          echo"${ulist[@]}"
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
