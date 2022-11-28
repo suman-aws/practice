@@ -114,6 +114,7 @@ jobs:
         id: step2
         shell: bash
         run: |
+          list = []
           output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
@@ -123,6 +124,8 @@ jobs:
           #sh ./host.sh "${envir[@]}"
           #hostd=$(sh ./host.sh )
           #echo "${host}"
+          list=$(python host.py)
+          print(list)
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
