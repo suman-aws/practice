@@ -64,7 +64,7 @@ jobs:
           
           list=$(python new.py)
           ulist+=(list)
-          echo"${ulist[@]}"
+          echo "${ulist[@]}"
       - name: Print model_details
         run: |
           echo "${{ steps.step1.outputs.model_details }}"
@@ -118,7 +118,7 @@ jobs:
         id: step2
         shell: bash
         run: |
-          list=[]
+          list1=[]
           output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
@@ -129,7 +129,7 @@ jobs:
           #hostd=$(sh ./host.sh )
           #echo "${host}"
           list=$(python host.py)
-          print(list)
+          echo $list
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
