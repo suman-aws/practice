@@ -129,7 +129,7 @@ jobs:
           #echo "${host}"
           list=$(python host.py)
           echo "model details:$list"
-          Models+=list
+          Models+=$list
           echo "::set-output name=Models_details::$Models"
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
