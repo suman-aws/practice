@@ -229,6 +229,7 @@ jobs:
         run: |
              echo "${{ steps.step3.outputs.uid_details }}"
       - name: execute python commands 
+        shell: python
         run : |
           list = []
           list.append(new1)
