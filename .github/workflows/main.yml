@@ -47,7 +47,7 @@ jobs:
         id: step1
         run: |
           output=$(python new.py)
-          OUTPUT="${output[@]}"
+          OUTPUT="${output[@]}" 
           readarray -t Models < <(echo "$OUTPUT")
           #echo "${Models}"
           model="${Models[0]}"
@@ -118,8 +118,6 @@ jobs:
         id: step2
         shell: bash
         run: |
-          list1=[]
-          modeld=()
           output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
@@ -131,16 +129,15 @@ jobs:
           #echo "${host}"
           list=$(python host.py)
           echo "model details:$list"
-          list1.append(list)
-          echo "list1 details:$list1"
-          modeld+=list
-          echo "modeld details:$modeld[@]"
+          Models+=list
+          echo "::set-output name=Models_details::$Models"
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
         run: |
           echo "${{ steps.step2.outputs.Host_details }}"
           echo "${{ steps.step2.outputs.Environment_details }}"
+          echo "${{ steps.step2.outputs.Models_details }}"
 
       - name: test the models 
         shell: bash
