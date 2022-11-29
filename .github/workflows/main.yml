@@ -131,10 +131,10 @@ jobs:
           #echo "${host}"
           list=$(python host.py)
           echo "model details:$list"
-          modeld+=list
           list1.append(list)
           echo "list1 details:$list1"
-          echo "modeld details:$modeld"
+          modeld+=list
+          echo "modeld details:$modeld[@]"
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
