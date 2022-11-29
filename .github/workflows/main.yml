@@ -228,6 +228,12 @@ jobs:
       - name: Print Model_details
         run: |
              echo "${{ steps.step3.outputs.uid_details }}"
+      - name: execute python commands 
+        run : |
+          list = []
+          list.append(new1)
+          list.append(new2)
+          print(list)
            
 
         
