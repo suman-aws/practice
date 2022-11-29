@@ -119,6 +119,7 @@ jobs:
         shell: bash
         run: |
           list1=[]
+          modeld=()
           output=$(python host.py)
           OUTPUT="${output[@]}"
           readarray -t Models < <(echo "$OUTPUT")
@@ -130,6 +131,7 @@ jobs:
           #echo "${host}"
           list=$(python host.py)
           echo "model details:$list"
+          modeld+=list
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
