@@ -129,7 +129,7 @@ jobs:
           #hostd=$(sh ./host.sh )
           #echo "${host}"
           list=$(python host.py)
-          echo $list
+          echo "model details:$list"
           echo "::set-output name=Host_details::$host"
           echo "::set-output name=Environment_details::$Env_details"
       - name: Print Host_details
