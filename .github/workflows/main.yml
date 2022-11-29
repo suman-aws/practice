@@ -71,7 +71,9 @@ jobs:
           echo "${{ steps.step1.outputs.env_details }}"
           echo "${{ steps.step1.outputs.table_details }}"
           echo "${{ steps.step1.outputs.enviro_details }}"
-
+      - name: execute python commands 
+        uses: ./.github/workflows/sub.yml
+        
       - name: Performing  authentication
         shell: bash
         env :
