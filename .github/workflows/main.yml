@@ -1,30 +1,17 @@
-
 # This is a basic workflow to help you get started with Actions
 
-name: models to deploy
+name: CI
 
 # Controls when the workflow will run
 on:
-
-
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ zap ]
+    branches: [ "zap-poc" ]
   pull_request:
-    branches: [ zap ]
+    branches: [ "zap-poc" ]
 
   # Allows you to run this workflow manually from the Actions tab
-#   workflow_dispatch:
-#     inputs:
-#       environ:
-#         description: "Env of the deployment(Int,qa or prod) as suffix" 
-#         type: choice
-#         required: true
-#         options:
-#           - INT
-#           - QA
-#           - PROD
- 
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,24 +20,16 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-#     # Steps represent a sequence of tasks that will be executed as part of the job
-#     steps:
-#      - name: ZAP Scan
-#        uses:  zaproxy/action-baseline@v0.7.0
-#        with:
-#          target: 'https://www.zaproxy.org/'
-
- 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: zap
-      - name: ZAP Scan
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: OWASP ZAP Baseline Scan
+        # You may pin to the exact commit or the version.
+        # uses: zaproxy/action-baseline@7cea08522cd386f6c675776d5e4296aecf61f33b
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          docker_name: 'owasp/zap2docker-stable'
-          target: 'https://www.zaproxy.org/'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'        
+          # Target URL
+          target: "https://dotnetthoughts.net"
+          rules_file_name: ".zap/rules.tsv"
