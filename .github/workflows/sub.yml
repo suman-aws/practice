@@ -12,27 +12,26 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      
     - name: Run Python script and store output
       run: |
-        python new.py > output.txt
+        python my_script.py > output.txt
         output=$(cat output.txt)
-        IFS=',' read var1 var2 var3 <<< "$output"
-      
-    - name: Set environment variables
-      run: |
-        echo "VAR1=$var1" >> $GITHUB_ENV
-        echo "VAR2=$var2" >> $GITHUB_ENV
-        echo "VAR3=$var3" >> $GITHUB_ENV
+        IFS=$'\n' readarray -t lines <<< "$output"
+        IFS=',' read MODES <<< "${lines[0]}"
+        IFS=',' read VERSIONS <<< "${lines[1]}"
+        IFS=',' read ENVIRS <<< "${lines[2]}"
+        echo "MODES=$MODES" >> $GITHUB_ENV
+        echo "VERSIONS=$VERSIONS" >> $GITHUB_ENV
+        echo "ENVIRS=$ENVIRS" >> $GITHUB_ENV
       
     - name: Use environment variables
       run: |
-        echo "VAR1=$VAR1"
-        echo "VAR2=$VAR2"
-        echo "VAR3=$VAR3"
+        echo "MODES=$MODES"
+        echo "VERSIONS=$VERSIONS"
+        echo "ENVIRS=$ENVIRS"
     - name: SI authentication
       run: |
-        if [[ "$VAR2" == *"abc QA"* ]]; then
+        if [[ "$ENVIRS" == *"abc QA"* ]]; then
            echo "QA models present; hence not authenticating for SI 7"
         else
            echo "No QA models present; hence not authenticating for SI 7"
