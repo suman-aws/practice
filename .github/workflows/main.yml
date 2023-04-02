@@ -46,10 +46,10 @@ jobs:
       - name: Run a one-line script
         run: |
           python3 new.py
-          env=$(python3 prepare_new_deployment.py | cut -d= -f1)
-          context=$(python3 prepare_new_deployment.py | cut -d= -f2)
-          model=$(python3 prepare_new_deployment.py | cut -d= -f3)
-          version=$(python3 prepare_new_deployment.py | cut -d= -f4
+          env=$(python3 new.py | cut -d= -f1)
+          context=$(python3 new.py| cut -d= -f2)
+          model=$(python3 new.py| cut -d= -f3)
+          version=$(python3 new.py | cut -d= -f4
           echo "Env: $env"
           echo "Deployment Context: $context"
           echo "Model Names: $model"
