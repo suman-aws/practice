@@ -17,20 +17,16 @@ jobs:
       run: |
         python my_script.py > output.txt
         output=$(cat output.txt)
-        IFS=',' read var1 var2 var3 var4 var5 <<< "$output"
+        IFS=',' read var1 var2 var3 <<< "$output"
       
     - name: Set environment variables
       run: |
         echo "VAR1=$var1" >> $GITHUB_ENV
         echo "VAR2=$var2" >> $GITHUB_ENV
         echo "VAR3=$var3" >> $GITHUB_ENV
-	echo "VAR4=$var4" >> $GITHUB_ENV 
-
-	
+      
     - name: Use environment variables
       run: |
         echo "VAR1=$VAR1"
         echo "VAR2=$VAR2"
         echo "VAR3=$VAR3"
-        echo "VAR4=$VAR4"
-        
