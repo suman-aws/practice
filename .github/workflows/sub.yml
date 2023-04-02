@@ -31,7 +31,7 @@ jobs:
         echo "ENVIRS=$ENVIRS"
     - name: SI authentication
       run: |
-        if [[ "$ENVIRS" == *"abc QA"* ]]; then
+        if [[ "$ENVIRS" == *"abc qa"* ]]; then
            echo "QA models present; hence not authenticating for SI 7"
         else
            echo "No QA models present; hence not authenticating for SI 7"
