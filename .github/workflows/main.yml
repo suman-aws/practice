@@ -47,7 +47,7 @@ jobs:
 #       # Runs a set of commands using the runners shell
       - name: Prepare new deployment
         run: |
-          python3 prepare_new_deployment.py > output.txt
+          python3 new.py > output.txt
 
       - name: Read and parse output
         id: parse_output
@@ -56,31 +56,27 @@ jobs:
           contexts=()
           models=()
           versions=()
-          sysuids=()
-          testing_times=()
+
 
           while read line; do
             env=$(echo $line | cut -d "=" -f 1)
             context=$(echo $line | cut -d "=" -f 2)
             model=$(echo $line | cut -d "=" -f 3)
             version=$(echo $line | cut -d "=" -f 4)
-            sysuid=$(echo $line | cut -d "=" -f 5)
-            testing_time=$(echo $line | cut -d "=" -f 6)
+
 
             envs+=("$env")
             contexts+=("$context")
             models+=("$model")
             versions+=("$version")
-            sysuids+=("$sysuid")
-            testing_times+=("$testing_time")
+
           done < output.txt
 
           echo "::set-output name=envs::${envs[@]}"
           echo "::set-output name=contexts::${contexts[@]}"
           echo "::set-output name=models::${models[@]}"
           echo "::set-output name=versions::${versions[@]}"
-          echo "::set-output name=sysuids::${sysuids[@]}"
-          echo "::set-output name=testing_times::${testing_times[@]}"
+
 
       - name: Show parsed output
         run: |
@@ -88,8 +84,7 @@ jobs:
           echo "Deployment Context: ${{ steps.parse_output.outputs.contexts }}"
           echo "Model Names: ${{ steps.parse_output.outputs.models }}"
           echo "Model Versions: ${{ steps.parse_output.outputs.versions }}"
-          echo "SystemUIDs: ${{ steps.parse_output.outputs.sysuids }}"
-          echo "Testing Time: ${{ steps.parse_output.outputs.testing_times }}"
+
 
           
       #     list=$(python new.py)
