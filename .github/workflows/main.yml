@@ -47,31 +47,36 @@ jobs:
 #       # Runs a set of commands using the runners shell
       - name: Prepare new deployment
         run: |
-          output=$(python new.py)
-          OUTPUT="${output[@]}" 
-          readarray -t Models < <(echo "$OUTPUT")
-          #echo "${Models}"
-          model="${Models[0]}"
-          envir="${Models[1]}"
-          version="${Models[2]}"
-          table="${Models[3]}"
-          envirmode="${Models[4]}"
-          #echo "Table_details:$table"
-          echo "model_details=$model" >> $GITHUB_OUTPUT
-          echo "env_details=$envir" >> $GITHUB_OUTPUT
-          echo "table_details=$table" >> $GITHUB_OUTPUT
-          echo "enviro_details=$envirmode" >> $GITHUB_OUTPUT
-          ulist=()
-          
-          list=$(python new.py)
-          ulist+=(list)
-          echo "${ulist[@]}"
-      - name: Print model_details
-        run: |
-          echo "${{ steps.step1.outputs.model_details }}"
-          echo "${{ steps.step1.outputs.env_details }}"
-          echo "${{ steps.step1.outputs.table_details }}"
-          echo "${{ steps.step1.outputs.enviro_details }}"
+         Text=$(python3 new.py)
+          IFS=$'\n'
+          for line in $Text; do
+            parts=(${line//=/ })
+            case ${parts[0]} in
+              "ENV")
+                echo "Setting environment variable ENV=${parts[1]}"
+                echo "ENV=${parts[1]}" >> $GITHUB_ENV
+                ;;
+              "CONTEXT")
+                echo "Setting environment variable DEPLOYMENT_CONTEXT=${parts[1]}"
+                echo "DEPLOYMENT_CONTEXT=${parts[1]}" >> $GITHUB_ENV
+                ;;
+              "MODEL")
+                echo "Setting environment variable MODEL_NAME=${parts[1]}"
+                echo "MODEL_NAME=${parts[1]}" >> $GITHUB_ENV
+                ;;
+              "VERSION")
+                echo "Setting environment variable MODEL_VERSION=${parts[1]}"
+                echo "MODEL_VERSION=${parts[1]}" >> $GITHUB_ENV
+                ;;
+              "SYSUID")
+                echo "Setting environment variable SYSTEM_UID=${parts[1]}"
+                echo "SYSTEM_UID=${parts[1]}" >> $GITHUB_ENV
+                ;;
+              *)
+                echo "Ignoring unknown line: $line"
+                ;;
+            esac
+          done
 
       - name: SI authentication
         run: |
