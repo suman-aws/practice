@@ -50,12 +50,19 @@ jobs:
         run: |
       - name: Prepare Deployment
         run: |
-          sh "python3 new.py"
-          env=$(python3 new.py)
-          echo "::set-env name=ENV::$(echo $env | awk '{print $1}')"
-          echo "::set-env name=CONTEXT::$(echo $env | awk '{print $2}')"
-          echo "::set-env name=MODEL::$(echo $env | awk '{print $3}')"
-          echo "::set-env name=VERSION::$(echo $env | awk '{print $4}')"
+          output=$(python3 new.py)
+          env=$(echo "$output" | grep "ENV=" | cut -d= -f2)
+          context=$(echo "$output" | grep "DEPLOYMENT_CONTEXT=" | cut -d= -f2)
+          model=$(echo "$output" | grep "MODEL_NAME=" | cut -d= -f2)
+          version=$(echo "$output" | grep "MODEL_VERSION=" | cut -d= -f2)
+          sysuid=$(echo "$output" | grep "SYSTEM_UID=" | cut -d= -f2)
+          testingtime=$(echo "$output" | grep "TESTING_TIME=" | cut -d= -f2)
+          echo "ENV=${env}" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=${context}" >> $GITHUB_ENV
+          echo "MODEL_NAME=${model}" >> $GITHUB_ENV
+          echo "MODEL_VERSION=${version}" >> $GITHUB_ENV
+          echo "SYSTEM_UID=${sysuid}" >> $GITHUB_ENV
+          echo "TESTING_TIME=${testingtime}" >> $GITHUB_ENV
 
 
           
