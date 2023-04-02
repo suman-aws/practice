@@ -48,33 +48,15 @@ jobs:
       - name: get
         id: step1
         run: |
-          python3 new.py
-          Text=$(python3 new.py)
-          for (( i=0; i<${#Text[@]}; i++ )); do
-            parts=(${Text[$i]//=/ })
-            case ${parts[0]} in
-              "env")
-                env+=(${parts[1]})
-                ;;
-              "context")
-                context+=(${parts[1]})
-                ;;
-              "model")
-                model+=(${parts[1]})
-                ;;
-              "version")
-                version+=(${parts[1]})
-                ;;
-              esac
-          done
-
-      - name: Print variables
+      - name: Prepare Deployment
         run: |
-          echo "Env: $env"
-          echo "Deployment Context: $context"
-          echo "Model Names: $model"
-          echo "Model Versions: $version"
-          echo "SystemUIDs: $sysuid"
+          sh "python3 new.py"
+          env=$(python3 newt.py)
+          echo "::set-env name=ENV::$(echo $env | awk '{print $1}')"
+          echo "::set-env name=CONTEXT::$(echo $env | awk '{print $2}')"
+          echo "::set-env name=MODEL::$(echo $env | awk '{print $3}')"
+          echo "::set-env name=VERSION::$(echo $env | awk '{print $4}')"
+
 
           
       #     list=$(python new.py)
