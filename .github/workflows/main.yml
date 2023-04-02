@@ -50,19 +50,40 @@ jobs:
         run: |
       - name: Prepare Deployment
         run: |
-          output=$(python3 new.py)
-          env=$(echo "$output" | grep "ENV=" | cut -d= -f2)
-          context=$(echo "$output" | grep "DEPLOYMENT_CONTEXT=" | cut -d= -f2)
-          model=$(echo "$output" | grep "MODEL_NAME=" | cut -d= -f2)
-          version=$(echo "$output" | grep "MODEL_VERSION=" | cut -d= -f2)
-          sysuid=$(echo "$output" | grep "SYSTEM_UID=" | cut -d= -f2)
-          testingtime=$(echo "$output" | grep "TESTING_TIME=" | cut -d= -f2)
-          echo "ENV=${env}" >> $GITHUB_ENV
-          echo "DEPLOYMENT_CONTEXT=${context}" >> $GITHUB_ENV
-          echo "MODEL_NAME=${model}" >> $GITHUB_ENV
-          echo "MODEL_VERSION=${version}" >> $GITHUB_ENV
-          echo "SYSTEM_UID=${sysuid}" >> $GITHUB_ENV
-          echo "TESTING_TIME=${testingtime}" >> $GITHUB_ENV
+          sh "python3 new.py"
+          def Text = sh returnStdout:true, script: new.py"
+          for(int i = 0; i < Text.readLines().size(); i++) {
+              String[] parts = Text.readLines().get(i).split("=")
+              for(j = 0; j < parts.size(); j++){
+                  switch(j) {            
+                      case 0: 
+                          envs.add(parts[j])
+                          break;
+                      case 1: 
+                          context.add(parts[j])
+                          break;
+                      case 2: 
+                          model.add(parts[j])  
+                          break;
+                      case 3:
+                          version.add(parts[j])
+                          break;
+
+                  }
+              }
+          }
+
+          // store each value in GitHub environment variables
+          def env = [:]
+          env['ENVS'] = envs.join(',')
+          env['CONTEXT'] = context.join(',')
+          env['MODEL'] = model.join(',')
+          env['VERSION'] = version.join(',')
+          env.forEach { name, value ->
+              env."${name}" = value
+              // store environment variable in GitHub
+              sh "echo '${value}' >> $GITHUB_ENV"
+          }
 
 
           
