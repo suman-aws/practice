@@ -51,7 +51,7 @@ jobs:
       - name: Prepare Deployment
         run: |
           sh "python3 new.py"
-          env=$(python3 newt.py)
+          env=$(python3 new.py)
           echo "::set-env name=ENV::$(echo $env | awk '{print $1}')"
           echo "::set-env name=CONTEXT::$(echo $env | awk '{print $2}')"
           echo "::set-env name=MODEL::$(echo $env | awk '{print $3}')"
