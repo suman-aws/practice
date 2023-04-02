@@ -80,12 +80,18 @@ jobs:
 
       - name: Show parsed output
         run: |
-          echo "Env: ${{ steps.parse_output.outputs.envs }}"
+          echo "Envs: ${{ steps.parse_output.outputs.envs }}"
           echo "Deployment Context: ${{ steps.parse_output.outputs.contexts }}"
           echo "Model Names: ${{ steps.parse_output.outputs.models }}"
           echo "Model Versions: ${{ steps.parse_output.outputs.versions }}"
 
-
+      - name: SI authentication
+        run: |
+          if [[ "$envs" == *"abc INT"* ]]; then
+            echo "INT models present; hence not authenticating for SI 7"
+          else
+            echo "No INT models present; hence not authenticating for SI 7"
+          fi
           
       #     list=$(python new.py)
       #     ulist+=(list)
