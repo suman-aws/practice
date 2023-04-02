@@ -29,6 +29,7 @@ jobs:
         echo "MODES=$MODES"
         echo "VERSIONS=$VERSIONS"
         echo "ENVIRS=$ENVIRS"
+        echo ${{ env.ENVIRS }}
     - name: SI authentication
       run: |
         if [[ "$ENVIRS" == *"abc qa"* ]]; then
