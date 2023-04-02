@@ -32,8 +32,8 @@ jobs:
         echo "VAR3=$VAR3"
     - name: SI authentication
       run: |
-        if [[ "$envir" == *"abc INT"* ]]; then
-           echo "INT models present; hence not authenticating for SI 7"
+        if [[ "$VAR2" == *"abc QA"* ]]; then
+           echo "QA models present; hence not authenticating for SI 7"
         else
-           echo "No INT models present; hence not authenticating for SI 7"
+           echo "No QA models present; hence not authenticating for SI 7"
         fi
