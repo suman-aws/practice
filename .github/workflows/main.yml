@@ -43,36 +43,34 @@ jobs:
             fetch-depth: 0
             ref: ${{ env.tag }}
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          python3 new.py
-          env=$(python3 new.py | cut -d= -f1)
-          context=$(python3 new.py| cut -d= -f2)
-          model=$(python3 new.py| cut -d= -f3)
-          version=$(python3 new.py | cut -d= -f4
-          echo "Env: $env"
-          echo "Deployment Context: $context"
-          echo "Model Names: $model"
-          echo "Model Versions: $version"
+
 #       # Runs a set of commands using the runners shell
-      # - name: get
-      #   id: step1
-      #   run: |
-      #     output=$(python new.py)
-      #     OUTPUT="${output[@]}" 
-      #     readarray -t Models < <(echo "$OUTPUT")
-      #     #echo "${Models}"
-      #     model="${Models[0]}"
-      #     envir="${Models[1]}"
-      #     version="${Models[2]}"
-      #     table="${Models[3]}"
-      #     envirmode="${Models[4]}"
-      #     #echo "Table_details:$table"
-      #     echo "model_details=$model" >> $GITHUB_OUTPUT
-      #     echo "env_details=$envir" >> $GITHUB_OUTPUT
-      #     echo "table_details=$table" >> $GITHUB_OUTPUT
-      #     echo "enviro_details=$envirmode" >> $GITHUB_OUTPUT
-      #     ulist=()
+      - name: get
+        id: step1
+        run: |
+          envs=()
+          context=()
+          model=()
+          version=()
+          sysuid=()
+          testingtime=()
+          failedmodels=()
+          re_deploy=""
+          updateDB=""
+          echo "====================================================================================================================================================="
+          python3 new.py > temp.txt
+          while IFS= read -r line; do
+            envs+=($(echo $line | cut -d'=' -f1))
+            context+=($(echo $line | cut -d'=' -f2))
+            model+=($(echo $line | cut -d'=' -f3))
+            version+=($(echo $line | cut -d'=' -f4))
+
+          done < temp.txt
+          echo "Env:" "${envs[@]}"
+          echo "Deployment Context:" "${context[@]}"
+          echo "Model Names:" "${model[@]}"
+          echo "Model Versions:" "${version[@]}"
+
           
       #     list=$(python new.py)
       #     ulist+=(list)
