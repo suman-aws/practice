@@ -1,41 +1,35 @@
-# This is a basic workflow to help you get started with Actions
+name: My Workflow
 
-name: models to deploy
-
-# Controls when the workflow will run
 on:
-
-
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-#   workflow_dispatch:
-#     inputs:
-#       environ:
-#         description: "Env of the deployment(Int,qa or prod) as suffix" 
-#         type: choice
-#         required: true
-#         options:
-#           - INT
-#           - QA
-#           - PROD
- 
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  my_job:
     runs-on: ubuntu-latest
-        # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Run Python script and store output
+      run: |
+        python my_script.py > output.txt
+        output=$(cat output.txt)
+        IFS=',' read var1 var2 var3 var4 var5 <<< "$output"
+      
+    - name: Set environment variables
+      run: |
+        echo "VAR1=$var1" >> $GITHUB_ENV
+        echo "VAR2=$var2" >> $GITHUB_ENV
+        echo "VAR3=$var3" >> $GITHUB_ENV
+	  echo "VAR4=$var4" >> $GITHUB_ENV
+        echo "VAR5=$var5" >> $GITHUB_ENV
+    - name: Use environment variables
+      run: |
+        echo "VAR1=$VAR1"
+        echo "VAR2=$VAR2"
+        echo "VAR3=$VAR3"
+        echo "VAR4=$VAR4"
+        echo "VAR5=$VAR5"
