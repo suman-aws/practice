@@ -47,47 +47,35 @@ jobs:
 #       # Runs a set of commands using the runners shell
       - name: Prepare new deployment
         run: |
-          python3 new.py > output.txt
-
-      - name: Read and parse output
-        id: parse_output
+          output=$(python new.py)
+          OUTPUT="${output[@]}" 
+          readarray -t Models < <(echo "$OUTPUT")
+          #echo "${Models}"
+          model="${Models[0]}"
+          envir="${Models[1]}"
+          version="${Models[2]}"
+          table="${Models[3]}"
+          envirmode="${Models[4]}"
+          #echo "Table_details:$table"
+          echo "model_details=$model" >> $GITHUB_OUTPUT
+          echo "env_details=$envir" >> $GITHUB_OUTPUT
+          echo "table_details=$table" >> $GITHUB_OUTPUT
+          echo "enviro_details=$envirmode" >> $GITHUB_OUTPUT
+          ulist=()
+          
+          list=$(python new.py)
+          ulist+=(list)
+          echo "${ulist[@]}"
+      - name: Print model_details
         run: |
-          envs=()
-          contexts=()
-          models=()
-          versions=()
-
-
-          while read line; do
-            env=$(echo $line | cut -d "=" -f 1)
-            context=$(echo $line | cut -d "=" -f 2)
-            model=$(echo $line | cut -d "=" -f 3)
-            version=$(echo $line | cut -d "=" -f 4)
-
-
-            envs+=("$env")
-            contexts+=("$context")
-            models+=("$model")
-            versions+=("$version")
-
-          done < output.txt
-
-          echo "::set-output name=envs::${envs[@]}"
-          echo "::set-output name=contexts::${contexts[@]}"
-          echo "::set-output name=models::${models[@]}"
-          echo "::set-output name=versions::${versions[@]}"
-
-
-      - name: Show parsed output
-        run: |
-          echo "Envs: ${{ steps.parse_output.outputs.envs }}"
-          echo "Deployment Context: ${{ steps.parse_output.outputs.contexts }}"
-          echo "Model Names: ${{ steps.parse_output.outputs.models }}"
-          echo "Model Versions: ${{ steps.parse_output.outputs.versions }}"
+          echo "${{ steps.step1.outputs.model_details }}"
+          echo "${{ steps.step1.outputs.env_details }}"
+          echo "${{ steps.step1.outputs.table_details }}"
+          echo "${{ steps.step1.outputs.enviro_details }}"
 
       - name: SI authentication
         run: |
-          if [[ "$envs" == *"abc INT"* ]]; then
+          if [[ "$envir" == *"abc INT"* ]]; then
             echo "INT models present; hence not authenticating for SI 7"
           else
             echo "No INT models present; hence not authenticating for SI 7"
