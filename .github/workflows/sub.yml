@@ -15,7 +15,7 @@ jobs:
       
     - name: Run Python script and store output
       run: |
-        python my_script.py > output.txt
+        python new.py > output.txt
         output=$(cat output.txt)
         IFS=',' read var1 var2 var3 <<< "$output"
       
