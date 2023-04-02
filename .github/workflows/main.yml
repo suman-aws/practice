@@ -48,28 +48,33 @@ jobs:
       - name: get
         id: step1
         run: |
-          envs=()
-          context=()
-          model=()
-          version=()
-          sysuid=()
-          testingtime=()
-          failedmodels=()
-          re_deploy=""
-          updateDB=""
-          echo "====================================================================================================================================================="
-          python3 new.py > temp.txt
-          while IFS= read -r line; do
-            envs+=($(echo $line | cut -d'=' -f1))
-            context+=($(echo $line | cut -d'=' -f2))
-            model+=($(echo $line | cut -d'=' -f3))
-            version+=($(echo $line | cut -d'=' -f4))
+          python3 new.py
+          Text=$(python3 new.py)
+          for (( i=0; i<${#Text[@]}; i++ )); do
+            parts=(${Text[$i]//=/ })
+            case ${parts[0]} in
+              "env")
+                env+=(${parts[1]})
+                ;;
+              "context")
+                context+=(${parts[1]})
+                ;;
+              "model")
+                model+=(${parts[1]})
+                ;;
+              "version")
+                version+=(${parts[1]})
+                ;;
+              esac
+          done
 
-          done < temp.txt
-          echo "Env:" "${envs[@]}"
-          echo "Deployment Context:" "${context[@]}"
-          echo "Model Names:" "${model[@]}"
-          echo "Model Versions:" "${version[@]}"
+      - name: Print variables
+        run: |
+          echo "Env: $env"
+          echo "Deployment Context: $context"
+          echo "Model Names: $model"
+          echo "Model Versions: $version"
+          echo "SystemUIDs: $sysuid"
 
           
       #     list=$(python new.py)
