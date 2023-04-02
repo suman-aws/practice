@@ -30,11 +30,11 @@ for i in range(len(envir)):
         envi ="qa"
     if envir[i].find("prod") >= 0:
         envi ="prod"
-for i in range(len(envir)):
-    print(model[i]+'='+envir[i]+'='+str(version[i])+'='+tableName[i]+'='+envi[i])  
-# print(model)
-# print(envir)
-# print(version)
-# print(tableName)
-# print(envi)
+        
+# for i in range(len(envir)):
+#     print(model[i]+'='+envir[i]+'='+str(version[i])+'='+tableName[i]+'='+envi[i]) 
+print(model)
+print(envir)
+print(version)
+print(tableName)
 
