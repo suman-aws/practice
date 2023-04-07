@@ -32,7 +32,7 @@ for i in range(len(envir)):
         envi ="prod"
         
 for i in range(len(envir)):
-     print(model[i]+','+envir[i]+','+str(version[i])) 
+     print(model[i]+'='+envir[i]+'='+str(version[i])) 
 # print(model),
 # print(envir)
 # print(version)
