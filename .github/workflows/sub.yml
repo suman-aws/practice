@@ -9,51 +9,50 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run script and store outputs
-        id: run_script
-        run: |
 
-          output=$(python3 deployment.py.py)
+    - name: Run script and store outputs
+      id: run_script
+      run: |
 
-          # Parse the output and store the values in arrays
-          IFS=$'\n'
-          lines=($output)
-          env=()
-          context=()
-          model=()
-          version=()
-          sysuid=()
-          testingtime=()
-          for line in "${lines[@]}"; do
-              parts=(${line//=/ })
-              env+=(${parts[0]})
-              context+=(${parts[1]})
-              model+=(${parts[2]})
-              version+=(${parts[3]})
-              sysuid+=(${parts[4]})
-              testingtime+=(${parts[5]})
-          done
+        output=$(python3 deployment.py.py)
 
-          # Print the values
-          echo "Env: ${env[@]}"
-          echo "Deployment Context: ${context[@]}"
-          echo "Model Names: ${model[@]}"
-          echo "Model Versions: ${version[@]}"
-          echo "SystemUIDs: ${sysuid[@]}"
-          echo "TestingTime: ${testingtime[@]}"
+        # Parse the output and store the values in arrays
+        IFS=$'\n'
+        lines=($output)
+        env=()
+        context=()
+        model=()
+        version=()
+        sysuid=()
+        testingtime=()
+        for line in "${lines[@]}"; do
+            parts=(${line//=/ })
+            env+=(${parts[0]})
+            context+=(${parts[1]})
+            model+=(${parts[2]})
+            version+=(${parts[3]})
+            sysuid+=(${parts[4]})
+            testingtime+=(${parts[5]})
+        done
 
-          # Set the output variables
-          echo "::set-output name=env::${env[*]}"
-          echo "::set-output name=context::${context[*]}"
-          echo "::set-output name=model::${model[*]}"
-          echo "::set-output name=version::${version[*]}"
-          echo "::set-output name=sysuid::${sysuid[*]}"
-          echo "::set-output name=testingtime::${testingtime[*]}"
+        # Print the values
+        echo "Env: ${env[@]}"
+        echo "Deployment Context: ${context[@]}"
+        echo "Model Names: ${model[@]}"
+        echo "Model Versions: ${version[@]}"
+        echo "SystemUIDs: ${sysuid[@]}"
+        echo "TestingTime: ${testingtime[@]}"
+
+        # Set the output variables
+        echo "::set-output name=env::${env[*]}"
+        echo "::set-output name=context::${context[*]}"
+        echo "::set-output name=model::${model[*]}"
+        echo "::set-output name=version::${version[*]}"
+        echo "::set-output name=sysuid::${sysuid[*]}"
+        echo "::set-output name=testingtime::${testingtime[*]}"
 
 
-      - name: Use output variables in subsequent step
-        run: |
-          echo "The environment is: ${{ steps.run_script.outputs.env }}"
-          echo "The model name is: ${{ steps.run_script.outputs.model }}"
+    - name: Use output variables in subsequent step
+      run: |
+        echo "The environment is: ${{ steps.run_script.outputs.env }}"
+        echo "The model name is: ${{ steps.run_script.outputs.model }}"
