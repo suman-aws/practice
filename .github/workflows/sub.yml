@@ -1,39 +1,71 @@
 name: My Workflow
-
-on:
-#   push:
-#     branches:
-#       - main
+on: [push]
 
 jobs:
-  my_job:
+  my-job:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Run Python script and store output
+
+    - name: Prepare deployment
       run: |
-        python deploy.py > output.txt
-        output=$(cat output.txt)
-        IFS=$'\n' readarray -t lines <<< "$output"
-        IFS=',' read MODES <<< "${lines[0]}"
-        IFS=',' read VERSIONS <<< "${lines[1]}"
-        IFS=',' read ENVIRS <<< "${lines[2]}"
-        echo "MODES=$MODES" >> $GITHUB_ENV
-        echo "VERSIONS=$VERSIONS" >> $GITHUB_ENV
-        echo "ENVIRS=$ENVIRS" >> $GITHUB_ENV
-      
-    - name: Use environment variables
-      run: |
-        echo "MODES=$MODES"
-        echo "VERSIONS=$VERSIONS"
-        echo "ENVIRS=$ENVIRS"
-        echo ${{ env.ENVIRS }}
-    - name: SI authentication
-      run: |
-        if [[ "$ENVIRS" == *"abc int"* ]]; then
-           echo "QA models present; hence not authenticating for SI 7"
-        else
-           echo "No QA models present; hence not authenticating for SI 7"
-        fi
+        sh "python3 deployment.py"
+        env=""
+        context=""
+        model=""
+        version=""
+        sysuid=""
+        testingtime=""
+        def Text = sh returnStdout:true, script: "python3 deployment.py"
+        for(int i = 0;i<Text.readLines().size();i++) {
+          String[] parts = Text.readLines().get(i).split("=")
+          for(j =0; j<parts.size();j++){
+            switch(j) {            
+              case 0: 
+                env.add(parts[j])
+                break;
+              case 1: 
+                context.add(parts[j])
+                break;
+              case 2: 
+                model.add(parts[j])  
+                break;
+              case 3:
+                version.add(parts[j])
+                break;
+              case 4:
+                sysuid.add(parts[j])
+                break;
+              case 5:
+                testingtime.add(parts[j])
+            }
+          }
+        }
+        print "Env:" + env
+        print "Deployment Context:" + context
+        print "Model Names:" + model
+        print "Model Versions:" + version 
+        print "SystemUIDs:" +  sysuid
+        print "TestingTime:" + testingtime   
+
+        if(env.contains("SI INT")){
+          print("INT models present; Authenticating for SI ")
+        }
+        else {
+          print("No INT models present; hence not authenticating for SI ")
+        }
+
+        if(env.contains("SI QA")){
+          print("INT models present; Authenticating for SI ")
+        }
+        else {
+          print("No INT models present; hence not authenticating for SI ")
+        }
+
+        if(env.contains("SI PROD)){
+          print("INT models present; Authenticating for SI ")
+        }
+        else {
+          print("No INT models present; hence not authenticating for SI ")
+        }
