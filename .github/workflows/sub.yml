@@ -1,58 +1,36 @@
-name: Prepare RE Deployment
+name: example_workflow
+
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  prepare:
+  example_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Set environment variables
+        run: |
+          output=$(python3 deployment.py)
+          env=$(echo "$output" | awk -F'=' '/^env/ {print $2}')
+          context=$(echo "$output" | awk -F'=' '/^context/ {print $2}')
+          model=$(echo "$output" | awk -F'=' '/^model/ {print $2}')
+          version=$(echo "$output" | awk -F'=' '/^version/ {print $2}')
+          sysuid=$(echo "$output" | awk -F'=' '/^sysuid/ {print $2}')
+          testingtime=$(echo "$output" | awk -F'=' '/^testingtime/ {print $2}')
 
-    - name: Run script and store outputs
-      id: run_script
-      run: |
+          echo "Setting environment variables"
+          echo "ENV=$env" >> $GITHUB_ENV
+          echo "CONTEXT=$context" >> $GITHUB_ENV
+          echo "MODEL=$model" >> $GITHUB_ENV
+          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "SYSUID=$sysuid" >> $GITHUB_ENV
+          echo "TESTINGTIME=$testingtime" >> $GITHUB_ENV
 
-        output=$(python3 deployment.py)
-
-        # Parse the output and store the values in arrays
-        IFS=$'\n'
-        lines=($output)
-        env=()
-        context=()
-        model=()
-        version=()
-        sysuid=()
-        testingtime=()
-        for line in "${lines[@]}"; do
-            parts=(${line//=/ })
-            env+=(${parts[0]})
-            context+=(${parts[1]})
-            model+=(${parts[2]})
-            version+=(${parts[3]})
-            sysuid+=(${parts[4]})
-            testingtime+=(${parts[5]})
-        done
-
-        # Print the values
-        echo "Env: ${env[@]}"
-        echo "Deployment Context: ${context[@]}"
-        echo "Model Names: ${model[@]}"
-        echo "Model Versions: ${version[@]}"
-        echo "SystemUIDs: ${sysuid[@]}"
-        echo "TestingTime: ${testingtime[@]}"
-
-        # Set the output variables
-        echo "::set-output name=env::${env[*]}"
-        echo "::set-output name=context::${context[*]}"
-        echo "::set-output name=model::${model[*]}"
-        echo "::set-output name=version::${version[*]}"
-        echo "::set-output name=sysuid::${sysuid[*]}"
-        echo "::set-output name=testingtime::${testingtime[*]}"
-
-
-    - name: Use output variables in subsequent step
-      run: |
-        echo "The environment is: ${{ steps.run_script.outputs.env }}"
-        echo "The model name is: ${{ steps.run_script.outputs.model }}"
+      - name: Use environment variables
+        run: |
+          echo "Env: $ENV"
+          echo "Deployment Context: $CONTEXT"
+          echo "Model Names: $MODEL"
+          echo "Model Versions: $VERSION"
+          echo "SystemUIDs: $SYSUID"
+          echo "TestingTime: $TESTINGTIME"
