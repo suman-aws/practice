@@ -12,35 +12,31 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          set -x
           output=$(python3 prepare_re_deployment.py)
-          echo "Output: $output"
           env=()
           context=()
           model=()
           version=()
           sysuid=()
           testingtime=()
-          while IFS= read -r line; do
-            parts=($line)
-            env+=(${parts[0]})
-            context+=(${parts[1]})
-            model+=(${parts[2]})
-            version+=(${parts[3]})
-            sysuid+=(${parts[4]})
-            testingtime+=(${parts[5]})
+
+          while read -r line; do
+            IFS='=' read -ra parts <<< "$line"
+            for i in "${!parts[@]}"; do
+              case "$i" in
+                0) export env+=("${parts[i]}") ;;
+                1) export context+=("${parts[i]}") ;;
+                2) export model+=("${parts[i]}") ;;
+                3) export version+=("${parts[i]}") ;;
+                4) export sysuid+=("${parts[i]}") ;;
+                5) export testingtime+=("${parts[i]}") ;;
+              esac
+            done
           done <<< "$output"
+
           echo "Env: ${env[@]}"
           echo "Deployment Context: ${context[@]}"
           echo "Model Names: ${model[@]}"
           echo "Model Versions: ${version[@]}"
           echo "SystemUIDs: ${sysuid[@]}"
           echo "TestingTime: ${testingtime[@]}"
-      - name: Set output variables
-        run: |
-          echo "::set-env name=ENV::${env[@]}"
-          echo "::set-env name=DEPLOYMENT_CONTEXT::${context[@]}"
-          echo "::set-env name=MODEL_NAMES::${model[@]}"
-          echo "::set-env name=MODEL_VERSIONS::${version[@]}"
-          echo "::set-env name=SYSTEM_UIDS::${sysuid[@]}"
-          echo "::set-env name=TESTING_TIME::${testingtime[@]}"
