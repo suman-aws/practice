@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set environment variables
+      - name: Run prepare_re_deployment.py
         run: |
           env=()
           context=()
@@ -30,7 +30,7 @@ jobs:
               "TestingTime:") testingtime+=("${parts[1]}");;
             esac
           done < output.txt
-            
+          
       - name: Print arrays
         run: |
           echo "Env: ${env[@]}"
