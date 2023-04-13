@@ -1,251 +1,251 @@
 
-# This is a basic workflow to help you get started with Actions
+# # This is a basic workflow to help you get started with Actions
 
-name: models to deploy
+# name: models to deploy
 
-# Controls when the workflow will run
-on:
- # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      environ:
-        description: "Env of the deployment(Int,qa or prod) as suffix" 
-        type: choice
-        required: true
-        options:
-          - INT
-          - QA
-          - PROD
+# # Controls when the workflow will run
+# # on:
+# #  # Allows you to run this workflow manually from the Actions tab
+# #   workflow_dispatch:
+# #     inputs:
+# #       environ:
+# #         description: "Env of the deployment(Int,qa or prod) as suffix" 
+# #         type: choice
+# #         required: true
+# #         options:
+# #           - INT
+# #           - QA
+# #           - PROD
  
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   # This workflow contains a single job called "build"
+#   build:
+#     # The type of runner that the job will run on
+#     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-            fetch-depth: 0
-            ref: ${{ env.tag }}
-      # Runs a single command using the runners shell
+#     # Steps represent a sequence of tasks that will be executed as part of the job
+#     steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#       - uses: actions/checkout@v2
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+#         with:
+#             fetch-depth: 0
+#             ref: ${{ env.tag }}
+#       # Runs a single command using the runners shell
 
-#       # Runs a set of commands using the runners shell
-      - name: Prepare new deployment
-        run: |
-         Text=$(python3 new.py)
-          IFS=$'\n'
-          for line in $Text; do
-            parts=(${line//=/ })
-            case ${parts[0]} in
-              "ENV")
-                echo "Setting environment variable ENV=${parts[1]}"
-                echo "ENV=${parts[1]}" >> $GITHUB_ENV
-                ;;
-              "CONTEXT")
-                echo "Setting environment variable DEPLOYMENT_CONTEXT=${parts[1]}"
-                echo "DEPLOYMENT_CONTEXT=${parts[1]}" >> $GITHUB_ENV
-                ;;
-              "MODEL")
-                echo "Setting environment variable MODEL_NAME=${parts[1]}"
-                echo "MODEL_NAME=${parts[1]}" >> $GITHUB_ENV
-                ;;
-              "VERSION")
-                echo "Setting environment variable MODEL_VERSION=${parts[1]}"
-                echo "MODEL_VERSION=${parts[1]}" >> $GITHUB_ENV
-                ;;
-              "SYSUID")
-                echo "Setting environment variable SYSTEM_UID=${parts[1]}"
-                echo "SYSTEM_UID=${parts[1]}" >> $GITHUB_ENV
-                ;;
-              *)
-                echo "Ignoring unknown line: $line"
-                ;;
-            esac
-          done
+# #       # Runs a set of commands using the runners shell
+#       - name: Prepare new deployment
+#         run: |
+#          Text=$(python3 new.py)
+#           IFS=$'\n'
+#           for line in $Text; do
+#             parts=(${line//=/ })
+#             case ${parts[0]} in
+#               "ENV")
+#                 echo "Setting environment variable ENV=${parts[1]}"
+#                 echo "ENV=${parts[1]}" >> $GITHUB_ENV
+#                 ;;
+#               "CONTEXT")
+#                 echo "Setting environment variable DEPLOYMENT_CONTEXT=${parts[1]}"
+#                 echo "DEPLOYMENT_CONTEXT=${parts[1]}" >> $GITHUB_ENV
+#                 ;;
+#               "MODEL")
+#                 echo "Setting environment variable MODEL_NAME=${parts[1]}"
+#                 echo "MODEL_NAME=${parts[1]}" >> $GITHUB_ENV
+#                 ;;
+#               "VERSION")
+#                 echo "Setting environment variable MODEL_VERSION=${parts[1]}"
+#                 echo "MODEL_VERSION=${parts[1]}" >> $GITHUB_ENV
+#                 ;;
+#               "SYSUID")
+#                 echo "Setting environment variable SYSTEM_UID=${parts[1]}"
+#                 echo "SYSTEM_UID=${parts[1]}" >> $GITHUB_ENV
+#                 ;;
+#               *)
+#                 echo "Ignoring unknown line: $line"
+#                 ;;
+#             esac
+#           done
 
-      - name: SI authentication
-        run: |
-          if [[ "$envir" == *"abc INT"* ]]; then
-            echo "INT models present; hence not authenticating for SI 7"
-          else
-            echo "No INT models present; hence not authenticating for SI 7"
-          fi
+#       - name: SI authentication
+#         run: |
+#           if [[ "$envir" == *"abc INT"* ]]; then
+#             echo "INT models present; hence not authenticating for SI 7"
+#           else
+#             echo "No INT models present; hence not authenticating for SI 7"
+#           fi
           
-      #     list=$(python new.py)
-      #     ulist+=(list)
-      #     echo "${ulist[@]}"
-      # - name: Print model_details
-      #   run: |
-      #     echo "${{ steps.step1.outputs.model_details }}"
-      #     echo "${{ steps.step1.outputs.env_details }}"
-      #     echo "${{ steps.step1.outputs.table_details }}"
-      #     echo "${{ steps.step1.outputs.enviro_details }}"
+#       #     list=$(python new.py)
+#       #     ulist+=(list)
+#       #     echo "${ulist[@]}"
+#       # - name: Print model_details
+#       #   run: |
+#       #     echo "${{ steps.step1.outputs.model_details }}"
+#       #     echo "${{ steps.step1.outputs.env_details }}"
+#       #     echo "${{ steps.step1.outputs.table_details }}"
+#       #     echo "${{ steps.step1.outputs.enviro_details }}"
 
-#       - name: Performing  authentication
-#         shell: bash
-#         env :
-#             envir: ${{ steps.step1.outputs.enviro_details }}
-#         run: |
-#           if [[ ${envir[@]} == *"int"* ]]; then
-#             echo " INT models present"
-#           else
-#             echo "No INT models present"
-#           fi
-#           if [[ ${envir[@]} == *"qa"* ]]; then
-#             echo "QA models present"
-#           else
-#             echo "No QA models present"
-#           fi
-#           if [[ ${envir[@]} == *"prod"* ]]; then
-#             echo "PROD models present"
-#           else
-#             echo "No PROD models present"
-#           fi
+# #       - name: Performing  authentication
+# #         shell: bash
+# #         env :
+# #             envir: ${{ steps.step1.outputs.enviro_details }}
+# #         run: |
+# #           if [[ ${envir[@]} == *"int"* ]]; then
+# #             echo " INT models present"
+# #           else
+# #             echo "No INT models present"
+# #           fi
+# #           if [[ ${envir[@]} == *"qa"* ]]; then
+# #             echo "QA models present"
+# #           else
+# #             echo "No QA models present"
+# #           fi
+# #           if [[ ${envir[@]} == *"prod"* ]]; then
+# #             echo "PROD models present"
+# #           else
+# #             echo "No PROD models present"
+# #           fi
 
-#       - name: Upload the model code to env
-#         shell: bash
-#         env:
-#            envir: "${{ steps.step1.outputs.env_details }}"
-#            models_id: "${{steps.step1.outputs.model_details}}"
-#         run: |
-#           python host.py
-#           echo "$models_id"
-#           if [[ ${models_id[@]} == *"Apple"* ]] ; then
-#            echo "models present in  qa"
-#           else
-#             echo "No models present"
-#           fi
-
-# #       - name: genertate the host
+# #       - name: Upload the model code to env
 # #         shell: bash
 # #         env:
 # #            envir: "${{ steps.step1.outputs.env_details }}"
 # #            models_id: "${{steps.step1.outputs.model_details}}"
-# #         run: python hs.py -e "${models_id[@]}" -e "${envir[@]}"
+# #         run: |
+# #           python host.py
+# #           echo "$models_id"
+# #           if [[ ${models_id[@]} == *"Apple"* ]] ; then
+# #            echo "models present in  qa"
+# #           else
+# #             echo "No models present"
+# #           fi
 
-#       - name: genertate the host
-#         id: step2
-#         shell: bash
-#         run: |
-#           output=$(python host.py)
-#           OUTPUT="${output[@]}"
-#           readarray -t Models < <(echo "$OUTPUT")
-#           echo "${Models}"
-#           host="${Models[0]}"
-#           Env_details="${Models[1]}"
-#           #sh ./host.sh "${envir[@]}"
-#           #hostd=$(sh ./host.sh )
-#           #echo "${host}"
-#           list=$(python host.py)
-#           echo "model details:$list"
-#           Models+=$list
-#           echo "::set-output name=Models_details::$Models"
-#           echo "::set-output name=Host_details::$host"
-#           echo "::set-output name=Environment_details::$Env_details"
-#       - name: Print Host_details
-#         run: |
-#           echo "${{ steps.step2.outputs.Host_details }}"
-#           echo "${{ steps.step2.outputs.Environment_details }}"
-#           echo "${{ steps.step2.outputs.Models_details }}"
+# # #       - name: genertate the host
+# # #         shell: bash
+# # #         env:
+# # #            envir: "${{ steps.step1.outputs.env_details }}"
+# # #            models_id: "${{steps.step1.outputs.model_details}}"
+# # #         run: python hs.py -e "${models_id[@]}" -e "${envir[@]}"
 
-#       - name: test the models 
-#         shell: bash
-#         env:
-#            envir: "${{ steps.step1.outputs.env_details }}"
-#            models_id: "${{steps.step1.outputs.model_details}}"
-#            envir_details: "${{ steps.step2.outputs.Environment_details }}"
-#         run: |
-#          len=${#envir[@]}
-#          echo "$len"
-#          for (( i=0; i<$len; i++ )); do 
-#             if [[ ${models_id[@]} == *"orange."* ]] ; then
-#               echo "test the orange models"
-#             else
-#               echo "no models "
-#             fi
-#             if [[ ${models_id[@]} == *"apple."* ]] ; then
-#               echo "test the apple models"
-#             else
-#               echo "no models "
-#             fi
-#          done 
-#          pwd
+# #       - name: genertate the host
+# #         id: step2
+# #         shell: bash
+# #         run: |
+# #           output=$(python host.py)
+# #           OUTPUT="${output[@]}"
+# #           readarray -t Models < <(echo "$OUTPUT")
+# #           echo "${Models}"
+# #           host="${Models[0]}"
+# #           Env_details="${Models[1]}"
+# #           #sh ./host.sh "${envir[@]}"
+# #           #hostd=$(sh ./host.sh )
+# #           #echo "${host}"
+# #           list=$(python host.py)
+# #           echo "model details:$list"
+# #           Models+=$list
+# #           echo "::set-output name=Models_details::$Models"
+# #           echo "::set-output name=Host_details::$host"
+# #           echo "::set-output name=Environment_details::$Env_details"
+# #       - name: Print Host_details
+# #         run: |
+# #           echo "${{ steps.step2.outputs.Host_details }}"
+# #           echo "${{ steps.step2.outputs.Environment_details }}"
+# #           echo "${{ steps.step2.outputs.Models_details }}"
+
+# #       - name: test the models 
+# #         shell: bash
+# #         env:
+# #            envir: "${{ steps.step1.outputs.env_details }}"
+# #            models_id: "${{steps.step1.outputs.model_details}}"
+# #            envir_details: "${{ steps.step2.outputs.Environment_details }}"
+# #         run: |
+# #          len=${#envir[@]}
+# #          echo "$len"
+# #          for (( i=0; i<$len; i++ )); do 
+# #             if [[ ${models_id[@]} == *"orange."* ]] ; then
+# #               echo "test the orange models"
+# #             else
+# #               echo "no models "
+# #             fi
+# #             if [[ ${models_id[@]} == *"apple."* ]] ; then
+# #               echo "test the apple models"
+# #             else
+# #               echo "no models "
+# #             fi
+# #          done 
+# #          pwd
         
-#          mkdir new
-#          if [[ -d "new" ]]; then
-#             touch sam
-#             cat sam
-#          fi
-#       - name: check the models 
-#         id: step3
-#         shell: bash
-#         env:
-#            envir: "${{ steps.step1.outputs.env_details }}"
-#            models_id: "${{steps.step1.outputs.model_details}}"
-#            envir_details: "${{ steps.step2.outputs.Environment_details }}"      
-#         run: |
-#           ARRAY=()
-#            if [[ ${models_id[@]} == *"orange."* ]] ; then
-#               ls -lrt 
-#               rm -rf /home/runner/work/practice/practice/orange/
-#               mkdir /home/runner/work/practice/practice/orange
-#               pwd 
-#               ls -lrt 
-#               cd /home/runner/work/practice/practice/orange/
+# #          mkdir new
+# #          if [[ -d "new" ]]; then
+# #             touch sam
+# #             cat sam
+# #          fi
+# #       - name: check the models 
+# #         id: step3
+# #         shell: bash
+# #         env:
+# #            envir: "${{ steps.step1.outputs.env_details }}"
+# #            models_id: "${{steps.step1.outputs.model_details}}"
+# #            envir_details: "${{ steps.step2.outputs.Environment_details }}"      
+# #         run: |
+# #           ARRAY=()
+# #            if [[ ${models_id[@]} == *"orange."* ]] ; then
+# #               ls -lrt 
+# #               rm -rf /home/runner/work/practice/practice/orange/
+# #               mkdir /home/runner/work/practice/practice/orange
+# #               pwd 
+# #               ls -lrt 
+# #               cd /home/runner/work/practice/practice/orange/
               
-#               #rm -rf /home/runner/work/practice/practice/orange/*
-#              # pwd 
-#               #ls -lrt          
+# #               #rm -rf /home/runner/work/practice/practice/orange/*
+# #              # pwd 
+# #               #ls -lrt          
                       
               
-#               git clone  https://github.com/wakaleo/game-of-life.git
+# #               git clone  https://github.com/wakaleo/game-of-life.git
               
-#              #/usr/bin/git clone git@github.com:suman-aws/practice.git
-#              #cd /usr/bin/git 
-#              pwd 
-#              cd ..
-#             #ARRAY=()
-#              result=$(python host.py 
-#              #pwd     
-#              )
-#              ARRAY+=$result
-#              #echo $result
-#              #echo $ARRAY
-#              New="${ARRAY[@]}"
-#              echo $New
-#              echo "::set-output name=uid_details::$New"
+# #              #/usr/bin/git clone git@github.com:suman-aws/practice.git
+# #              #cd /usr/bin/git 
+# #              pwd 
+# #              cd ..
+# #             #ARRAY=()
+# #              result=$(python host.py 
+# #              #pwd     
+# #              )
+# #              ARRAY+=$result
+# #              #echo $result
+# #              #echo $ARRAY
+# #              New="${ARRAY[@]}"
+# #              echo $New
+# #              echo "::set-output name=uid_details::$New"
              
-#            fi 
-#            #ARRAY=()
-#            #sample() { python host.py
-#             #}
-#           # $new=$(sample)
-#            #ARRAY+=$new
-#            #echo "${{ env.sample }}" 
-#            #echo $ARRAY
-#            #echo "${ARRAY[@]}"
-#           if [[ ${models_id[@]} == *"apple."* ]] ; then
-#             result=$(#python host.py 
-#              pwd     
-#              )
-#              ARRAY+=$result
-#              #echo $result
-#              #echo $ARRAY
-#              New="${ARRAY[@]}"
-#              echo $New
-#           fi
-#       - name: Print Model_details
-#         run: |
-#              echo "${{ steps.step3.outputs.uid_details }}"
-#       - name: execute python commands 
-#         uses: ./.github/workflows/sub.yml
+# #            fi 
+# #            #ARRAY=()
+# #            #sample() { python host.py
+# #             #}
+# #           # $new=$(sample)
+# #            #ARRAY+=$new
+# #            #echo "${{ env.sample }}" 
+# #            #echo $ARRAY
+# #            #echo "${ARRAY[@]}"
+# #           if [[ ${models_id[@]} == *"apple."* ]] ; then
+# #             result=$(#python host.py 
+# #              pwd     
+# #              )
+# #              ARRAY+=$result
+# #              #echo $result
+# #              #echo $ARRAY
+# #              New="${ARRAY[@]}"
+# #              echo $New
+# #           fi
+# #       - name: Print Model_details
+# #         run: |
+# #              echo "${{ steps.step3.outputs.uid_details }}"
+# #       - name: execute python commands 
+# #         uses: ./.github/workflows/sub.yml
            
 
         
