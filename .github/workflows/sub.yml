@@ -14,7 +14,7 @@ jobs:
         run: |
 
           # Run the Python script and capture its output
-          output=$(python3 prepare_re_deployment.py)
+          output=$(python3 deployment.py)
 
           # Initialize arrays to store the values
           env=()
