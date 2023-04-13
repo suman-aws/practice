@@ -46,12 +46,12 @@ jobs:
           esac
         done
 
-        echo "::set-env name=envi::${envi[@]}"
-        echo "::set-env name=context::${context[@]}"
-        echo "::set-env name=model::${model[@]}"
-        echo "::set-env name=version::${version[@]}"
-        echo "::set-env name=sysuid::${sysuid[@]}"
-        echo "::set-env name=testingtime::${testingtime[@]}"
+        echo "::set-output name=envi::${envi[@]}"
+        echo "::set-output name=context::${context[@]}"
+        echo "::set-output name=model::${model[@]}"
+        echo "::set-output name=version::${version[@]}"
+        echo "::set-output name=sysuid::${sysuid[@]}"
+        echo "::set-output name=testingtime::${testingtime[@]}"
 
     - name: Print values
       run: |
