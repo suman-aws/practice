@@ -12,7 +12,7 @@ jobs:
     - name: Run script
       run: |
         python3 deployment.py > output.txt
-        env=()
+        envi=()
         context=()
         model=()
         version=()
@@ -22,7 +22,7 @@ jobs:
             parts=($(echo "$line" | tr "=" "\n"))
             case 0 in
                 "${parts[0]}")
-                    env+=(${parts[1]})
+                    envi+=(${parts[1]})
                     ;;
                 "${parts[1]}")
                     context+=(${parts[1]})
@@ -41,9 +41,17 @@ jobs:
                     ;;
             esac
         done < output.txt
-        echo "env=${env[@]}" >> $GITHUB_ENV
+        echo "envi=${envi[@]}" >> $GITHUB_ENV
         echo "context=${context[@]}" >> $GITHUB_ENV
         echo "model=${model[@]}" >> $GITHUB_ENV
         echo "version=${version[@]}" >> $GITHUB_ENV
         echo "sysuid=${sysuid[@]}" >> $GITHUB_ENV
         echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV
+    - name: Display GitHub Environment Variables
+      run: |
+        echo "Env: ${{ env.envi }}"
+        echo "Deployment Context: ${{ env.context }}"
+        echo "Model Names: ${{ env.model }}"
+        echo "Model Versions: ${{ env.version }}"
+        echo "SystemUIDs: ${{ env.sysuid }}"
+        echo "TestingTime: ${{ env.testingtime }}"
