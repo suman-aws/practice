@@ -1,71 +1,68 @@
-name: My Workflow
-on: [push]
+name: Deployment Workflow
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  my-job:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Prepare deployment
-      run: |
-        sh "python3 deployment.py"
-        env=""
-        context=""
-        model=""
-        version=""
-        sysuid=""
-        testingtime=""
-        def Text = sh returnStdout:true, script: "python3 deployment.py"
-        for(int i = 0;i<Text.readLines().size();i++) {
-          String[] parts = Text.readLines().get(i).split("=")
-          for(j =0; j<parts.size();j++){
-            switch(j) {            
-              case 0: 
-                env.add(parts[j])
-                break;
-              case 1: 
-                context.add(parts[j])
-                break;
-              case 2: 
-                model.add(parts[j])  
-                break;
-              case 3:
-                version.add(parts[j])
-                break;
-              case 4:
-                sysuid.add(parts[j])
-                break;
-              case 5:
-                testingtime.add(parts[j])
-            }
-          }
-        }
-        print "Env:" + env
-        print "Deployment Context:" + context
-        print "Model Names:" + model
-        print "Model Versions:" + version 
-        print "SystemUIDs:" +  sysuid
-        print "TestingTime:" + testingtime   
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-        if(env.contains("SI INT")){
-          print("INT models present; Authenticating for SI ")
-        }
-        else {
-          print("No INT models present; hence not authenticating for SI ")
-        }
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt
 
-        if(env.contains("SI QA")){
-          print("INT models present; Authenticating for SI ")
-        }
-        else {
-          print("No INT models present; hence not authenticating for SI ")
-        }
+      - name: Prepare for Deployment
+        run: |
+          python3 deployment.py
+          TEXT=$(python3 deployment.py)
+          echo "$TEXT" | while read line; do
+            IFS='=' read -ra PARTS <<< "$line"
+            for j in "${!PARTS[@]}"; do
+              case $j in
+                0) env=${PARTS[$j]};;
+                1) context=${PARTS[$j]};;
+                2) model=${PARTS[$j]};;
+                3) version=${PARTS[$j]};;
+                4) sysuid=${PARTS[$j]};;
+                5) testingtime=${PARTS[$j]};;
+              esac
+            done
+            echo "Env: $env"
+            echo "Deployment Context: $context"
+            echo "Model Names: $model"
+            echo "Model Versions: $version"
+            echo "SystemUIDs: $sysuid"
+            echo "TestingTime: $testingtime"
+          done
 
-        if(env.contains("SI PROD)){
-          print("INT models present; Authenticating for SI ")
-        }
-        else {
-          print("No INT models present; hence not authenticating for SI ")
-        }
+      - name: Authenticate for SI INT
+        run: |
+          if [[ "$env" == *"SI INT"* ]]; then
+            echo "INT models present; Authenticating for SI"
+          else
+            echo "No INT models present; hence not authenticating for SI"
+          fi
+
+      - name: Authenticate for SI QA
+        run: |
+          if [[ "$env" == *"SI QA"* ]]; then
+            echo "QA models present; Authenticating for SI"
+          else
+            echo "No QA models present; hence not authenticating for SI"
+          fi
+
+      - name: Authenticate for SI PROD
+        run: |
+          if [[ "$env" == *"SI PROD"* ]]; then
+            echo "PROD models present; Authenticating for SI"
+          else
+            echo "No PROD models present; hence not authenticating for SI"
+          fi
