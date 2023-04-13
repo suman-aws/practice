@@ -11,44 +11,41 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set environment variables
+
         run: |
-
-          # Run the Python script and capture its output
-          output=$(python3 deployment.py)
-
-          # Initialize arrays to store the values
-          env=()
-          context=()
-          model=()
-          version=()
-          sysuid=()
-          testingtime=()
-
-          # Parse the output and populate the arrays
-          while IFS= read -r line; do
-            parts=($(echo "$line" | tr '=' '\n'))
-            env+=("${parts[0]}")
-            context+=("${parts[1]}")
-            model+=("${parts[2]}")
-            version+=("${parts[3]}")
-            sysuid+=("${parts[4]}")
-            testingtime+=("${parts[5]}")
-          done <<< "$output"
-
-          # Set environment variables with the values
-          echo "::set-env name=env::${env[*]}"
-          echo "::set-env name=context::${context[*]}"
-          echo "::set-env name=model::${model[*]}"
-          echo "::set-env name=version::${version[*]}"
-          echo "::set-env name=sysuid::${sysuid[*]}"
-          echo "::set-env name=testingtime::${testingtime[*]}"
-
-          # Print the values for debugging
+            env=()
+            context=()
+            model=()
+            version=()
+            sysuid=()
+            testingtime=()
+            sh "python3 prepare_re_deployment.py"
+            while read line; do
+              parts=(${line//=/ })
+              case ${parts[0]} in
+                "Env:") env+=("${parts[1]}");;
+                "Deployment Context:") context+=("${parts[1]}");;
+                "Model Names:") model+=("${parts[1]}");;
+                "Model Versions:") version+=("${parts[1]}");;
+                "SystemUIDs:") sysuid+=("${parts[1]}");;
+                "TestingTime:") testingtime+=("${parts[1]}");;
+              esac
+            done < output.txt
+            
+      - name: Print arrays
+        run: |
           echo "Env: ${env[@]}"
           echo "Deployment Context: ${context[@]}"
           echo "Model Names: ${model[@]}"
           echo "Model Versions: ${version[@]}"
           echo "SystemUIDs: ${sysuid[@]}"
           echo "TestingTime: ${testingtime[@]}"
-
-
+        
+      - name: Set env variables
+        env:
+          ENV: "${env[@]}"
+          CONTEXT: "${context[@]}"
+          MODEL: "${model[@]}"
+          VERSION: "${version[@]}"
+          SYSUID: "${sysuid[@]}"
+          TESTINGTIME: "${testingtime[@]}"
