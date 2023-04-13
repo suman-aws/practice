@@ -1,65 +1,40 @@
-name: Deployment Workflow
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # - name: Setup Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: '3.x'
-
-      # - name: Install dependencies
-      #   run: pip3 install -r requirements.txt
-
-      - name: Prepare for Deployment
-        run: |
-          python3 deployment.py > deployment_config.txt
-              TEXT=$(cat deployment_config.txt)
-              for line in $TEXT; do
-                IFS='=' read -ra PARTS <<< "$line"
-                case ${PARTS[0]} in
-                  "env") ENV=${PARTS[1]} ;;
-                  "context") CONTEXT=${PARTS[1]} ;;
-                  "model") MODEL=${PARTS[1]} ;;
-                  "version") VERSION=${PARTS[1]} ;;
-                  "sysuid") SYSUID=${PARTS[1]} ;;
-                  "testingtime") TESTINGTIME=${PARTS[1]} ;;
-                esac
-              done
-              echo "Env: $ENV"
-              echo "Deployment Context: $CONTEXT"
-              echo "Model Names: $MODEL"
-              echo "Model Versions: $VERSION"
-              echo "SystemUIDs: $SYSUID"
-              echo "TestingTime: $TESTINGTIME"
-      - name: Authenticate for SI INT
-        run: |
-          if [[ "$env" == *"SI INT"* ]]; then
-            echo "INT models present; Authenticating for SI"
-          else
-            echo "No INT models present; hence not authenticating for SI"
-          fi
-
-      - name: Authenticate for SI QA
-        run: |
-          if [[ "$env" == *"SI QA"* ]]; then
-            echo "QA models present; Authenticating for SI"
-          else
-            echo "No QA models present; hence not authenticating for SI"
-          fi
-
-      - name: Authenticate for SI PROD
-        run: |
-          if [[ "$env" == *"SI PROD"* ]]; then
-            echo "PROD models present; Authenticating for SI"
-          else
-            echo "No PROD models present; hence not authenticating for SI"
-          fi
+- name: Get deployment info
+  run: |
+    # Replace the below command with the command to run your script
+    sh "python3 deployment.py"
+    # Parse the output of your script
+    env=()
+    context=()
+    model=()
+    version=()
+    sysuid=()
+    testingtime=()
+    Text=$(python3 deployment.py)
+    IFS=$'\n' # Set the delimiter to newline
+    for line in $Text; do
+        IFS='=' read -ra parts <<< "$line" # Split each line into parts
+        for i in "${!parts[@]}"; do
+            case $i in
+                0) env+=("${parts[i]}");;
+                1) context+=("${parts[i]}");;
+                2) model+=("${parts[i]}");;
+                3) version+=("${parts[i]}");;
+                4) sysuid+=("${parts[i]}");;
+                5) testingtime+=("${parts[i]}");;
+            esac
+        done
+    done
+    # Print the parsed values for debugging
+    echo "Env: ${env[@]}"
+    echo "Deployment Context: ${context[@]}"
+    echo "Model Names: ${model[@]}"
+    echo "Model Versions: ${version[@]}"
+    echo "SystemUIDs: ${sysuid[@]}"
+    echo "TestingTime: ${testingtime[@]}"
+    # Set the environment variables for use in later steps
+    echo "::set-output name=DEPLOYMENT_ENV::${env[@]}"
+    echo "::set-output name=DEPLOYMENT_CONTEXT::${context[@]}"
+    echo "::set-output name=DEPLOYMENT_MODEL::${model[@]}"
+    echo "::set-output name=DEPLOYMENT_VERSION::${version[@]}"
+    echo "::set-output name=DEPLOYMENT_SYSUID::${sysuid[@]}"
+    echo "::set-output name=DEPLOYMENT_TESTING_TIME::${testingtime[@]}"
