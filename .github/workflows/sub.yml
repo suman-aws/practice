@@ -11,7 +11,7 @@ jobs:
         id: run_script
         run: |
 
-          output=$(python3 prepare_re_deployment.py)
+          output=$(python3 deployment.py)
 
           # Parse the output and store the values in arrays
           IFS=$'\n'
