@@ -4,14 +4,18 @@ on:
     branches: [ main ]
 
 jobs:
-  example_job:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
     runs-on: ubuntu-latest
     steps:
       - name: Run script and store outputs
         id: run_script
         run: |
 
-          output=$(python3 deployment.py)
+          output=$(python3 deployment.py.py)
 
           # Parse the output and store the values in arrays
           IFS=$'\n'
