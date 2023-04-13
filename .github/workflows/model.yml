@@ -68,8 +68,10 @@ jobs:
             echo "No INT models present; hence not authenticating for SI"
         fi
     - name: Display GitHub  Variables
+      env:
+        envi: ${envi[@]}
       run: |
-        if echo "$env" | grep -q "SI INT"; then
+        if echo "$envi" | grep -q "SI INT"; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
