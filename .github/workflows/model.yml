@@ -47,7 +47,9 @@ jobs:
         echo "model=${model[@]}" >> $GITHUB_ENV
         echo "version=${version[@]}" >> $GITHUB_ENV
         echo "sysuid=${sysuid[@]}" >> $GITHUB_ENV
-        echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV
+        echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV 
+        echo "$envi[@]"
+        
     - name: Display GitHub Environment Variables
       env :
         envir: ${{ steps.step1.outputs.envi}}
