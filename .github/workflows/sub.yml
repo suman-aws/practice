@@ -19,6 +19,7 @@ jobs:
 
     - name: Parse deployment info
       run: |
+        pwd
         env=()
         context=()
         model=()
