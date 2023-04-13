@@ -21,28 +21,25 @@ jobs:
 
       - name: Prepare for Deployment
         run: |
-          python3 deployment.py
-          TEXT=$(python3 deployment.py)
-          echo "$TEXT" | while read line; do
-            IFS='=' read -ra PARTS <<< "$line"
-            for j in "${!PARTS[@]}"; do
-              case $j in
-                0) env=${PARTS[$j]};;
-                1) context=${PARTS[$j]};;
-                2) model=${PARTS[$j]};;
-                3) version=${PARTS[$j]};;
-                4) sysuid=${PARTS[$j]};;
-                5) testingtime=${PARTS[$j]};;
-              esac
-            done
-            echo "Env: $env"
-            echo "Deployment Context: $context"
-            echo "Model Names: $model"
-            echo "Model Versions: $version"
-            echo "SystemUIDs: $sysuid"
-            echo "TestingTime: $testingtime"
-          done
-
+          python3 deployment.py > deployment_config.txt
+              TEXT=$(cat deployment_config.txt)
+              for line in $TEXT; do
+                IFS='=' read -ra PARTS <<< "$line"
+                case ${PARTS[0]} in
+                  "env") ENV=${PARTS[1]} ;;
+                  "context") CONTEXT=${PARTS[1]} ;;
+                  "model") MODEL=${PARTS[1]} ;;
+                  "version") VERSION=${PARTS[1]} ;;
+                  "sysuid") SYSUID=${PARTS[1]} ;;
+                  "testingtime") TESTINGTIME=${PARTS[1]} ;;
+                esac
+              done
+              echo "Env: $ENV"
+              echo "Deployment Context: $CONTEXT"
+              echo "Model Names: $MODEL"
+              echo "Model Versions: $VERSION"
+              echo "SystemUIDs: $SYSUID"
+              echo "TestingTime: $TESTINGTIME"
       - name: Authenticate for SI INT
         run: |
           if [[ "$env" == *"SI INT"* ]]; then
