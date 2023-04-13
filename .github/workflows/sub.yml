@@ -1,9 +1,9 @@
 name: My Workflow
 
 on:
-  push:
-    branches:
-      - main
+#   push:
+#     branches:
+#       - main
 
 jobs:
   my_job:
