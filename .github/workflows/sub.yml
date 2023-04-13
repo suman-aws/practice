@@ -26,15 +26,41 @@ jobs:
         sysuid=()
         testingtime=()
 
-        while IFS= read -r line; do
-          parts=($(echo "$line" | tr '=' ' '))
-          env+=("${parts[0]}")
-          context+=("${parts[1]}")
-          model+=("${parts[2]}")
-          version+=("${parts[3]}")
-          sysuid+=("${parts[4]}")
-          testingtime+=("${parts[5]}")
-        done < <(echo "${{ steps.prepare_deploy.outputs.stdout }}")
+        echo "Running the prepare_re_deployment.py script..."
+        sh "python3 prepare_re_deployment.py"
+
+        echo "Reading output from the prepare_re_deployment.py script..."
+        Text=$(python3 prepare_re_deployment.py)
+        echo "Text: ${Text}"
+
+        echo "Parsing the output and storing the values..."
+        for line in ${Text[@]}; do
+          echo "Parsing line: ${line}"
+          IFS='=' read -ra parts <<< "${line}"
+          for idx in "${!parts[@]}"; do
+            echo "Parsing part[${idx}]: ${parts[$idx]}"
+            case $idx in            
+              0) 
+                env+=("${parts[$idx]}")
+                ;;
+              1) 
+                context+=("${parts[$idx]}")
+                ;;
+              2) 
+                model+=("${parts[$idx]}")
+                ;;
+              3)
+                version+=("${parts[$idx]}")
+                ;;
+              4)
+                sysuid+=("${parts[$idx]}")
+                ;;
+              5)
+                testingtime+=("${parts[$idx]}")
+                ;;
+            esac
+          done
+        done
 
         echo "Env: ${env[@]}"
         echo "Deployment Context: ${context[@]}"
