@@ -50,19 +50,19 @@ jobs:
     - name: Display GitHub Environment Variables
       run: |
        
-        if [[ $envi == *"SI INT"* ]]; then
+        if [[ $envi[@] == *"SI INT"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $envi == *"SI QA"* ]]; then
+        if [[ $envi[@] == *"SI QA"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $envi == *"SI PROD"* ]]; then
+        if [[ $envi[@] == *"SI PROD"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
