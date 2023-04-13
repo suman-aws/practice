@@ -12,39 +12,31 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          env=()
-          context=()
-          model=()
-          version=()
-          sysuid=()
-          testingtime=()
-          sh "python3 prepare_re_deployment.py"
-          while read line; do
-            parts=(${line//=/ })
-            case ${parts[0]} in
-              "Env:") env+=("${parts[1]}");;
-              "Deployment Context:") context+=("${parts[1]}");;
-              "Model Names:") model+=("${parts[1]}");;
-              "Model Versions:") version+=("${parts[1]}");;
-              "SystemUIDs:") sysuid+=("${parts[1]}");;
-              "TestingTime:") testingtime+=("${parts[1]}");;
-            esac
-          done < output.txt
-          
-      - name: Print arrays
-        run: |
-          echo "Env: ${env[@]}"
-          echo "Deployment Context: ${context[@]}"
-          echo "Model Names: ${model[@]}"
-          echo "Model Versions: ${version[@]}"
-          echo "SystemUIDs: ${sysuid[@]}"
-          echo "TestingTime: ${testingtime[@]}"
-        
-      - name: Set env variables
-        env:
-          ENV: "${env[@]}"
-          CONTEXT: "${context[@]}"
-          MODEL: "${model[@]}"
-          VERSION: "${version[@]}"
-          SYSUID: "${sysuid[@]}"
-          TESTINGTIME: "${testingtime[@]}"
+- name: Get deployment info
+  run: |
+    python3 deployment.py
+    declare -a env=()
+    declare -a context=()
+    declare -a model=()
+    declare -a version=()
+    declare -a sysuid=()
+    declare -a testingtime=()
+
+    while read line; do
+      arr=(${line//=/ })
+      case ${arr[0]} in
+        "env") env+=(${arr[1]});;
+        "context") context+=(${arr[1]});;
+        "model") model+=(${arr[1]});;
+        "version") version+=(${arr[1]});;
+        "sysuid") sysuid+=(${arr[1]});;
+        "testingtime") testingtime+=(${arr[1]});;
+      esac
+    done < <(python3 prepare_re_deployment.py)
+  env:
+    env: ${{ env }}
+    context: ${{ context }}
+    model: ${{ model }}
+    version: ${{ version }}
+    sysuid: ${{ sysuid }}
+    testingtime: ${{ testingtime }}
