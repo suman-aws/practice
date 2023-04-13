@@ -1,40 +1,50 @@
 name: My Workflow
 
-on: [push]
+on:
+  push:
+    branches: [main]
 
 jobs:
-  my-job:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Set Environment Variables
-      run: |
-        output=$(python3 prepare_re_deployment.py)
-        while read -r line; do
-          IFS="=" read -r -a parts <<< "$line"
-          case ${parts[0]} in
-            "SI QA")
-              echo "ENV=${parts[0]}" >> $GITHUB_ENV
-              echo "DEPLOYMENT_CONTEXT=${parts[1]}" >> $GITHUB_ENV
-              echo "MODEL_NAMES=${parts[2]}" >> $GITHUB_ENV
-              echo "MODEL_VERSIONS=${parts[3]}" >> $GITHUB_ENV
-              echo "SYSTEM_UIDS=${parts[4]}" >> $GITHUB_ENV
-              echo "TESTING_TIME=${parts[5]}" >> $GITHUB_ENV
-              ;;
-            # Add other cases here for different environments
-            *)
-              ;;
-          esac
-        done <<< "$output"
-
-    - name: Use Environment Variables
-      run: |
-        echo $ENV
-        echo $DEPLOYMENT_CONTEXT
-        echo $MODEL_NAMES
-        echo $MODEL_VERSIONS
-        echo $SYSTEM_UIDS
-        echo $TESTING_TIME
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Run prepare_re_deployment.py
+        run: |
+          set -x
+          output=$(python3 prepare_re_deployment.py)
+          echo "Output: $output"
+          env=()
+          context=()
+          model=()
+          version=()
+          sysuid=()
+          testingtime=()
+          while IFS= read -r line; do
+            parts=($line)
+            env+=(${parts[0]})
+            context+=(${parts[1]})
+            model+=(${parts[2]})
+            version+=(${parts[3]})
+            sysuid+=(${parts[4]})
+            testingtime+=(${parts[5]})
+          done <<< "$output"
+          echo "Env: ${env[@]}"
+          echo "Deployment Context: ${context[@]}"
+          echo "Model Names: ${model[@]}"
+          echo "Model Versions: ${version[@]}"
+          echo "SystemUIDs: ${sysuid[@]}"
+          echo "TestingTime: ${testingtime[@]}"
+      - name: Set output variables
+        run: |
+          echo "::set-env name=ENV::${env[@]}"
+          echo "::set-env name=DEPLOYMENT_CONTEXT::${context[@]}"
+          echo "::set-env name=MODEL_NAMES::${model[@]}"
+          echo "::set-env name=MODEL_VERSIONS::${version[@]}"
+          echo "::set-env name=SYSTEM_UIDS::${sysuid[@]}"
+          echo "::set-env name=TESTING_TIME::${testingtime[@]}"
