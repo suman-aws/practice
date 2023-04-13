@@ -46,7 +46,7 @@ jobs:
           esac
         done
 
-        echo "::set-env name=env::${envi[@]}"
+        echo "::set-env name=envi::${envi[@]}"
         echo "::set-env name=context::${context[@]}"
         echo "::set-env name=model::${model[@]}"
         echo "::set-env name=version::${version[@]}"
