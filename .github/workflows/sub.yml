@@ -25,8 +25,8 @@ jobs:
         for i in $(echo "$Text" | awk '{print $0}'); do
           IFS='=' read -ra parts <<< "$i"
           case "${parts[0]}" in
-            "envi")
-              envi+=("${parts[1]}")
+            "env")
+              env+=("${parts[1]}")
               ;;
             "context")
               context+=("${parts[1]}")
@@ -46,7 +46,7 @@ jobs:
           esac
         done
 
-        echo "::set-output name=envi::${envi[@]}"
+        echo "::set-output name=env::${env[@]}"
         echo "::set-output name=context::${context[@]}"
         echo "::set-output name=model::${model[@]}"
         echo "::set-output name=version::${version[@]}"
@@ -55,7 +55,7 @@ jobs:
 
     - name: Print values
       run: |
-        echo "Envi: ${{ envi }}"
+        echo "Env: ${{ env }}"
         echo "Deployment Context: ${{ context }}"
         echo "Model Names: ${{ model }}"
         echo "Model Versions: ${{ version }}"
