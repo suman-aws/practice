@@ -1,0 +1,20 @@
+134:
+
+  DeploymentContext: RW
+  DeploymentEnv: SI QA
+  Modality: TR
+  ModelName: T-PR
+  ModelUID: T-PR
+  ModelVersion: '1.0'
+  SystemUIDs: '77276535'
+  TestingTime: 20230218-235959
+135:
+
+  DeploymentContext: RW+RS
+  DeploymentEnv: SI QA
+  Modality: R
+  ModelName: LR
+  ModelUID: LR
+  ModelVersion: '1.0'
+  SystemUIDs: '77276535'
+  TestingTime: 20230218-235959
