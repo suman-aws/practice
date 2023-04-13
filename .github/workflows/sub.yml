@@ -11,13 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+      # - name: Setup Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.x'
 
-      - name: Install dependencies
-        run: pip3 install -r requirements.txt
+      # - name: Install dependencies
+      #   run: pip3 install -r requirements.txt
 
       - name: Prepare for Deployment
         run: |
