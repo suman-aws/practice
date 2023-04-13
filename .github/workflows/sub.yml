@@ -1,51 +1,58 @@
-name: Prepare RE Deployment
-on:
-  push:
-    branches: [ main ]
-
 jobs:
-  prepare:
+  my_job:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Get deployment info
+
+    - name: Run Python script
       run: |
-        # Replace the below command with the command to run your script
-        sh "python3 deployment.py"
-        # Parse the output of your script
-        env=()
+        python3 deployment.py
+        export Text=$(python3 deployment.py)
+
+        envi=()
         context=()
         model=()
         version=()
         sysuid=()
         testingtime=()
-        Text=$(python3 deployment.py)
-        IFS=$'\n' # Set the delimiter to newline
-        for line in $Text; do
-            IFS='=' read -ra parts <<< "$line" # Split each line into parts
-            for i in "${!parts[@]}"; do
-                case $i in
-                    0) env+=("${parts[i]}");;
-                    1) context+=("${parts[i]}");;
-                    2) model+=("${parts[i]}");;
-                    3) version+=("${parts[i]}");;
-                    4) sysuid+=("${parts[i]}");;
-                    5) testingtime+=("${parts[i]}");;
-                esac
-            done
+
+        for i in $(echo "$Text" | awk '{print $0}'); do
+          IFS='=' read -ra parts <<< "$i"
+          case "${parts[0]}" in
+            "envi")
+              envi+=("${parts[1]}")
+              ;;
+            "context")
+              context+=("${parts[1]}")
+              ;;
+            "model")
+              model+=("${parts[1]}")
+              ;;
+            "version")
+              version+=("${parts[1]}")
+              ;;
+            "sysuid")
+              sysuid+=("${parts[1]}")
+              ;;
+            "testingtime")
+              testingtime+=("${parts[1]}")
+              ;;
+          esac
         done
-        # Print the parsed values for debugging
-        echo "Env: ${env[@]}"
-        echo "Deployment Context: ${context[@]}"
-        echo "Model Names: ${model[@]}"
-        echo "Model Versions: ${version[@]}"
-        echo "SystemUIDs: ${sysuid[@]}"
-        echo "TestingTime: ${testingtime[@]}"
-        # Set the environment variables for use in later steps
-        echo "::set-output name=DEPLOYMENT_ENV::${env[@]}"
-        echo "::set-output name=DEPLOYMENT_CONTEXT::${context[@]}"
-        echo "::set-output name=DEPLOYMENT_MODEL::${model[@]}"
-        echo "::set-output name=DEPLOYMENT_VERSION::${version[@]}"
-        echo "::set-output name=DEPLOYMENT_SYSUID::${sysuid[@]}"
-        echo "::set-output name=DEPLOYMENT_TESTING_TIME::${testingtime[@]}"
+
+        echo "::set-env name=env::${envi[@]}"
+        echo "::set-env name=context::${context[@]}"
+        echo "::set-env name=model::${model[@]}"
+        echo "::set-env name=version::${version[@]}"
+        echo "::set-env name=sysuid::${sysuid[@]}"
+        echo "::set-env name=testingtime::${testingtime[@]}"
+
+    - name: Print values
+      run: |
+        echo "Envi: ${{ envi }}"
+        echo "Deployment Context: ${{ context }}"
+        echo "Model Names: ${{ model }}"
+        echo "Model Versions: ${{ version }}"
+        echo "SystemUIDs: ${{ sysuid }}"
+        echo "TestingTime: ${{ testingtime }}"
