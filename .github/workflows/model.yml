@@ -55,3 +55,21 @@ jobs:
         echo "Model Versions: ${{ env.version }}"
         echo "SystemUIDs: ${{ env.sysuid }}"
         echo "TestingTime: ${{ env.testingtime }}"
+        if [[ $envi == *"SI INT"* ]]; then
+            echo "INT models present; Authenticating for SI"
+        else
+            echo "No INT models present; hence not authenticating for SI"
+        fi
+
+        if [[ $envi == *"SI QA"* ]]; then
+            echo "INT models present; Authenticating for SI"
+        else
+            echo "No INT models present; hence not authenticating for SI"
+        fi
+
+        if [[ $envi == *"SI PROD"* ]]; then
+            echo "INT models present; Authenticating for SI"
+        else
+            echo "No INT models present; hence not authenticating for SI"
+        fi
+
