@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Prepare deployment
-      run: python3 deployment.py
+      run: python3 prepare_re_deployment.py
       id: prepare_deploy
       continue-on-error: true
 
