@@ -11,26 +11,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set environment variables
-
         run: |
-            env=()
-            context=()
-            model=()
-            version=()
-            sysuid=()
-            testingtime=()
-            sh "python3 prepare_re_deployment.py"
-            while read line; do
-              parts=(${line//=/ })
-              case ${parts[0]} in
-                "Env:") env+=("${parts[1]}");;
-                "Deployment Context:") context+=("${parts[1]}");;
-                "Model Names:") model+=("${parts[1]}");;
-                "Model Versions:") version+=("${parts[1]}");;
-                "SystemUIDs:") sysuid+=("${parts[1]}");;
-                "TestingTime:") testingtime+=("${parts[1]}");;
-              esac
-            done < output.txt
+          env=()
+          context=()
+          model=()
+          version=()
+          sysuid=()
+          testingtime=()
+          sh "python3 prepare_re_deployment.py"
+          while read line; do
+            parts=(${line//=/ })
+            case ${parts[0]} in
+              "Env:") env+=("${parts[1]}");;
+              "Deployment Context:") context+=("${parts[1]}");;
+              "Model Names:") model+=("${parts[1]}");;
+              "Model Versions:") version+=("${parts[1]}");;
+              "SystemUIDs:") sysuid+=("${parts[1]}");;
+              "TestingTime:") testingtime+=("${parts[1]}");;
+            esac
+          done < output.txt
             
       - name: Print arrays
         run: |
