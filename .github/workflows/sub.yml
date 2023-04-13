@@ -32,7 +32,7 @@ jobs:
         echo ${{ env.ENVIRS }}
     - name: SI authentication
       run: |
-        if [[ "$ENVIRS" == *"abc qa"* ]]; then
+        if [[ "$ENVIRS" == *"abc int"* ]]; then
            echo "QA models present; hence not authenticating for SI 7"
         else
            echo "No QA models present; hence not authenticating for SI 7"
