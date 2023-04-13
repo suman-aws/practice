@@ -28,7 +28,7 @@ jobs:
         testingtime=()
 
         echo "Running the prepare_re_deployment.py script..."
-        sh "python3 practice/prepare_re_deployment.py"
+        sh "python3 /home/runner/work/practice/practice/prepare_re_deployment.py"
 
         echo "Reading output from the prepare_re_deployment.py script..."
         Text=$(python3 prepare_re_deployment.py)
