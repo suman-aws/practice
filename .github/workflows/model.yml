@@ -10,6 +10,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Run script
+      id: step1
       run: |
         python3 deployment.py > output.txt
         envi=()
@@ -48,43 +49,45 @@ jobs:
         echo "sysuid=${sysuid[@]}" >> $GITHUB_ENV
         echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV
     - name: Display GitHub Environment Variables
+      env :
+        envir: ${{ steps.step1.outputs.envi}}
       run: |
        
-        if [[ $envi[@] == *"SI INT"* ]]; then
+        if [[ $envir[@] == *"SI INT"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $envi[@] == *"SI QA"* ]]; then
+        if [[ $envir[@] == *"SI QA"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $envi[@] == *"SI PROD"* ]]; then
+        if [[ $envir[@] == *"SI PROD"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
-    - name: Display GitHub  Variables
-      env:
-        envi: ${envi[@]}
-      run: |
-        if echo "$envi" | grep -q "SI INT"; then
-            echo "INT models present; Authenticating for SI"
-        else
-            echo "No INT models present; hence not authenticating for SI"
-        fi
+    # - name: Display GitHub  Variables
+    #   env:
+    #     envi: ${envi[@]}
+    #   run: |
+    #     if echo "$envi" | grep -q "SI INT"; then
+    #         echo "INT models present; Authenticating for SI"
+    #     else
+    #         echo "No INT models present; hence not authenticating for SI"
+    #     fi
 
-        if echo "$env" | grep -q "SI QA"; then
-            echo "QA models present; Authenticating for SI"
-        else
-            echo "No QA models present; hence not authenticating for SI"
-        fi
+    #     if echo "$env" | grep -q "SI QA"; then
+    #         echo "QA models present; Authenticating for SI"
+    #     else
+    #         echo "No QA models present; hence not authenticating for SI"
+    #     fi
 
-        if echo "$env" | grep -q "SI PROD"; then
-            echo "PROD models present; Authenticating for SI"
-        else
-            echo "No PROD models present; hence not authenticating for SI"
-        fi
+    #     if echo "$env" | grep -q "SI PROD"; then
+    #         echo "PROD models present; Authenticating for SI"
+    #     else
+    #         echo "No PROD models present; hence not authenticating for SI"
+    #     fi
