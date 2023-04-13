@@ -1,41 +1,44 @@
-name: example_workflow
+name: Example Workflow
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  example_job:
+  test_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Get deployment info
-        run: |
-          python3 deployment.py
-          declare -a env=()
-          declare -a context=()
-          declare -a model=()
-          declare -a version=()
-          declare -a sysuid=()
-          declare -a testingtime=()
+    - name: Prepare deployment
+      run: python3 deployment.py
+      id: prepare_deploy
+      continue-on-error: true
 
-          while read line; do
-            arr=(${line//=/ })
-            case ${arr[0]} in
-              "env") env+=(${arr[1]});;
-              "context") context+=(${arr[1]});;
-              "model") model+=(${arr[1]});;
-              "version") version+=(${arr[1]});;
-              "sysuid") sysuid+=(${arr[1]});;
-              "testingtime") testingtime+=(${arr[1]});;
-            esac
-          done < <(python3 prepare_re_deployment.py)
-        env:
-          env: ${{ env }}
-          context: ${{ context }}
-          model: ${{ model }}
-          version: ${{ version }}
-          sysuid: ${{ sysuid }}
-          testingtime: ${{ testingtime }}
+    - name: Parse deployment info
+      run: |
+        env=()
+        context=()
+        model=()
+        version=()
+        sysuid=()
+        testingtime=()
+
+        while IFS= read -r line; do
+          parts=($(echo "$line" | tr '=' ' '))
+          env+=("${parts[0]}")
+          context+=("${parts[1]}")
+          model+=("${parts[2]}")
+          version+=("${parts[3]}")
+          sysuid+=("${parts[4]}")
+          testingtime+=("${parts[5]}")
+        done < <(echo "${{ steps.prepare_deploy.outputs.stdout }}")
+
+        echo "Env: ${env[@]}"
+        echo "Deployment Context: ${context[@]}"
+        echo "Model Names: ${model[@]}"
+        echo "Model Versions: ${version[@]}"
+        echo "SystemUIDs: ${sysuid[@]}"
+        echo "TestingTime: ${testingtime[@]}"
