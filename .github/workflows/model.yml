@@ -49,27 +49,40 @@ jobs:
         echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV
     - name: Display GitHub Environment Variables
       run: |
-        echo "Env: ${{ env.envi }}"
-        echo "Deployment Context: ${{ env.context }}"
-        echo "Model Names: ${{ env.model }}"
-        echo "Model Versions: ${{ env.version }}"
-        echo "SystemUIDs: ${{ env.sysuid }}"
-        echo "TestingTime: ${{ env.testingtime }}"
-        if [[ $Env == *"SI INT"* ]]; then
+       
+        if [[ $envi == *"SI INT"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $Env == *"SI QA"* ]]; then
+        if [[ $envi == *"SI QA"* ]]; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $Env == *"SI PROD"* ]]; then
+        if [[ $envi == *"SI PROD"* ]]; then
+            echo "INT models present; Authenticating for SI"
+        else
+            echo "No INT models present; hence not authenticating for SI"
+        fi
+    - name: Display GitHub  Variables
+      run: |
+        if echo "$env" | grep -q "SI INT"; then
             echo "INT models present; Authenticating for SI"
         else
             echo "No INT models present; hence not authenticating for SI"
         fi
 
+        if echo "$env" | grep -q "SI QA"; then
+            echo "QA models present; Authenticating for SI"
+        else
+            echo "No QA models present; hence not authenticating for SI"
+        fi
+
+        if echo "$env" | grep -q "SI PROD"; then
+            echo "PROD models present; Authenticating for SI"
+        else
+            echo "No PROD models present; hence not authenticating for SI"
+        fi
