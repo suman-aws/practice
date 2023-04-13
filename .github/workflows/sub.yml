@@ -13,24 +13,28 @@ jobs:
       - name: Set environment variables
         run: |
           output=$(python3 deployment.py)
-          env=$(echo "$output" | awk -F'=' '/^env/ {print $2}')
+          envi=$(echo "$output" | awk -F'=' '/^env/ {print $2}')
           context=$(echo "$output" | awk -F'=' '/^context/ {print $2}')
           model=$(echo "$output" | awk -F'=' '/^model/ {print $2}')
           version=$(echo "$output" | awk -F'=' '/^version/ {print $2}')
           sysuid=$(echo "$output" | awk -F'=' '/^sysuid/ {print $2}')
           testingtime=$(echo "$output" | awk -F'=' '/^testingtime/ {print $2}')
-
-          echo "Setting environment variables"
-          echo "ENV=$env" >> $GITHUB_ENV
-          echo "CONTEXT=$context" >> $GITHUB_ENV
-          echo "MODEL=$model" >> $GITHUB_ENV
-          echo "VERSION=$version" >> $GITHUB_ENV
-          echo "SYSUID=$sysuid" >> $GITHUB_ENV
-          echo "TESTINGTIME=$testingtime" >> $GITHUB_ENV
-
-      - name: Use environment variables
+          echo "::set-env name=ENVI::${envi}"
+          echo "::set-env name=CONTEXT::${context}"
+          echo "::set-env name=MODEL::${model}"
+          echo "::set-env name=VERSION::${version}"
+          echo "::set-env name=SYSUID::${sysuid}"
+          echo "::set-env name=TESTINGTIME::${testingtime}"
+          # echo "Setting environment variables"
+          # echo "ENV=$env" >> $GITHUB_ENV
+          # echo "CONTEXT=$context" >> $GITHUB_ENV
+          # echo "MODEL=$model" >> $GITHUB_ENV
+          # echo "VERSION=$version" >> $GITHUB_ENV
+          # echo "SYSUID=$sysuid" >> $GITHUB_ENV
+          # echo "TESTINGTIME=$testingtime" >> $GITHUB_ENV
+      - name: Print environment variables
         run: |
-          echo "Env: $ENV"
+          echo "Envi: $ENVI"
           echo "Deployment Context: $CONTEXT"
           echo "Model Names: $MODEL"
           echo "Model Versions: $VERSION"
