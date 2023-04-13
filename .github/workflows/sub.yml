@@ -1,71 +1,40 @@
-name: Example Workflow
+name: My Workflow
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  test_job:
+  my-job:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Prepare deployment
-      run: python3 prepare_re_deployment.py
-      id: prepare_deploy
-      continue-on-error: true
-
-    - name: Parse deployment info
+    - name: Set Environment Variables
       run: |
-        pwd
-        env=()
-        context=()
-        model=()
-        version=()
-        sysuid=()
-        testingtime=()
+        output=$(python3 prepare_re_deployment.py)
+        while read -r line; do
+          IFS="=" read -r -a parts <<< "$line"
+          case ${parts[0]} in
+            "SI QA")
+              echo "ENV=${parts[0]}" >> $GITHUB_ENV
+              echo "DEPLOYMENT_CONTEXT=${parts[1]}" >> $GITHUB_ENV
+              echo "MODEL_NAMES=${parts[2]}" >> $GITHUB_ENV
+              echo "MODEL_VERSIONS=${parts[3]}" >> $GITHUB_ENV
+              echo "SYSTEM_UIDS=${parts[4]}" >> $GITHUB_ENV
+              echo "TESTING_TIME=${parts[5]}" >> $GITHUB_ENV
+              ;;
+            # Add other cases here for different environments
+            *)
+              ;;
+          esac
+        done <<< "$output"
 
-        echo "Running the prepare_re_deployment.py script..."
-        sh "python3 /home/runner/work/practice/practice/prepare_re_deployment.py"
-
-        echo "Reading output from the prepare_re_deployment.py script..."
-        Text=$(python3 prepare_re_deployment.py)
-        echo "Text: ${Text}"
-
-        echo "Parsing the output and storing the values..."
-        for line in ${Text[@]}; do
-          echo "Parsing line: ${line}"
-          IFS='=' read -ra parts <<< "${line}"
-          for idx in "${!parts[@]}"; do
-            echo "Parsing part[${idx}]: ${parts[$idx]}"
-            case $idx in            
-              0) 
-                env+=("${parts[$idx]}")
-                ;;
-              1) 
-                context+=("${parts[$idx]}")
-                ;;
-              2) 
-                model+=("${parts[$idx]}")
-                ;;
-              3)
-                version+=("${parts[$idx]}")
-                ;;
-              4)
-                sysuid+=("${parts[$idx]}")
-                ;;
-              5)
-                testingtime+=("${parts[$idx]}")
-                ;;
-            esac
-          done
-        done
-
-        echo "Env: ${env[@]}"
-        echo "Deployment Context: ${context[@]}"
-        echo "Model Names: ${model[@]}"
-        echo "Model Versions: ${version[@]}"
-        echo "SystemUIDs: ${sysuid[@]}"
-        echo "TestingTime: ${testingtime[@]}"
+    - name: Use Environment Variables
+      run: |
+        echo $ENV
+        echo $DEPLOYMENT_CONTEXT
+        echo $MODEL_NAMES
+        echo $MODEL_VERSIONS
+        echo $SYSTEM_UIDS
+        echo $TESTING_TIME
