@@ -11,8 +11,8 @@ jobs:
     - name: Run script and store output in environment
       run: |
         python3 hs.py
-        if 'INT' in os.environ['ENVironment']:
-            print("INT models present; Authenticating for SI ")
+        if 'INT' in os.environ['ENVironment']:then
+            echo "INT models present; Authenticating for SI "
         else:
-            print("No INT models present; hence not authenticating for SI ")
+            echo "No INT models present; hence not authenticating for SI "
 
