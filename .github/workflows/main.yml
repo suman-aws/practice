@@ -1,34 +1,42 @@
-name: My Workflow
-on: [push]
+name: Prepare new deployment
+
+on:
+  push:
+    branches: [main]
 
 jobs:
-  my_job:
+  prepare_deployment:
     runs-on: ubuntu-latest
-    inputs:
-      environment:
-        description: 'Environment'
-        required: true
-      deployment_context:
-        description: 'Deployment Context'
-        required: true
-      model_names:
-        description: 'Model Names'
-        required: true
-      model_versions:
-        description: 'Model Versions'
-        required: true
-      system_uids:
-        description: 'System UIDs'
-        required: true
-      testing_times:
-        description: 'Testing Times'
-        required: true
+
     steps:
-      - name: My Step
-        run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Deployment Context: ${{ inputs.deployment_context }}"
-          echo "Model Names: ${{ inputs.model_names }}"
-          echo "Model Versions: ${{ inputs.model_versions }}"
-          echo "System UIDs: ${{ inputs.system_uids }}"
-          echo "Testing Times: ${{ inputs.testing_times }}"
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run script and capture output
+      run: |
+        python3 prepare_new_deployment.py > output.txt
+      id: get_output
+
+    - name: Parse output and set output variables
+      run: |
+        env=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==1')
+        context=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==2')
+        model=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==3')
+        version=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==4')
+        sysuid=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==5')
+        testingtime=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==6')
+        echo "::set-output name=env::$env"
+        echo "::set-output name=context::$context"
+        echo "::set-output name=model::$model"
+        echo "::set-output name=version::$version"
+        echo "::set-output name=sysuid::$sysuid"
+        echo "::set-output name=testingtime::$testingtime"
+      shell: bash
+
+    - name: Use parsed output
+      run: |
+        echo "Env: ${{ steps.get_output.outputs.env }}"
+        echo "Deployment Context: ${{ steps.get_output.outputs.context }}"
+        echo "Model Names: ${{ steps.get_output.outputs.model }}"
+        echo "Model Versions: ${{ steps.get_output.outputs.version }}"
+        echo "SystemUIDs: ${{ steps.get_output.outputs.sysuid }}"
+        echo "TestingTime: ${{ steps.get_output.outputs.testingtime }}"
