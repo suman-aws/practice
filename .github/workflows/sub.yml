@@ -12,27 +12,35 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          python3 prepare_new_deployment.py
-          env=$(grep 'ENVironment' config.yaml | awk '{print $2}')
-          deployment_context=$(grep 'DeploymentContext' config.yaml | awk '{print $2}')
-          model_name=$(grep 'ModelName' config.yaml | awk '{print $2}')
-          model_version=$(grep 'ModelVersion' config.yaml | awk '{print $2}')
-          system_uids=$(grep 'SystemUIDs' config.yaml | awk '{print $2}')
-          testing_time=$(grep 'TestingTime' config.yaml | awk '{print $2}')
-          echo "::set-output name=env::$env"
-          echo "::set-output name=deployment_context::$deployment_context"
-          echo "::set-output name=model_name::$model_name"
-          echo "::set-output name=model_version::$model_version"
-          echo "::set-output name=system_uids::$system_uids"
-          echo "::set-output name=testing_time::$testing_time"
-      - name: Use deployment inputs
-        run: |
-          echo "Env: ${{ steps.prepare.outputs.env }}"
-          echo "Deployment Context: ${{ steps.prepare.outputs.deployment_context }}"
-          echo "Model Names: ${{ steps.prepare.outputs.model_name }}"
-          echo "Model Versions: ${{ steps.prepare.outputs.model_version }}"
-          echo "SystemUIDs: ${{ steps.prepare.outputs.system_uids }}"
-          echo "Testing Time: ${{ steps.prepare.outputs.testing_time }}"
+
+
+          # Run the Python script and store the output in a variable
+          output=$(python prepare_new_deployment.py)
+
+          # Set the GitHub environment variables for each list
+          export ENVironment=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=])")
+          export DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=])")
+          export MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=])")
+          export MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=])")
+          export SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=])")
+          export TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=])")
+
+          # Display the values of the environment variables
+          echo "ENVironment: $ENVironment"
+          echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
+          echo "MODEL_NAMES: $MODEL_NAMES"
+          echo "MODEL_VERSIONS: $MODEL_VERSIONS"
+          echo "SYSTEM_UIDS: $SYSTEM_UIDS"
+          echo "TESTING_TIMES: $TESTING_TIMES"
+
+    - name: Use deployment inputs
+      run: |
+        echo "Env: ${{ steps.prepare.outputs.env }}"
+        echo "Deployment Context: ${{ steps.prepare.outputs.deployment_context }}"
+        echo "Model Names: ${{ steps.prepare.outputs.model_name }}"
+        echo "Model Versions: ${{ steps.prepare.outputs.model_version }}"
+        echo "SystemUIDs: ${{ steps.prepare.outputs.system_uids }}"
+        echo "Testing Time: ${{ steps.prepare.outputs.testing_time }}"
 
 
     - name: Use parsed output
