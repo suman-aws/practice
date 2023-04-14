@@ -20,7 +20,13 @@ jobs:
           echo "MODEL_VERSIONS=$(grep -oP "(?<=Model Versions: ).*" output.txt)" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=$(grep -oP "(?<=SystemUIDs: ).*" output.txt)" >> $GITHUB_ENV
           echo "TESTING_TIMES=$(grep -oP "(?<=TestingTime: ).*" output.txt)" >> $GITHUB_ENV
-
+      - name: Check environment variable
+        run: |
+          if [[ ${{ env.ENVIRONMENT }} == *"INT"* ]]; then
+            echo "INT models present; Authenticating for SI"
+          else
+            echo "No INT models present; hence not authenticating for SI"
+          fi
           # output=$(python3 prepare_re_deployment.py)
           # env=()
           # context=()
