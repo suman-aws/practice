@@ -22,12 +22,18 @@ jobs:
           sysuid="${Models[4]}"
           testingtime="${Models[5]}"
           echo "::set-output name=env_details::$envir"
-          echo "::set-output name=env_details::$environ"
           echo "::set-output name=Deployment_Context::$context"
           echo "::set-output name=model_details::$model"
           echo "::set-output name=Model_Versions::$version"
           echo "::set-output name=SystemUIDs::$sysuid"
           echo "::set-output name=TestingTime::$testingtime"
+
+          echo "Env: ${env_details[@]}"
+          echo "Deployment Context: ${Deployment_Context[@]}"
+          echo "Model Names: ${model_details[@]}"
+          echo "Model Versions: ${Model_Versions[@]}"
+          echo "SystemUIDs: ${SystemUIDs[@]}"
+          echo "TestingTime: ${TestingTime[@]}"
       #     python prepare_re_deployment.py > output.txt
       #     cat output.txt
       #     echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
