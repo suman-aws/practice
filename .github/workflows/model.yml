@@ -25,3 +25,12 @@ jobs:
         echo $version >> $GITHUB_ENV
         echo $sysuid >> $GITHUB_ENV
         echo $testingtime >> $GITHUB_ENV
+
+    - name: Check if QA environment is present
+      run: |
+        if [[ "${{ env.ENVironment }}" == *"QA"* ]]; then
+        echo "QA environment is present"
+        else
+        echo "QA environment is not present"
+        fi
+
