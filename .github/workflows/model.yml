@@ -4,6 +4,10 @@ on: [push]
 
 jobs:
   my_job:
+    inputs:
+    model: model1
+    version: v1
+    context: c1
     runs-on: ubuntu-latest
     steps:
       - name: My Step

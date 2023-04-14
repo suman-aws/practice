@@ -12,22 +12,38 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          python prepare_re_deployment.py > output.txt
-          cat output.txt
-          echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
-          echo "DEPLOYMENT_CONTEXT=$(grep -oP "(?<=Deployment Context: ).*" output.txt)" >> $GITHUB_ENV
-          echo "MODEL_NAMES=$(grep -oP "(?<=Model Names: ).*" output.txt)" >> $GITHUB_ENV
-          echo "MODEL_VERSIONS=$(grep -oP "(?<=Model Versions: ).*" output.txt)" >> $GITHUB_ENV
-          echo "SYSTEM_UIDS=$(grep -oP "(?<=SystemUIDs: ).*" output.txt)" >> $GITHUB_ENV
-          echo "TESTING_TIMES=$(grep -oP "(?<=TestingTime: ).*" output.txt)" >> $GITHUB_ENV
-      - name: Check environment variable
-        run: |
-          if [[ ${{ env.ENVIRONMENT }} == *"INT"* ]]; then
-            echo "INT models present; Authenticating for SI"
-          else
-            echo "No INT models present; hence not authenticating for SI"
-          fi
-          
+          output=$(python3 prepare_re_deployment.py)
+          OUTPUT="${output[@]}"
+          readarray -t Models < <(echo "$OUTPUT")
+          envir="${Models[0]}"
+          context=="${Models[1]}"
+          model="${Models[2]}"
+          version="${Models[3]}"
+          sysuid="${Models[4]}"
+          testingtime="${Models[5]}"
+          echo "::set-output name=env_details::$envir"
+          echo "::set-output name=env_details::$environ"
+          echo "::set-output name=Deployment_Context::$context"
+          echo "::set-output name=model_details::$model"
+          echo "::set-output name=Model_Versions::$version"
+          echo "::set-output name=SystemUIDs::$sysuid"
+          echo "::set-output name=TestingTime::$testingtime"
+      #     python prepare_re_deployment.py > output.txt
+      #     cat output.txt
+      #     echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
+      #     echo "DEPLOYMENT_CONTEXT=$(grep -oP "(?<=Deployment Context: ).*" output.txt)" >> $GITHUB_ENV
+      #     echo "MODEL_NAMES=$(grep -oP "(?<=Model Names: ).*" output.txt)" >> $GITHUB_ENV
+      #     echo "MODEL_VERSIONS=$(grep -oP "(?<=Model Versions: ).*" output.txt)" >> $GITHUB_ENV
+      #     echo "SYSTEM_UIDS=$(grep -oP "(?<=SystemUIDs: ).*" output.txt)" >> $GITHUB_ENV
+      #     echo "TESTING_TIMES=$(grep -oP "(?<=TestingTime: ).*" output.txt)" >> $GITHUB_ENV
+      # - name: Check environment variable
+      #   run: |
+      #     if [[ ${{ env.ENVIRONMENT }} == *"INT"* ]]; then
+      #       echo "INT models present; Authenticating for SI"
+      #     else
+      #       echo "No INT models present; hence not authenticating for SI"
+      #     fi
+
           # output=$(python3 prepare_re_deployment.py)
           # env=()
           # context=()
