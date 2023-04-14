@@ -12,23 +12,36 @@ jobs:
       #   uses: actions/setup-python@v2
       #   with:
       #     python-version: '3.x'
-      - name: Run script
+      - name: Run Python Script and Set Environment Variables
         run: |
-          # Run your Python script and store its output in a list
+          # Replace with your Python script that prints the lists as strings
           output=$(python prepare_new_deployment.py)
-          # Separate the list values and store them in separate environment variables
-          IFS=' ' read -ra values <<< "$output"
-          echo "ENVironment=${values[0]}" >> $GITHUB_ENV
-          echo "DEPLOYMENT_CONTEXT=${values[1]}" >> $GITHUB_ENV
-          echo "MODEL_NAMES=${values[2]}" >> $GITHUB_ENV
-          echo "MODEL_VERSIONS=${values[3]}" >> $GITHUB_ENV
-          echo "SYSTEM_UIDS=${values[4]}" >> $GITHUB_ENV
-          echo "TESTING_TIMES=${values[5]}" >> $GITHUB_ENV
-      - name: Display ENV Values
+          # Set environment variables for each list
+          export ENVironment=$(echo "$output" | sed -n '1p')
+          export DEPLOYMENT_CONTEXT=$(echo "$output" | sed -n '2p')
+          export MODEL_NAMES=$(echo "$output" | sed -n '3p')
+          export MODEL_VERSIONS=$(echo "$output" | sed -n '4p')
+          export SYSTEM_UIDS=$(echo "$output" | sed -n '5p')
+          export TESTING_TIMES=$(echo "$output" | sed -n '6p')
+        env:
+          ENVironment: ''
+          DEPLOYMENT_CONTEXT: ''
+          MODEL_NAMES: ''
+          MODEL_VERSIONS: ''
+          SYSTEM_UIDS: ''
+          TESTING_TIMES: ''
+      - name: Set Environment Variables for GitHub
         run: |
-          echo "ENVironment: ${{ env.ENVironment }}"
-          echo "DEPLOYMENT_CONTEXT: ${{ env.DEPLOYMENT_CONTEXT }}"
-          echo "MODEL_NAMES: ${{ env.MODEL_NAMES }}"
-          echo "MODEL_VERSIONS: ${{ env.MODEL_VERSIONS }}"
-          echo "SYSTEM_UIDS: ${{ env.SYSTEM_UIDS }}"
-          echo "TESTING_TIMES: ${{ env.TESTING_TIMES }}"
+          echo "ENVironment: '${{ env.ENVironment }}'" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT: '${{ env.DEPLOYMENT_CONTEXT }}'" >> $GITHUB_ENV
+          echo "MODEL_NAMES: '${{ env.MODEL_NAMES }}'" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS: '${{ env.MODEL_VERSIONS }}'" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS: '${{ env.SYSTEM_UIDS }}'" >> $GITHUB_ENV
+          echo "TESTING_TIMES: '${{ env.TESTING_TIMES }}'" >> $GITHUB_ENV
+        env:
+          ENVironment: $ENVironment
+          DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT
+          MODEL_NAMES: $MODEL_NAMES
+          MODEL_VERSIONS: $MODEL_VERSIONS
+          SYSTEM_UIDS: $SYSTEM_UIDS
+          TESTING_TIMES: $TESTING_TIMES
