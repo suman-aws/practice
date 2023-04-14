@@ -11,8 +11,11 @@ jobs:
     - name: Run script and store output in environment
       run: |
         python3 hs.py
-        if 'INT' in os.environ['ENVironment']:then
-            echo "INT models present; Authenticating for SI "
-        else:
-            echo "No INT models present; hence not authenticating for SI "
-
+    - name: Print environment variables
+    run: |
+        echo "ENVironment: ${{ env.ENVironment }}"
+        echo "DEPLOYMENT_CONTEXT: ${{ env.DEPLOYMENT_CONTEXT }}"
+        echo "MODEL_NAMES: ${{ env.MODEL_NAMES }}"
+        echo "MODEL_VERSIONS: ${{ env.MODEL_VERSIONS }}"
+        echo "SYSTEM_UIDS: ${{ env.SYSTEM_UIDS }}"
+        echo "TESTING_TIMES: ${{ env.TESTING_TIMES }}"
