@@ -69,3 +69,26 @@ jobs:
         fi
       env:
         ENVironment: ${{ env.ENVironment }}
+    - name: Deploy to environment
+      env:
+        ENVironment: ${{ env.ENVironment }}
+      run: |
+          for i in "${!ENVironment[@]}"; do
+            parts=(${ENVironment[$i]// / })
+            case "${parts[1]}" in
+              INT)
+                HOST="hsi7.com"
+                ;;
+              QA)
+                HOST="3.com"
+                ;;
+              PROD)
+                HOST="5.com"
+                ;;
+            esac
+            echo "Deploying to ${parts[1]} environment on host ${HOST}"
+            # Add your deployment commands here using $HOST
+          done
+
+
+
