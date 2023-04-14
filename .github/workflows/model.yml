@@ -1,95 +1,27 @@
-name: Prepare RE Deployment
-on:
-  push:
-    branches: [ main ]
+name: Store output in environment
+
+on: [push]
 
 jobs:
-  prepare:
+  read_output:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Run script
-      id: step1
+    - name: Run script and store output in environment
       run: |
-        python3 deployment.py > output.txt
-        envi=()
-        context=()
-        model=()
-        version=()
-        sysuid=()
-        testingtime=()
-        while read -r line; do
-            parts=($(echo "$line" | tr "=" "\n"))
-            case 0 in
-                "${parts[0]}")
-                    envi+=(${parts[1]})
-                    ;;
-                "${parts[1]}")
-                    context+=(${parts[1]})
-                    ;;
-                "${parts[2]}")
-                    model+=(${parts[1]})
-                    ;;
-                "${parts[3]}")
-                    version+=(${parts[1]})
-                    ;;
-                "${parts[4]}")
-                    sysuid+=(${parts[1]})
-                    ;;
-                "${parts[5]}")
-                    testingtime+=(${parts[1]})
-                    ;;
-            esac
-        done < output.txt
-        echo "envi=${envi[@]}" >> $GITHUB_ENV
-        echo "context=${context[@]}" >> $GITHUB_ENV
-        echo "model=${model[@]}" >> $GITHUB_ENV
-        echo "version=${version[@]}" >> $GITHUB_ENV
-        echo "sysuid=${sysuid[@]}" >> $GITHUB_ENV
-        echo "testingtime=${testingtime[@]}" >> $GITHUB_ENV 
-        echo "$envi[@]"
-        
-    - name: Display GitHub Environment Variables
-      env :
-        envir: ${{ steps.step1.outputs.envi}}
-      run: |
-       
-        if [[ $envir[@] == *"SI INT"* ]]; then
-            echo "INT models present; Authenticating for SI"
-        else
-            echo "No INT models present; hence not authenticating for SI"
-        fi
-
-        if [[ $envir[@] == *"SI QA"* ]]; then
-            echo "INT models present; Authenticating for SI"
-        else
-            echo "No INT models present; hence not authenticating for SI"
-        fi
-
-        if [[ $envir[@] == *"SI PROD"* ]]; then
-            echo "INT models present; Authenticating for SI"
-        else
-            echo "No INT models present; hence not authenticating for SI"
-        fi
-    # - name: Display GitHub  Variables
-    #   env:
-    #     envi: ${envi[@]}
-    #   run: |
-    #     if echo "$envi" | grep -q "SI INT"; then
-    #         echo "INT models present; Authenticating for SI"
-    #     else
-    #         echo "No INT models present; hence not authenticating for SI"
-    #     fi
-
-    #     if echo "$env" | grep -q "SI QA"; then
-    #         echo "QA models present; Authenticating for SI"
-    #     else
-    #         echo "No QA models present; hence not authenticating for SI"
-    #     fi
-
-    #     if echo "$env" | grep -q "SI PROD"; then
-    #         echo "PROD models present; Authenticating for SI"
-    #     else
-    #         echo "No PROD models present; hence not authenticating for SI"
-    #     fi
+        output=$(python3 prepare_re_deployment.py)
+        IFS=$'\n'
+        data=($output)
+        env=("ENVironment=${data[0]}")
+        context=("DEPLOYMENT_CONTEXT=${data[1]}")
+        model=("MODEL_NAMES=${data[2]}")
+        version=("MODEL_VERSIONS=${data[3]}")
+        sysuid=("SYSTEM_UIDS=${data[4]}")
+        testingtime=("TESTING_TIMES=${data[5]}")
+        echo $env >> $GITHUB_ENV
+        echo $context >> $GITHUB_ENV
+        echo $model >> $GITHUB_ENV
+        echo $version >> $GITHUB_ENV
+        echo $sysuid >> $GITHUB_ENV
+        echo $testingtime >> $GITHUB_ENV
