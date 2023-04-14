@@ -1,21 +1,14 @@
-name: Store output in environment
+name: My Workflow
 
 on: [push]
 
 jobs:
-  read_output:
+  my_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Run script and store output in environment
-      run: |
-        python3 hs.py
-    - name: Print environment variables
-      run: |
-        echo "ENVironment: ${{ env.ENVironment }}"
-        echo "DEPLOYMENT_CONTEXT: ${{ env.DEPLOYMENT_CONTEXT }}"
-        echo "MODEL_NAMES: ${{ env.MODEL_NAMES }}"
-        echo "MODEL_VERSIONS: ${{ env.MODEL_VERSIONS }}"
-        echo "SYSTEM_UIDS: ${{ env.SYSTEM_UIDS }}"
-        echo "TESTING_TIMES: ${{ env.TESTING_TIMES }}"
+      - name: My Step
+        run: echo "Hello, world!"
+        env:
+          MODEL: ${{ inputs.model }}
+          VERSION: ${{ inputs.version }}
+          CONTEXT: ${{ inputs.context }}
