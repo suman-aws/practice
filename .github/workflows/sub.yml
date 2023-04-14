@@ -1,159 +1,26 @@
-name: My Workflow
+name: Python Script
 
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
-  deploy:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Run prepare_re_deployment.py
-      run: |
-
-
-        # Run the Python script and store the output in a variable
-        output=$(python prepare_new_deployment.py)
-
-        # Set the GitHub environment variables for each list
-        export ENVironment=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=])")
-        export DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=])")
-        export MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=])")
-        export MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=])")
-        export SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=])")
-        export TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=])")
-
-        # Display the values of the environment variables
-        echo "ENVironment: $ENVironment"
-        echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
-        echo "MODEL_NAMES: $MODEL_NAMES"
-        echo "MODEL_VERSIONS: $MODEL_VERSIONS"
-        echo "SYSTEM_UIDS: $SYSTEM_UIDS"
-        echo "TESTING_TIMES: $TESTING_TIMES"
-
-    - name: Use deployment inputs
-      run: |
-        echo "Env: ${{ steps.prepare.outputs.env }}"
-        echo "Deployment Context: ${{ steps.prepare.outputs.deployment_context }}"
-        echo "Model Names: ${{ steps.prepare.outputs.model_name }}"
-        echo "Model Versions: ${{ steps.prepare.outputs.model_version }}"
-        echo "SystemUIDs: ${{ steps.prepare.outputs.system_uids }}"
-        echo "Testing Time: ${{ steps.prepare.outputs.testing_time }}"
-
-
-    - name: Use parsed output
-      run: |
-        echo "Env: ${{ steps.get_output.outputs.env }}"
-        echo "Deployment Context: ${{ steps.get_output.outputs.context }}"
-        echo "Model Names: ${{ steps.get_output.outputs.model }}"
-        echo "Model Versions: ${{ steps.get_output.outputs.version }}"
-        echo "SystemUIDs: ${{ steps.get_output.outputs.sysuid }}"
-        echo "TestingTime: ${{ steps.get_output.outputs.testingtime }}"
-
-
-          # output=$(python3 prepare_new_deployment.py)
-          # IFS=$'\n'
-          # for line in ${output}; do
-          #   parts=($(echo ${line} | tr '=' ' '))
-
-          #   case ${#parts[@]} in
-          #     6)
-          #       env+=(${parts[0]})
-          #       context+=(${parts[1]})
-          #       model+=(${parts[2]})
-          #       version+=(${parts[3]})
-          #       sysuid+=(${parts[4]})
-          #       testingtime+=(${parts[5]})
-          #       ;;
-          #     *)
-          #       echo "Unexpected number of parts in line: ${line}"
-          #       ;;
-          #   esac
-          # done
-
-          # echo "Env: ${env[@]}"
-          # echo "Deployment Context: ${context[@]}"
-          # echo "Model Names: ${model[@]}"
-          # echo "Model Versions: ${version[@]}"
-          # echo "SystemUIDs: ${sysuid[@]}"
-          # echo "TestingTime: ${testingtime[@]}"
-
-          # echo "::set-output name=env::${env[*]}"
-          # echo "::set-output name=context::${context[*]}"
-          # echo "::set-output name=model::${model[*]}"
-          # echo "::set-output name=version::${version[*]}"
-          # echo "::set-output name=sysuid::${sysuid[*]}"
-          # echo "::set-output name=testingtime::${testingtime[*]}"
-
-          # # Text=$(python3 prepare_re_deployment.py)
-
-          # # for i in $(seq 0 $(echo "$Text" | wc -l)); do
-          # #   parts=($(echo "$Text" | sed -n "$((i+1))p" | tr '=' ' '))
-          # #   case "${#parts[@]}" in
-          # #     6)
-          # #       env+=("${parts[0]}")
-          # #       context+=("${parts[1]}")
-          # #       model+=("${parts[2]}")
-          # #       version+=("${parts[3]}")
-          # #       sysuid+=("${parts[4]}")
-          # #       testingtime+=("${parts[5]}")
-          # #       ;;
-          # #     *)
-          # #       ;;
-          # #   esac
-          # # done
-
-          # # echo "Env: ${env[@]}" >> $GITHUB_ENV
-          # # echo "Deployment Context: ${context[@]}" >> $GITHUB_ENV
-          # # echo "Model Names: ${model[@]}" >> $GITHUB_ENV
-          # # echo "Model Versions: ${version[@]}" >> $GITHUB_ENV
-          # # echo "SystemUIDs: ${sysuid[@]}" >> $GITHUB_ENV
-          # # echo "TestingTime: ${testingtime[@]}" >> $GITHUB_ENV
-
-
-      #     python prepare_re_deployment.py > output.txt
-      #     cat output.txt
-      #     echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
-      #     echo "DEPLOYMENT_CONTEXT=$(grep -oP "(?<=Deployment Context: ).*" output.txt)" >> $GITHUB_ENV
-      #     echo "MODEL_NAMES=$(grep -oP "(?<=Model Names: ).*" output.txt)" >> $GITHUB_ENV
-      #     echo "MODEL_VERSIONS=$(grep -oP "(?<=Model Versions: ).*" output.txt)" >> $GITHUB_ENV
-      #     echo "SYSTEM_UIDS=$(grep -oP "(?<=SystemUIDs: ).*" output.txt)" >> $GITHUB_ENV
-      #     echo "TESTING_TIMES=$(grep -oP "(?<=TestingTime: ).*" output.txt)" >> $GITHUB_ENV
-      # - name: Check environment variable
-      #   run: |
-      #     if [[ ${{ env.ENVIRONMENT }} == *"INT"* ]]; then
-      #       echo "INT models present; Authenticating for SI"
-      #     else
-      #       echo "No INT models present; hence not authenticating for SI"
-      #     fi
-
-          # output=$(python3 prepare_re_deployment.py)
-          # env=()
-          # context=()
-          # model=()
-          # version=()
-          # sysuid=()
-          # testingtime=()
-
-          # while read -r line; do
-          #   IFS='=' read -ra parts <<< "$line"
-          #   for i in "${!parts[@]}"; do
-          #     case "$i" in
-          #       0) export env+=("${parts[i]}") ;;
-          #       1) export context+=("${parts[i]}") ;;
-          #       2) export model+=("${parts[i]}") ;;
-          #       3) export version+=("${parts[i]}") ;;
-          #       4) export sysuid+=("${parts[i]}") ;;
-          #       5) export testingtime+=("${parts[i]}") ;;
-          #     esac
-          #   done
-          # done <<< "$output"
-
-          # echo "Env: ${env[@]}"
-          # echo "Deployment Context: ${context[@]}"
-          # echo "Model Names: ${model[@]}"
-          # echo "Model Versions: ${version[@]}"
-          # echo "SystemUIDs: ${sysuid[@]}"
-          # echo "TestingTime: ${testingtime[@]}"
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # - name: Setup Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.x'
+      - name: Run script
+        run: |
+          # Run your Python script and store its output in a list
+          output=$(python your_script.py)
+          # Separate the list values and store them in separate environment variables
+          IFS=' ' read -ra values <<< "$output"
+          echo "ENVironment=${values[0]}" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=${values[1]}" >> $GITHUB_ENV
+          echo "MODEL_NAMES=${values[2]}" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=${values[3]}" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=${values[4]}" >> $GITHUB_ENV
+          echo "TESTING_TIMES=${values[5]}" >> $GITHUB_ENV
