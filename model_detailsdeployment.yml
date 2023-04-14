@@ -1,7 +1,7 @@
 134:
 
   DeploymentContext: RW
-  DeploymentEnv: SI QA
+  DeploymentEnv: QA
   Modality: TR
   ModelName: T-PR
   ModelUID: T-PR
@@ -11,7 +11,7 @@
 135:
 
   DeploymentContext: RW+RS
-  DeploymentEnv: SI QA
+  DeploymentEnv: QA
   Modality: R
   ModelName: LR
   ModelUID: LR
