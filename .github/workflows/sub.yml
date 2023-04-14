@@ -24,3 +24,11 @@ jobs:
           echo "MODEL_VERSIONS=${values[3]}" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=${values[4]}" >> $GITHUB_ENV
           echo "TESTING_TIMES=${values[5]}" >> $GITHUB_ENV
+      - name: Display ENV Values
+        run: |
+          echo "ENVironment: ${{ env.ENVironment }}"
+          echo "DEPLOYMENT_CONTEXT: ${{ env.DEPLOYMENT_CONTEXT }}"
+          echo "MODEL_NAMES: ${{ env.MODEL_NAMES }}"
+          echo "MODEL_VERSIONS: ${{ env.MODEL_VERSIONS }}"
+          echo "SYSTEM_UIDS: ${{ env.SYSTEM_UIDS }}"
+          echo "TESTING_TIMES: ${{ env.TESTING_TIMES }}"
