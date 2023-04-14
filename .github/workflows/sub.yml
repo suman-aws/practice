@@ -34,6 +34,10 @@ jobs:
           echo "Model Versions: ${Model_Versions[@]}"
           echo "SystemUIDs: ${SystemUIDs[@]}"
           echo "TestingTime: ${TestingTime[@]}"
+      - name: Run display
+        run: |
+          if [[ ${envir[@]} == *"INT"* ]]; then
+          echo "INT models present; Authenticating for HSI
       #     python prepare_re_deployment.py > output.txt
       #     cat output.txt
       #     echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
