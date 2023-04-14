@@ -12,20 +12,22 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          Text=$(python3 prepare_re_deployment.py)
+          output=$(python3 prepare_new_deployment.py)
+          IFS=$'\n'
+          for line in ${output}; do
+            parts=($(echo ${line} | tr '=' ' '))
 
-          for i in $(seq 0 $(echo "$Text" | wc -l)); do
-            parts=($(echo "$Text" | sed -n "$((i+1))p" | tr '=' ' '))
-            case "${#parts[@]}" in
+            case ${#parts[@]} in
               6)
-                env+=("${parts[0]}")
-                context+=("${parts[1]}")
-                model+=("${parts[2]}")
-                version+=("${parts[3]}")
-                sysuid+=("${parts[4]}")
-                testingtime+=("${parts[5]}")
+                env+=(${parts[0]})
+                context+=(${parts[1]})
+                model+=(${parts[2]})
+                version+=(${parts[3]})
+                sysuid+=(${parts[4]})
+                testingtime+=(${parts[5]})
                 ;;
               *)
+                echo "Unexpected number of parts in line: ${line}"
                 ;;
             esac
           done
@@ -36,6 +38,39 @@ jobs:
           echo "Model Versions: ${version[@]}"
           echo "SystemUIDs: ${sysuid[@]}"
           echo "TestingTime: ${testingtime[@]}"
+
+          echo "::set-output name=env::${env[*]}"
+          echo "::set-output name=context::${context[*]}"
+          echo "::set-output name=model::${model[*]}"
+          echo "::set-output name=version::${version[*]}"
+          echo "::set-output name=sysuid::${sysuid[*]}"
+          echo "::set-output name=testingtime::${testingtime[*]}"
+
+          # Text=$(python3 prepare_re_deployment.py)
+
+          # for i in $(seq 0 $(echo "$Text" | wc -l)); do
+          #   parts=($(echo "$Text" | sed -n "$((i+1))p" | tr '=' ' '))
+          #   case "${#parts[@]}" in
+          #     6)
+          #       env+=("${parts[0]}")
+          #       context+=("${parts[1]}")
+          #       model+=("${parts[2]}")
+          #       version+=("${parts[3]}")
+          #       sysuid+=("${parts[4]}")
+          #       testingtime+=("${parts[5]}")
+          #       ;;
+          #     *)
+          #       ;;
+          #   esac
+          # done
+
+          # echo "Env: ${env[@]}" >> $GITHUB_ENV
+          # echo "Deployment Context: ${context[@]}" >> $GITHUB_ENV
+          # echo "Model Names: ${model[@]}" >> $GITHUB_ENV
+          # echo "Model Versions: ${version[@]}" >> $GITHUB_ENV
+          # echo "SystemUIDs: ${sysuid[@]}" >> $GITHUB_ENV
+          # echo "TestingTime: ${testingtime[@]}" >> $GITHUB_ENV
+
 
       #     python prepare_re_deployment.py > output.txt
       #     cat output.txt

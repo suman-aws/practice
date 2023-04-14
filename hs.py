@@ -1,29 +1,30 @@
-#!/usr/bin/env python3
-
 import subprocess
 
-output = subprocess.check_output(["python3", "prepare_new_deployment.py"]).decode().split("\n")
+output = subprocess.check_output(['python3', 'prepare_re_deployment.py'], universal_newlines=True)
 
-for line in output:
-  parts = line.split("=")
+env = []
+context = []
+model = []
+version = []
+sysuid = []
+testingtime = []
 
-  for j in range(6):
-    if j == 0:
-      env = parts[j]
-    elif j == 1:
-      context = parts[j]
-    elif j == 2:
-      model = parts[j]
-    elif j == 3:
-      version = parts[j]
-    elif j == 4:
-      sysuid = parts[j]
-    elif j == 5:
-      testingtime = parts[j]
+for line in output.splitlines():
+    parts = line.split('=')
 
-  print("Env:", env)
-  print("Deployment Context:", context)
-  print("Model Names:", model)
-  print("Model Versions:", version)
-  print("SystemUIDs:", sysuid)
-  print("TestingTime:", testingtime)
+    if len(parts) == 6:
+        env.append(parts[0])
+        context.append(parts[1])
+        model.append(parts[2])
+        version.append(parts[3])
+        sysuid.append(parts[4])
+        testingtime.append(parts[5])
+    else:
+        print(f"Unexpected number of parts in line: {line}")
+
+print(f"Env: {env}")
+print(f"Deployment Context: {context}")
+print(f"Model Names: {model}")
+print(f"Model Versions: {version}")
+print(f"SystemUIDs: {sysuid}")
+print(f"TestingTime: {testingtime}")
