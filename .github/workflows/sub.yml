@@ -12,16 +12,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run prepare_re_deployment.py
         run: |
-          name: My Workflow
-
-on: [push]
-
-jobs:
-  my_job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Python Script
-        run: |
           python prepare_re_deployment.py > output.txt
           cat output.txt
           echo "ENVIRONMENT=$(grep -oP "(?<=ENVironment: ).*" output.txt)" >> $GITHUB_ENV
