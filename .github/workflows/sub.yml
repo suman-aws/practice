@@ -43,30 +43,29 @@ jobs:
         echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
         echo "SYSTEM_UIDS=$SYSTEM_UIDS"
         echo "TESTING_TIMES=$TESTING_TIMES"
-
     - name: Run script
       run: |
-          #!/bin/bash
 
-          if [[ $ENVironment =~ "INT" ]]; then
-            echo "INT models present; Authenticating for SI"
-            # Add authentication steps for SI INT
-          else
-            echo "No INT models present; hence not authenticating for SI"
-          fi
 
-          if [[ $ENVironment =~ "QA" ]]; then
-            echo "QA models present; Authenticating for SI"
-            # Add authentication steps for SI QA
-          else
-            echo "No QA models present; hence not authenticating for SI"
-          fi
+        if [[ $ENVironment =~ "INT" ]]; then
+          echo "INT models present; Authenticating for SI"
+          # Add authentication steps for SI INT
+        else
+          echo "No INT models present; hence not authenticating for SI"
+        fi
 
-          if [[ $ENVironment =~ "PROD" ]]; then
-            echo "PROD models present; Authenticating for SI"
-            # Add authentication steps for SI PROD
-          else
-            echo "No PROD models present; hence not authenticating for SI"
-          fi
-        env:
-          ENVironment: ${{ env.ENVironment }}
+        if [[ $ENVironment =~ "QA" ]]; then
+          echo "QA models present; Authenticating for SI"
+          # Add authentication steps for SI QA
+        else
+          echo "No QA models present; hence not authenticating for SI"
+        fi
+
+        if [[ $ENVironment =~ "PROD" ]]; then
+          echo "PROD models present; Authenticating for SI"
+          # Add authentication steps for SI PROD
+        else
+          echo "No PROD models present; hence not authenticating for SI"
+        fi
+      env:
+        ENVironment: ${{ env.ENVironment }}
