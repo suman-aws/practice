@@ -7,31 +7,31 @@ on:
 jobs:
   deploy:
   runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run prepare_re_deployment.py
-        run: |
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run prepare_re_deployment.py
+      run: |
 
 
-          # Run the Python script and store the output in a variable
-          output=$(python prepare_new_deployment.py)
+        # Run the Python script and store the output in a variable
+        output=$(python prepare_new_deployment.py)
 
-          # Set the GitHub environment variables for each list
-          export ENVironment=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=])")
-          export DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=])")
-          export MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=])")
-          export MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=])")
-          export SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=])")
-          export TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=])")
+        # Set the GitHub environment variables for each list
+        export ENVironment=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=])")
+        export DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=])")
+        export MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=])")
+        export MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=])")
+        export SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=])")
+        export TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=])")
 
-          # Display the values of the environment variables
-          echo "ENVironment: $ENVironment"
-          echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
-          echo "MODEL_NAMES: $MODEL_NAMES"
-          echo "MODEL_VERSIONS: $MODEL_VERSIONS"
-          echo "SYSTEM_UIDS: $SYSTEM_UIDS"
-          echo "TESTING_TIMES: $TESTING_TIMES"
+        # Display the values of the environment variables
+        echo "ENVironment: $ENVironment"
+        echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
+        echo "MODEL_NAMES: $MODEL_NAMES"
+        echo "MODEL_VERSIONS: $MODEL_VERSIONS"
+        echo "SYSTEM_UIDS: $SYSTEM_UIDS"
+        echo "TESTING_TIMES: $TESTING_TIMES"
 
     - name: Use deployment inputs
       run: |
