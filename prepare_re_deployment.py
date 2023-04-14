@@ -64,12 +64,12 @@ for key, value in doc.items():
             if k == 'ModelVersion':
                 version.append(v)
 
-for i in range(len(modellist)):
-    print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
+# for i in range(len(modellist)):
+#     print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
 
-# print(env)
-# print(context)
-# print(modellist)
-# print(version)
-# print(sysuid)
-# print(testingtime)
+print("ENVironment:",env)
+print("DEPLOYMENT_CONTEXT:",context)
+print("MODEL_NAMES:",modellist)
+print("MODEL_VERSIONS:",version)
+print("SYSTEM_UIDS:",sysuid)
+print("TESTING_TIMES:",testingtime)

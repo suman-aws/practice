@@ -1,18 +1,34 @@
-import os
 import subprocess
 
-# Run the prepare_re_deployment.py script and capture the output
-result = subprocess.run(['python3', 'new.py'], capture_output=True, text=True)
+result = subprocess.run(['python3', 'prepare_re_deployment.py'], capture_output=True, text=True)
+output = result.stdout.strip()
 
-# Split the output into lines and loop through each line
-for line in result.stdout.strip().split('\n'):
-    # Extract the deployment information from each line
-    env, context, model, version, sysuid, testingtime = [x.strip() for x in line.split('=')]
-    
-    # Set the environment variables for the GitHub workflow
-    os.environ['DEPLOY_ENV'] = envi
-#     os.environ['DEPLOY_CONTEXT'] = context
-    os.environ['DEPLOY_MODEL'] = model
-    os.environ['DEPLOY_VERSION'] = version
-#     os.environ['DEPLOY_SYSUID'] = sysuid
-#     os.environ['DEPLOY_TESTINGTIME'] = testingtime
+env = []
+context = []
+model = []
+version = []
+sysuid = []
+testingtime = []
+
+for line in output.split('\n'):
+    parts = line.split('=')
+    for j, part in enumerate(parts):
+        if j == 0:
+            env.append(part)
+        elif j == 1:
+            context.append(part)
+        elif j == 2:
+            model.append(part)
+        elif j == 3:
+            version.append(part)
+        elif j == 4:
+            sysuid.append(part)
+        elif j == 5:
+            testingtime.append(part)
+
+print("Env:", env)
+print("Deployment Context:", context)
+print("Model Names:", model)
+print("Model Versions:", version)
+print("SystemUIDs:", sysuid)
+print("TestingTime:", testingtime)
