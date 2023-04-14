@@ -1,36 +1,33 @@
-name: Prepare new deployment
-
-on:
-  push:
-    branches: [main]
-
 jobs:
-  prepare_deployment:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Run script and capture output
-      run: |
-        python3 prepare_new_deployment.py > output.txt
-      id: get_output
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Prepare new deployment
+        run: |
+          python3 prepare_new_deployment.py
+          env=$(grep 'ENVironment' config.yaml | awk '{print $2}')
+          deployment_context=$(grep 'DeploymentContext' config.yaml | awk '{print $2}')
+          model_name=$(grep 'ModelName' config.yaml | awk '{print $2}')
+          model_version=$(grep 'ModelVersion' config.yaml | awk '{print $2}')
+          system_uids=$(grep 'SystemUIDs' config.yaml | awk '{print $2}')
+          testing_time=$(grep 'TestingTime' config.yaml | awk '{print $2}')
+          echo "::set-output name=env::$env"
+          echo "::set-output name=deployment_context::$deployment_context"
+          echo "::set-output name=model_name::$model_name"
+          echo "::set-output name=model_version::$model_version"
+          echo "::set-output name=system_uids::$system_uids"
+          echo "::set-output name=testing_time::$testing_time"
+      - name: Use deployment inputs
+        run: |
+          echo "Env: ${{ steps.prepare.outputs.env }}"
+          echo "Deployment Context: ${{ steps.prepare.outputs.deployment_context }}"
+          echo "Model Names: ${{ steps.prepare.outputs.model_name }}"
+          echo "Model Versions: ${{ steps.prepare.outputs.model_version }}"
+          echo "SystemUIDs: ${{ steps.prepare.outputs.system_uids }}"
+          echo "Testing Time: ${{ steps.prepare.outputs.testing_time }}"
 
-    - name: Parse output and set output variables
-      run: |
-        env=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==1')
-        context=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==2')
-        model=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==3')
-        version=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==4')
-        sysuid=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==5')
-        testingtime=$(awk -F'=' '{print $2}' output.txt | awk 'NR%7==6')
-        echo "::set-output name=env::$env"
-        echo "::set-output name=context::$context"
-        echo "::set-output name=model::$model"
-        echo "::set-output name=version::$version"
-        echo "::set-output name=sysuid::$sysuid"
-        echo "::set-output name=testingtime::$testingtime"
-      shell: bash
 
     - name: Use parsed output
       run: |
