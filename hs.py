@@ -2,30 +2,33 @@ import subprocess
 import os
 
 # Run the script and capture the output
-script_path = r"C:\Users\hp\Desktop\New folder\practice\prepare_re_deployment.py"
-result = subprocess.run(['python', script_path], capture_output=True)
+result = subprocess.run(["python", "prepare_re_deployment.py"], capture_output=True, text=True)
 
-# Parse the output into variables
-output = result.stdout.decode('utf-8').split('\n')
-env = output[0].split(': ')[1].split(', ')
-deployment_context = output[1].split(': ')[1].split(', ')
-model_names = output[2].split(': ')[1].split(', ')
-model_versions = output[3].split(': ')[1].split(', ')
-system_uids = output[4].split(': ')[1].split(', ')
-testing_time = output[5].split(': ')[1].split(', ')
+# Split the output into lines
+lines = result.stdout.strip().split('\n')
 
-# Set the environment variables for the GitHub workflow
-os.environ['ENVIRONMENT'] = ', '.join(env)
-os.environ['DEPLOYMENT_CONTEXT'] = ', '.join(deployment_context)
-os.environ['MODEL_NAMES'] = ', '.join(model_names)
-os.environ['MODEL_VERSIONS'] = ', '.join(model_versions)
-os.environ['SYSTEM_UIDS'] = ', '.join(system_uids)
-os.environ['TESTING_TIME'] = ', '.join(testing_time)
+# Initialize empty lists for each environment variable
+env = []
+context = []
+model = []
+version = []
+sysuid = []
+testingtime = []
 
-# Print the environment variables for verification
-print(os.environ['ENVIRONMENT'])
-print(os.environ['DEPLOYMENT_CONTEXT'])
-print(os.environ['MODEL_NAMES'])
-print(os.environ['MODEL_VERSIONS'])
-print(os.environ['SYSTEM_UIDS'])
-print(os.environ['TESTING_TIME'])
+# Process each line and populate the lists
+for line in lines:
+    parts = line.split('=')
+    env.append(parts[0].strip())
+    context.append(parts[1].strip())
+    model.append(parts[2].strip())
+    version.append(parts[3].strip())
+    sysuid.append(parts[4].strip())
+    testingtime.append(parts[5].strip())
+
+# Set the environment variables in GitHub Actions
+os.environ['ENVironment'] = str(env)
+os.environ['DEPLOYMENT_CONTEXT'] = str(context)
+os.environ['MODEL_NAMES'] = str(model)
+os.environ['MODEL_VERSIONS'] = str(version)
+os.environ['SYSTEM_UIDS'] = str(sysuid)
+os.environ['TESTING_TIMES'] = str(testingtime)

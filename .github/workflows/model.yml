@@ -10,27 +10,9 @@ jobs:
       uses: actions/checkout@v2
     - name: Run script and store output in environment
       run: |
-        output=$(python3 prepare_re_deployment.py)
-        IFS=$'\n'
-        data=($output)
-        env=("ENVironment=${data[0]}")
-        context=("DEPLOYMENT_CONTEXT=${data[1]}")
-        model=("MODEL_NAMES=${data[2]}")
-        version=("MODEL_VERSIONS=${data[3]}")
-        sysuid=("SYSTEM_UIDS=${data[4]}")
-        testingtime=("TESTING_TIMES=${data[5]}")
-        echo $env >> $GITHUB_ENV
-        echo $context >> $GITHUB_ENV
-        echo $model >> $GITHUB_ENV
-        echo $version >> $GITHUB_ENV
-        echo $sysuid >> $GITHUB_ENV
-        echo $testingtime >> $GITHUB_ENV
-
-    - name: Check if QA environment is present
-      run: |
-        if [[ "${{ env.ENVironment }}" == *"QA"* ]]; then
-        echo "QA environment is present"
-        else
-        echo "QA environment is not present"
-        fi
+        python3 hs.py
+        if 'INT' in os.environ['ENVironment']:
+            print("INT models present; Authenticating for SI ")
+        else:
+            print("No INT models present; hence not authenticating for SI ")
 
