@@ -12,7 +12,7 @@ jobs:
       run: |
         python3 hs.py
     - name: Print environment variables
-    run: |
+      run: |
         echo "ENVironment: ${{ env.ENVironment }}"
         echo "DEPLOYMENT_CONTEXT: ${{ env.DEPLOYMENT_CONTEXT }}"
         echo "MODEL_NAMES: ${{ env.MODEL_NAMES }}"
