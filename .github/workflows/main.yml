@@ -1,15 +1,16 @@
-name: run script
+name: My Workflow
 
 on:
   push:
     branches: [main]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Prepare new deployment
+      - name: Run prepare_re_deployment.py
         run: |
           python3 prepare_new_deployment.py
           env=$(grep 'ENVironment' config.yaml | awk '{print $2}')
