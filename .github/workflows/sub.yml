@@ -11,6 +11,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Git Sumbodule Update
+      run: |
+        git pull --recurse-submodules
+        git submodule update --init --recursive
 
     - name: Run Python script
       run: |
