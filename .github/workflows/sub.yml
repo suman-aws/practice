@@ -13,79 +13,70 @@ jobs:
       uses: actions/checkout@v2
     - name: Git Sumbodule Update
       run: |
-        git pull --recurse-submodules
-        git submodule update --init --recursive
         pwd
         ls
 
     - name: Run Python script
       run: |
         output=$(python prepare_new_deployment.py)
-
-        # Extract the values for ENVironment and DEPLOYMENT_CONTEXT separately
-        environment=$(echo "$output" | grep -oP "(?<=ENVironment: )\['.*?'\]" | tr -d '[],'"'"'')
-        deployment_context=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: )\['.*?'\]" | tr -d '[],'"'"'')
-
-        # Set the values as environment variables using the 'env' keyword
-        echo "ENVironment=$environment" >> $GITHUB_ENV
-        echo "DEPLOYMENT_CONTEXT=$deployment_context" >> $GITHUB_ENV
+        echo "$output" > ~/inputfolder/input.txt
 
 
 
-    - name: Verify environment variables
-      run: |
-        # echo "ENVironment=$ENVironment"
-        #echo "MODEL_NAMES=$MODEL_NAMES"
-        #echo "MODEL_VERSIONS=$MODEL_VERSIONS"
-        echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
-        #echo "SYSTEM_UIDS=$SYSTEM_UIDS"
-        #echo "TESTING_TIMES=$TESTING_TIMES"
-    - name: Run script
-      run: |
+    # - name: Verify environment variables
+    #   run: |
+    #     # echo "ENVironment=$ENVironment"
+    #     #echo "MODEL_NAMES=$MODEL_NAMES"
+    #     #echo "MODEL_VERSIONS=$MODEL_VERSIONS"
+    #     echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
+    #     #echo "SYSTEM_UIDS=$SYSTEM_UIDS"
+    #     #echo "TESTING_TIMES=$TESTING_TIMES"
+    # - name: Run script
+    #   run: |
 
 
-        if [[ $ENVironment =~ "INT" ]]; then
-          echo "INT models present; Authenticating for SI"
-          # Add authentication steps for SI INT
-        else
-          echo "No INT models present; hence not authenticating for SI"
-        fi
+    #     if [[ $ENVironment =~ "INT" ]]; then
+    #       echo "INT models present; Authenticating for SI"
+    #       # Add authentication steps for SI INT
+    #     else
+    #       echo "No INT models present; hence not authenticating for SI"
+    #     fi
 
-        if [[ $ENVironment =~ "QA" ]]; then
-          echo "QA models present; Authenticating for SI"
-          # Add authentication steps for SI QA
-        else
-          echo "No QA models present; hence not authenticating for SI"
-        fi
+    #     if [[ $ENVironment =~ "QA" ]]; then
+    #       echo "QA models present; Authenticating for SI"
+    #       # Add authentication steps for SI QA
+    #     else
+    #       echo "No QA models present; hence not authenticating for SI"
+    #     fi
 
-        if [[ $ENVironment =~ "PROD" ]]; then
-          echo "PROD models present; Authenticating for SI"
-          # Add authentication steps for SI PROD
-        else
-          echo "No PROD models present; hence not authenticating for SI"
-        fi
-      env:
-        ENVironment: ${{ env.ENVironment }}
-    - name: Deploy to environment
-      env:
-        ENVironment: ${{ env.ENVironment }}
-      run: |
-          for i in "${!ENVironment[@]}"; do
-            parts=(${ENVironment[$i]// / })
-            case "${parts[1]}" in
-              INT)
-                HOST="hsi7.com"
-                ;;
-              QA)
-                HOST="3.com"
-                ;;
-              PROD)
-                HOST="5.com"
-                ;;
-            esac
-            echo "Deploying to ${parts[1]} environment on host ${HOST}"
-            # Add your deployment commands here using $HOST
-          done
+    #     if [[ $ENVironment =~ "PROD" ]]; then
+    #       echo "PROD models present; Authenticating for SI"
+    #       # Add authentication steps for SI PROD
+    #     else
+    #       echo "No PROD models present; hence not authenticating for SI"
+    #     fi
+    #   env:
+    #     ENVironment: ${{ env.ENVironment }}
+    # - name: Deploy to environment
+    #   env:
+    #     ENVironment: ${{ env.ENVironment }}
+    #   run: |
+    #       for i in "${!ENVironment[@]}"; do
+    #         parts=(${ENVironment[$i]// / })
+    #         case "${parts[1]}" in
+    #           INT)
+    #             HOST="hsi7.com"
+    #             ;;
+    #           QA)
+    #             HOST="3.com"
+    #             ;;
+    #           PROD)
+    #             HOST="5.com"
+    #             ;;
+    #         esac
+    #         echo "Deploying to ${parts[1]} environment on host ${HOST}"
+    #         # Add your deployment commands here using $HOST
+    #       done
 
 
 
