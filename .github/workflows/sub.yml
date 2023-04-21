@@ -25,7 +25,7 @@ jobs:
     - name: authunticate
       run: |
         ENVironment=$(cut -d '=' -f1 <<< inputfolder/input.txt)
-        
+        echo $ENVironment
 
         if [[ $ENVironment =~ "INT" ]]; then
           echo "INT models present; Authenticating for SI"
