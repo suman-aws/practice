@@ -14,19 +14,6 @@ jobs:
       id: script1
       run: |
         out=$(python prepare_new_deployment.py)
-        environmnet=$(python host.py "$out")
-      env:
-        OUTPUT_VAR_1: ${{ steps.script1.environmnet.output_var }}
-
-    - name: Run script 2
-      id: script2
-      run: |
-        out=$(python prepare_new_deployment.py)
-        context=$(python host.py "$out")
-      env:
-        OUTPUT_VAR_2: ${{ steps.script2.context.output_var }}
-
-    - name: Print output variables
-      run: |
-        echo "Output of script 1: $OUTPUT_VAR_1"
-        echo "Output of script 2: $OUTPUT_VAR_2"
+        context=$(python new.py "$out")
+        echo $context
+        
