@@ -12,15 +12,19 @@ jobs:
 
     - name: Run script 1
       id: script1
-      run: python host.py
+      run: |
+        out=$(python prepare_new_deployment.py)
+        environmnet=$(python host.py "$out")
       env:
-        OUTPUT_VAR_1: ${{ steps.script1.outputs.output_var }}
+        OUTPUT_VAR_1: ${{ steps.script1.environmnet.output_var }}
 
     - name: Run script 2
       id: script2
-      run: python new.py
+      run: |
+        out=$(python prepare_new_deployment.py)
+        context=$(python host.py "$out")
       env:
-        OUTPUT_VAR_2: ${{ steps.script2.outputs.output_var }}
+        OUTPUT_VAR_2: ${{ steps.script2.context.output_var }}
 
     - name: Print output variables
       run: |
