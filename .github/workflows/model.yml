@@ -14,6 +14,12 @@ jobs:
       id: script1
       run: |
         out=$(python prepare_new_deployment.py)
-        context=$(python new.py "$out")
+        Environment=$(python new.py "$out")
+        echo $Environment
+        context=$(python deploy.py "$out") 
+        echo $context
+        context=$(python hs.py "$out") 
         echo $context
         
+
+        python host.py "$ENVironment" "$context" "$models"
