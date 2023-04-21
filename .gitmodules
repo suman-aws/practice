@@ -1,0 +1,3 @@
+[submodule "HelloWorldGHActions"]
+path = HelloWorldGHActions
+url = https://github.com/suman-aws/HelloWorldGHActions.git
