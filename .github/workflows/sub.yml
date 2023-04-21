@@ -22,6 +22,7 @@ jobs:
         mkdir ~/inputfolder
         echo "$output" > ~/inputfolder/input.txt
         cat ~/inputfolder/input.txt
+        pwd
     - name: authunticate
       run: |
         ENVironment=$(cut -d '=' -f1 <<< inputfolder/input.txt)
