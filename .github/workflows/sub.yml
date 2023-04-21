@@ -22,6 +22,33 @@ jobs:
         mkdir ~/inputfolder
         echo "$output" > ~/inputfolder/input.txt
         cat ~/inputfolder/input.txt
+    - name: authunticate
+      run: |
+        ENVironment=$(cut -d '=' -f1 <<< inputfolder/input.txt)
+        
+
+        if [[ $ENVironment =~ "INT" ]]; then
+          echo "INT models present; Authenticating for SI"
+          # Add authentication steps for SI INT
+        else
+          echo "No INT models present; hence not authenticating for SI"
+        fi
+
+        if [[ $ENVironment =~ "QA" ]]; then
+          echo "QA models present; Authenticating for SI"
+          # Add authentication steps for SI QA
+        else
+          echo "No QA models present; hence not authenticating for SI"
+        fi
+
+        if [[ $ENVironment =~ "PROD" ]]; then
+          echo "PROD models present; Authenticating for SI"
+          # Add authentication steps for SI PROD
+        else
+          echo "No PROD models present; hence not authenticating for SI"
+        fi
+
+
 
 
 
