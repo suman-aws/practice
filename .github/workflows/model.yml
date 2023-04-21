@@ -1,18 +1,28 @@
-name: My Workflow
+name: Run Python scripts and store outputs
 
-on: [push]
+on: push
 
 jobs:
-  my_job:
-    inputs:
-    model: model1
-    version: v1
-    context: c1
+  run-scripts:
     runs-on: ubuntu-latest
+
     steps:
-      - name: My Step
-        run: echo "Hello, world!"
-        env:
-          MODEL: ${{ inputs.model }}
-          VERSION: ${{ inputs.version }}
-          CONTEXT: ${{ inputs.context }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run script 1
+      id: script1
+      run: python host.py
+      env:
+        OUTPUT_VAR_1: ${{ steps.script1.outputs.output_var }}
+
+    - name: Run script 2
+      id: script2
+      run: python new.py
+      env:
+        OUTPUT_VAR_2: ${{ steps.script2.outputs.output_var }}
+
+    - name: Print output variables
+      run: |
+        echo "Output of script 1: $OUTPUT_VAR_1"
+        echo "Output of script 2: $OUTPUT_VAR_2"

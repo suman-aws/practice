@@ -1,30 +1,23 @@
 import subprocess
+import re
+import os
 
-output = subprocess.check_output(['python3', 'prepare_re_deployment.py'], universal_newlines=True)
+output = subprocess.check_output(["python", "prepare_new_deployment.py"]).decode("utf-8")
 
-env = []
-context = []
-model = []
-version = []
-sysuid = []
-testingtime = []
+environment = re.findall(r"(?<=ENVironment: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["ENVironment"] = environment
 
-for line in output.splitlines():
-    parts = line.split('=')
+model_names = re.findall(r"(?<=MODEL_NAMES: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["MODEL_NAMES"] = model_names
 
-    if len(parts) == 6:
-        env.append(parts[0])
-        context.append(parts[1])
-        model.append(parts[2])
-        version.append(parts[3])
-        sysuid.append(parts[4])
-        testingtime.append(parts[5])
-    else:
-        print(f"Unexpected number of parts in line: {line}")
+model_versions = re.findall(r"(?<=MODEL_VERSIONS: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["MODEL_VERSIONS"] = model_versions
 
-print(f"Env: {env}")
-print(f"Deployment Context: {context}")
-print(f"Model Names: {model}")
-print(f"Model Versions: {version}")
-print(f"SystemUIDs: {sysuid}")
-print(f"TestingTime: {testingtime}")
+deployment_contexts = re.findall(r"(?<=DEPLOYMENT_CONTEXT: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["DEPLOYMENT_CONTEXT"] = deployment_contexts
+
+system_uids = re.findall(r"(?<=SYSTEM_UIDS: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["SYSTEM_UIDS"] = system_uids
+
+testing_times = re.findall(r"(?<=TESTING_TIMES: )\['.*?'\]", output)[0].strip("[]''")
+os.environ["TESTING_TIMES"] = testing_times

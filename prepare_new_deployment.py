@@ -65,8 +65,8 @@ for key, value in doc.items():
                 version.append(v)
 
 # for i in range(len(modellist)):
-#     print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
-# model_names = [name.strip() for name in env]
+    # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
+model_names = [name.strip() for name in env]
 
 print("ENVironment:",env)
 print("DEPLOYMENT_CONTEXT:",context)

@@ -1,39 +1,10 @@
-import yaml
-
-with open("Model_list.yml") as file:
-    document = yaml.safe_load(file)
-
-
-env = []
-
-
-for i in range (len(document)):
-    for j in document[i].items():
-        for d in j[1].items():
-            for m in d[1]:
-                for v in m.items():
-                    env.append(j[0])
-                    # context.append(d[0])
-                    # modellist.append(v[0])
-                    # version.append(v[1])
-
-                   #print(j[0]+'='+d[0]+'='+v[0]+'='+v[1])  #env, context, model name, version
-                    # print(j[0])  #env, context, model name, version
-
-with open("Model_details.yml") as f:
-    doc = yaml.safe_load(f)
-
-Host = []
-Envi_details = []
-for key, value in doc.items():
-    for k,v in value.items():
-            if k == 'ServiceURL':
-                Host.append(v)
-            if k == 'Environment':
-                Envi_details.append(v)
-
-
-print(Host[0])
-print(Envi_details[0])
-
-
+import sys
+output = sys.argv[1]
+lines = output.splitlines()
+DEPLOYMENT_CONTEXT = '';
+for line in lines:
+    # print(line.split(': ')[1])
+    if 'DEPLOYMENT_CONTEXT' in line:
+        DEPLOYMENT_CONTEXT=line.split(': ')[1];
+       
+print(DEPLOYMENT_CONTEXT)
