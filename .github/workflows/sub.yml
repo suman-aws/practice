@@ -56,9 +56,9 @@ jobs:
         ENVironment=$(cut -d '=' -f1 <<< "$output")
         context=$(cut -d '=' -f2 <<< "$output")
         models=$(cut -d '=' -f3 <<< "$output")
-        echo $ENVironment
-        echo $context
-        echo $models
+        # echo $ENVironment
+        # echo $context
+        # echo $models
         python host.py "$ENVironment" "$context" "$models"
 
 
