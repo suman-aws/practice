@@ -18,8 +18,8 @@ jobs:
         echo $Environment
         context=$(python deploy.py "$out") 
         echo $context
-        context=$(python hs.py "$out") 
-        echo $context
+        models=$(python hs.py "$out") 
+        echo $models
         
 
         python host.py "$ENVironment" "$context" "$models"
