@@ -44,11 +44,11 @@ jobs:
     - name: Verify environment variables
       run: |
         echo "ENVironment=$ENVironment"
-        echo "MODEL_NAMES=$MODEL_NAMES"
-        echo "MODEL_VERSIONS=$MODEL_VERSIONS"
-        echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
-        echo "SYSTEM_UIDS=$SYSTEM_UIDS"
-        echo "TESTING_TIMES=$TESTING_TIMES"
+        #echo "MODEL_NAMES=$MODEL_NAMES"
+        #echo "MODEL_VERSIONS=$MODEL_VERSIONS"
+        #echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
+        #echo "SYSTEM_UIDS=$SYSTEM_UIDS"
+        #echo "TESTING_TIMES=$TESTING_TIMES"
     - name: Run script
       run: |
 
