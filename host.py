@@ -1,5 +1,5 @@
 import sys
-env = sys.argv[1]
+envi = sys.argv[1]
 context = sys.argv[2]
 models = sys.argv[3]
 # lines = output.splitlines()
@@ -9,6 +9,6 @@ models = sys.argv[3]
 #     if 'DEPLOYMENT_CONTEXT' in line:
 #         DEPLOYMENT_CONTEXT=line.split(': ')[1];
        
-print(env)
+print(envi)
 print(context)
 print(models)
