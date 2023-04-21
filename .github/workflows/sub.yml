@@ -59,7 +59,7 @@ jobs:
         echo $ENVironment
         echo $context
         echo $models
-        python host.py "$ENVironment","$context","$models"
+        python host.py "$ENVironment" "$context" "$models"
 
 
     # - name: Verify environment variables
