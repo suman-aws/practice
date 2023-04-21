@@ -21,25 +21,15 @@ jobs:
     - name: Run Python script
       run: |
         output=$(python prepare_new_deployment.py)
-        echo "$output"
-        # Parse the output and set the environment variables
+
+        # Extract the values for ENVironment and DEPLOYMENT_CONTEXT separately
         environment=$(echo "$output" | grep -oP "(?<=ENVironment: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=ENVironment::$environment"
+        deployment_context=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: )\['.*?'\]" | tr -d '[],'"'"'')
 
-        model_names=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=MODEL_NAMES::$model_names"
+        # Set the values as environment variables using the 'env' keyword
+        echo "ENVironment=$environment" >> $GITHUB_ENV
+        echo "DEPLOYMENT_CONTEXT=$deployment_context" >> $GITHUB_ENV
 
-        model_versions=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=MODEL_VERSIONS::$model_versions"
-
-        deployment_contexts=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=DEPLOYMENT_CONTEXT::$deployment_contexts"
-
-        system_uids=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=SYSTEM_UIDS::$system_uids"
-
-        testing_times=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: )\['.*?'\]" | tr -d '[],'"'"'')
-        echo "::set-env name=TESTING_TIMES::$testing_times"
 
 
     - name: Verify environment variables
