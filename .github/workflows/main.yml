@@ -1,10 +1,17 @@
+name: My Workflow
+
+on: [push]
+
 jobs:
-  display-variables:
+  my_job:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Run Python script
         id: run-python
-        run: python prepare_new_deployment.py
+        run: python test.py
 
       - name: Display variables
         run: |
