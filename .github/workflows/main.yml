@@ -40,4 +40,26 @@ jobs:
 
     - name: Use the outputs
       run: |
-        echo "DEPLOYMENT_CONTEXT=${{ env.DEPLOYMENT_CONTEXT }}"
+        if [[ $ENVironment =~ "INT" ]]; then
+          echo "INT models present; Authenticating for SI"
+          # Add authentication steps for SI INT
+        else
+          echo "No INT models present; hence not authenticating for SI"
+        fi
+
+        if [[ $ENVironment =~ "QA" ]]; then
+          echo "QA models present; Authenticating for SI"
+          # Add authentication steps for SI QA
+        else
+          echo "No QA models present; hence not authenticating for SI"
+        fi
+
+        if [[ $ENVironment =~ "PROD" ]]; then
+          echo "PROD models present; Authenticating for SI"
+          # Add authentication steps for SI PROD
+        else
+          echo "No PROD models present; hence not authenticating for SI"
+        fi
+
+      - name: Run Python script
+        run: python script.py --var1 value1 --var2 value2
