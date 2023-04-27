@@ -38,7 +38,12 @@ jobs:
         echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
-    - name: Use the outputs
+    - name: Use environment variables
       run: |
-        echo "DEPLOYMENT_CONTEXT=${{ env.DEPLOYMENT_CONTEXT }}"
-      
+        echo "Environment: ${{ env.ENVironment }}"
+        if [[ "${{ env.ENVironment }}" == "QA" ]]; then
+            echo "Environment is QA"
+        else
+            echo "Environment is not QA"
+        fi
+              
