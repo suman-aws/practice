@@ -15,18 +15,18 @@ jobs:
       run: |
         out=$(python prepare_new_deployment.py)
         versions=$(python new.py "$out")
-        echo $envi
-        context=$(python deploy.py "$out") 
-        echo $context
+        echo $versions
+        # context=$(python deploy.py "$out") 
+        # echo $context
         models=$(python hs.py "$out") 
         echo $models
         # python host.py "$envi" "$context" "$models"
-        # length=${#models[@]}
+        length=${#models[@]}
         
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
            echo "equal"
         else
-           for (( i=0; i<${#models[@]}; i++ ));do
+           for (( i=0; i<${length}; i++ ));do
              echo "{models[$i]}"
              echo "{versions[$i]}"
            done
