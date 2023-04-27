@@ -22,7 +22,6 @@ jobs:
         echo $models
         # python host.py "$envi" "$context" "$models"
         length=${#models[@]}
-        
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
            echo "equal"
         else
