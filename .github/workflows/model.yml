@@ -28,7 +28,7 @@ jobs:
         else
            for (( i=0; i<length; i++ ));do
              echo "${models[$i]}"
-             echo "{versions[$i]}"
+             echo "${versions[$i]}"
            done
         fi
 
