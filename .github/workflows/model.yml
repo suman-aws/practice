@@ -33,9 +33,9 @@ jobs:
         else
            for (( i=0; i<length; i++ ));do
               modelname="${models[$i]//\'/}"
-              version"${versions[$i]//\'/}"
+              versionss="${versions[$i]//\'/}"
               echo $modelname
-              echo $version
+              echo $versionss
            done
         fi
 
