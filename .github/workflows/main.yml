@@ -38,7 +38,9 @@ jobs:
         echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
-    - name: Use the outputs
+    - name: Use 
+      env : 
+        ENVIRONMENT=${{ env.ENVIRONMENT }}
       run: |
         if [[ $ENVIRONMENT =~ "INT" ]]; then
           echo "INT models present; Authenticating for SI"
