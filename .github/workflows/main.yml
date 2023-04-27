@@ -12,21 +12,23 @@ jobs:
 
     - name: Extract variables
       run: |
-        output=$(python prepare_new_deployment.py)
 
-        environment=$(echo "$output" | grep 'ENVironment:' | awk '{print $2}' | tr -d '[],')
-        deployment_context=$(echo "$output" | grep 'DEPLOYMENT_CONTEXT:' | awk '{print $2}' | tr -d '[],')
-        model_names=$(echo "$output" | grep 'MODEL_NAMES:' | awk '{print $2}' | tr -d '[],')
-        model_versions=$(echo "$output" | grep 'MODEL_VERSIONS:' | awk '{print $2}' | tr -d '[],')
-        system_uids=$(echo "$output" | grep 'SYSTEM_UIDS:' | awk '{print $2}' | tr -d '[],')
-        testing_times=$(echo "$output" | grep 'TESTING_TIMES:' | awk '{print $2}' | tr -d '[],')
+        python_output=$(python prepare_new_deployment.py)
+        environment=$(echo "$python_output" | awk -F": " '/ENVironment/ {print $2}')
+        deployment_context=$(echo "$python_output" | awk -F": " '/DEPLOYMENT_CONTEXT/ {print $2}')
+        model_names=$(echo "$python_output" | awk -F": " '/MODEL_NAMES/ {print $2}')
+        model_versions=$(echo "$python_output" | awk -F": " '/MODEL_VERSIONS/ {print $2}')
+        system_uids=$(echo "$python_output" | awk -F": " '/SYSTEM_UIDS/ {print $2}')
+        testing_times=$(echo "$python_output" | awk -F": " '/TESTING_TIMES/ {print $2}')
 
-        echo "ENVIRONMENT=$environment" >> $GITHUB_ENV
+        # Set the environment variables in the GitHub Actions environment
+        echo "ENVironment=$environment" >> $GITHUB_ENV
         echo "DEPLOYMENT_CONTEXT=$deployment_context" >> $GITHUB_ENV
         echo "MODEL_NAMES=$model_names" >> $GITHUB_ENV
         echo "MODEL_VERSIONS=$model_versions" >> $GITHUB_ENV
         echo "SYSTEM_UIDS=$system_uids" >> $GITHUB_ENV
         echo "TESTING_TIMES=$testing_times" >> $GITHUB_ENV
+
     - name: Display environment variables
       run: |
         echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
