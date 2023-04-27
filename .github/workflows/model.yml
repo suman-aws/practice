@@ -14,6 +14,7 @@ jobs:
       id: script1
       run: |
         out=$(python prepare_new_deployment.py)
+        echo $out
         version=$(python new.py "$out")
         echo $version
         # context=$(python deploy.py "$out") 
