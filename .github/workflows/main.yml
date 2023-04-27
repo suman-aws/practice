@@ -9,21 +9,25 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Run tests
+    - name: run pythoncode
       run: |
         output=$(python test.py)
         environment=$(echo "$output" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
         deployment_context=$(echo "$output" | grep -oP 'DEPLOYMENT_CONTEXT: \[\K[^]]+' | tr '\n' ' ')
-        echo "deployment_context: '$deployment_context'"
         model_names=$(echo "$output" | grep -oP 'MODEL_NAMES: \[\K[^]]+' | tr '\n' ' ')
-        echo "model_names: '$model_names'"
         model_versions=$(echo "$output" | grep -oP 'MODEL_VERSIONS: \[\K[^]]+' | tr '\n' ' ')
-        echo "model_versions: '$model_versions'"
         system_uids=$(echo "$output" | grep -oP 'SYSTEM_UIDS: \[\K[^]]+' | tr '\n' ' ')
-        echo "system_uids: '$system_uids'"
         testing_times=$(echo "$output" | grep -oP 'TESTING_TIMES: \[\K[^]]+' | tr '\n' ' ')
-        echo "testing_times: '$testing_times'"
+
+        echo "environment=$environment" > output.env
+        echo "deployment_context=$deployment_context" >> output.env
+        echo "model_names=$model_names" >> output.env
+        echo "model_versions=$model_versions" >> output.env
+        echo "system_uids=$system_uids" >> output.env
+        echo "testing_times=$testing_times" >> output.env
+
+        echo "::set-env name=STEP_OUTPUT_FILE::output.env"
+
 
 
     # - name: Use the outputs
