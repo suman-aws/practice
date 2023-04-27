@@ -17,10 +17,10 @@ jobs:
         run: |
           len=${{ env.ARRAY_LENGTH }}
           for ((i=0; i<$len; i++)); do
-            echo "Environment: '${{ steps.run-python.outputs.environment }}[$i]',"
-            echo "Deployment context: '${{ steps.run-python.outputs.deployment-context }}[$i]',"
-            echo "Model names: '${{ steps.run-python.outputs.model-names }}[$i]',"
-            echo "Model versions: '${{ steps.run-python.outputs.model-versions }}[$i]',"
-            echo "System UIDs: '${{ steps.run-python.outputs.system-uids }}[$i]',"
-            echo "Testing times: '${{ steps.run-python.outputs.testing-times }}[$i]',"
+            echo "Environment: '${{ steps.run-python.outputs.environment[$i] }}',"
+            echo "Deployment context: '${{ steps.run-python.outputs.deployment-context[$i] }}',"
+            echo "Model names: '${{ steps.run-python.outputs.model-names[$i] }}',"
+            echo "Model versions: '${{ steps.run-python.outputs.model-versions[$i] }}',"
+            echo "System UIDs: '${{ steps.run-python.outputs.system-uids[$i] }}',"
+            echo "Testing times: '${{ steps.run-python.outputs.testing-times[$i] }}',"
           done
