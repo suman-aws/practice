@@ -32,8 +32,10 @@ jobs:
            echo "equal"
         else
            for (( i=0; i<length; i++ ));do
-             echo "${models[$i]//\'/}"
-             echo "${versions[$i]//\'/}"
+              modelname="${models[$i]//\'/}"
+              version"${versions[$i]//\'/}"
+              echo $modelname
+              echo $version
            done
         fi
 
