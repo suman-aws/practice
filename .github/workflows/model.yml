@@ -14,13 +14,17 @@ jobs:
       id: script1
       run: |
         out=$(python prepare_new_deployment.py)
-        versions=$(python new.py "$out")
-        echo $versions
+        version=$(python new.py "$out")
+        echo $version
         # context=$(python deploy.py "$out") 
         # echo $context
-        models=$(python hs.py "$out") 
-        echo $models
+        model=$(python hs.py "$out") 
+        echo $model
         # python host.py "$envi" "$context" "$models"
+        model=$(tr -d '[]' <<< "$model")
+        IFS=',' read -r -a models <<< "$model"
+        version=$(tr -d '[]' <<< "$version")
+        IFS=',' read -r -a versions <<< "$version"
         length=${#models[@]}
         
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then

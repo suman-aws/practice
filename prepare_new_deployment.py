@@ -68,17 +68,17 @@ for key, value in doc.items():
     # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
 model_names = [name.strip() for name in env]
 
-models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
-versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
-env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
-context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
-sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
-testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
+# models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
+# versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
+# env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
+# context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
+# sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
+# testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
 
-print("ENVironment:",env_str)
-print("DEPLOYMENT_CONTEXT:",context_str)
-print("MODEL_NAMES:",models_str)
-print("MODEL_VERSIONS:",versions_str)
-print("SYSTEM_UIDS:",sysuid_str)
-print("TESTING_TIMES:",testingtime_str)
+print("ENVironment:",env)
+print("DEPLOYMENT_CONTEXT:",context)
+print("MODEL_NAMES:",model_names)
+print("MODEL_VERSIONS:",version)
+print("SYSTEM_UIDS:",sysuid)
+print("TESTING_TIMES:",testingtime)
 # print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))
