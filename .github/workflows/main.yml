@@ -39,8 +39,10 @@ jobs:
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
     - name: Use environment variables
+      env:
+        envi="${{ env.ENVIRONMENT }}"
       run: |
-        if [[ "${{ env.ENVIRONMENT }}" == "QA" ]]; then
+        if [[ envi == "QA" ]]; then
             echo "ENVIRONMENT is QA"
         else
             echo "ENVIRONMENT is not QA"
