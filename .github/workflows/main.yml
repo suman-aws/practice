@@ -40,10 +40,9 @@ jobs:
 
     - name: Use environment variables
       run: |
-        echo "Environment: ${{ env.ENVironment }}"
-        if [[ "${{ env.ENVironment }}" == "QA" ]]; then
-            echo "Environment is QA"
+        if [[ "${{ env.ENVIRONMENT }}" == "QA" ]]; then
+            echo "ENVIRONMENT is QA"
         else
-            echo "Environment is not QA"
+            echo "ENVIRONMENT is not QA"
         fi
               
