@@ -38,30 +38,6 @@ jobs:
         echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
-    - name: Use 
-      env : 
-        ENVIRONMENT=${{ env.ENVIRONMENT }}
-      run: |
-        if [[ $ENVIRONMENT =~ "INT" ]]; then
-          echo "INT models present; Authenticating for SI"
-          # Add authentication steps for SI INT
-        else
-          echo "No INT models present; hence not authenticating for SI"
-        fi
-
-        if [[ $ENVIRONMENT =~ "QA" ]]; then
-          echo "QA models present; Authenticating for SI"
-          # Add authentication steps for SI QA
-        else
-          echo "No QA models present; hence not authenticating for SI"
-        fi
-
-        if [[ $ENVIRONMENT =~ "PROD" ]]; then
-          echo "PROD models present; Authenticating for SI"
-          # Add authentication steps for SI PROD
-        else
-          echo "No PROD models present; hence not authenticating for SI"
-        fi
 
       - name: Run Python script
-        run: python script.py --var1 value1 --var2 value2
+        run: python script.py --var1 $ENVIRONMENT --var2 $DEPLOYMENT_CONTEXT
