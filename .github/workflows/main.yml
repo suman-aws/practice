@@ -9,25 +9,24 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: run pythoncode
+
+    - name: Extract variables
       run: |
-        output=$(python test.py)
-        environment=$(echo "$output" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
-        deployment_context=$(echo "$output" | grep -oP 'DEPLOYMENT_CONTEXT: \[\K[^]]+' | tr '\n' ' ')
-        model_names=$(echo "$output" | grep -oP 'MODEL_NAMES: \[\K[^]]+' | tr '\n' ' ')
-        model_versions=$(echo "$output" | grep -oP 'MODEL_VERSIONS: \[\K[^]]+' | tr '\n' ' ')
-        system_uids=$(echo "$output" | grep -oP 'SYSTEM_UIDS: \[\K[^]]+' | tr '\n' ' ')
-        testing_times=$(echo "$output" | grep -oP 'TESTING_TIMES: \[\K[^]]+' | tr '\n' ' ')
+        output=$(python prepare_new_deployment.py)
 
-        echo "environment=$environment" > output.env
-        echo "deployment_context=$deployment_context" >> output.env
-        echo "model_names=$model_names" >> output.env
-        echo "model_versions=$model_versions" >> output.env
-        echo "system_uids=$system_uids" >> output.env
-        echo "testing_times=$testing_times" >> output.env
+        environment=$(echo "$output" | grep 'ENVironment:' | awk '{print $2}' | tr -d '[],')
+        deployment_context=$(echo "$output" | grep 'DEPLOYMENT_CONTEXT:' | awk '{print $2}' | tr -d '[],')
+        model_names=$(echo "$output" | grep 'MODEL_NAMES:' | awk '{print $2}' | tr -d '[],')
+        model_versions=$(echo "$output" | grep 'MODEL_VERSIONS:' | awk '{print $2}' | tr -d '[],')
+        system_uids=$(echo "$output" | grep 'SYSTEM_UIDS:' | awk '{print $2}' | tr -d '[],')
+        testing_times=$(echo "$output" | grep 'TESTING_TIMES:' | awk '{print $2}' | tr -d '[],')
 
-        echo "::set-env name=STEP_OUTPUT_FILE::output.env"
-
+        echo "::set-env name=ENVIRONMENT::$environment"
+        echo "::set-env name=DEPLOYMENT_CONTEXT::$deployment_context"
+        echo "::set-env name=MODEL_NAMES::$model_names"
+        echo "::set-env name=MODEL_VERSIONS::$model_versions"
+        echo "::set-env name=SYSTEM_UIDS::$system_uids"
+        echo "::set-env name=TESTING_TIMES::$testing_times"
 
 
     # - name: Use the outputs
