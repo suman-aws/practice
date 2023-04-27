@@ -26,7 +26,7 @@ jobs:
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
            echo "equal"
         else
-           for (( i=0; i<${length}; i++ ));do
+           for (( i=0; i<length; i++ ));do
              echo "${models[$i]}"
              echo "{versions[$i]}"
            done
