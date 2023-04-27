@@ -72,13 +72,13 @@ models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
 versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
 env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
 context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
-_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
+sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
 testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
 
-print("ENVironment:",env)
-print("DEPLOYMENT_CONTEXT:",context)
+print("ENVironment:",env_str)
+print("DEPLOYMENT_CONTEXT:",context_str)
 print("MODEL_NAMES:",models_str)
 print("MODEL_VERSIONS:",versions_str)
-print("SYSTEM_UIDS:",sysuid)
-print("TESTING_TIMES:",testingtime)
+print("SYSTEM_UIDS:",sysuid_str)
+print("TESTING_TIMES:",testingtime_str)
 # print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))
