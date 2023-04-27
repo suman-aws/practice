@@ -12,19 +12,10 @@ jobs:
       - name: Run Python script
         id: python_script
         run: |
-          output=$(python test.py)
-          echo "environment=$(echo "$output" | awk -F ': ' '/ENVironment:/ {print $2}')"
-          echo "deployment_context=$(echo "$output" | awk -F ': ' '/DEPLOYMENT_CONTEXT:/ {print $2}')"
-          echo "model_names=$(echo "$output" | awk -F ': ' '/MODEL_NAMES:/ {print $2}')"
-          echo "model_versions=$(echo "$output" | awk -F ': ' '/MODEL_VERSIONS:/ {print $2}')"
-          echo "system_uids=$(echo "$output" | awk -F ': ' '/SYSTEM_UIDS:/ {print $2}')"
-          echo "testing_times=$(echo "$output" | awk -F ': ' '/TESTING_TIMES:/ {print $2}')"
-
-      - name: Use output variables
-        run: |
-          echo "Environment: ${{ steps.python_script.outputs.environment }}"
-          echo "Deployment context: ${{ steps.python_script.outputs.deployment_context }}"
-          echo "Model names: ${{ steps.python_script.outputs.model_names }}"
-          echo "Model versions: ${{ steps.python_script.outputs.model_versions }}"
-          echo "System UIDs: ${{ steps.python_script.outputs.system_uids }}"
-          echo "Testing times: ${{ steps.python_script.outputs.testing_times }}"
+          output=$(python prepare_new_deployment.py)
+          environment=$(echo "$output" | grep -oP "ENVironment: \[\K[^\]]+" | awk '{print $1}')
+          deployment_context=$(echo "$output" | grep -oP "DEPLOYMENT_CONTEXT: \[\K[^\]]+" | awk '{print $1}')
+          model_names=$(echo "$output" | grep -oP "MODEL_NAMES: \[\K[^\]]+" | awk '{print $1}')
+          model_versions=$(echo "$output" | grep -oP "MODEL_VERSIONS: \[\K[^\]]+" | awk '{print $1}')
+          system_uids=$(echo "$output" | grep -oP "SYSTEM_UIDS: \[\K[^\]]+" | awk '{print $1}')
+          testing_times=$(echo "$output" | grep -oP "TESTING_TIMES: \[\K[^\]]+" | awk '{print $1}')
