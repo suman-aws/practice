@@ -15,22 +15,22 @@ jobs:
         output=$(python test.py)
         environment=$(echo "$output" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
         deployment_context=$(echo "$output" | grep -oP 'DEPLOYMENT_CONTEXT: \[\K[^]]+' | tr '\n' ' ')
+        echo "deployment_context: '$deployment_context'"
         model_names=$(echo "$output" | grep -oP 'MODEL_NAMES: \[\K[^]]+' | tr '\n' ' ')
+        echo "model_names: '$model_names'"
         model_versions=$(echo "$output" | grep -oP 'MODEL_VERSIONS: \[\K[^]]+' | tr '\n' ' ')
+        echo "model_versions: '$model_versions'"
         system_uids=$(echo "$output" | grep -oP 'SYSTEM_UIDS: \[\K[^]]+' | tr '\n' ' ')
+        echo "system_uids: '$system_uids'"
         testing_times=$(echo "$output" | grep -oP 'TESTING_TIMES: \[\K[^]]+' | tr '\n' ' ')
-        echo "::set-output name=environment::$environment"
-        echo "::set-output name=deployment_context::$deployment_context"
-        echo "::set-output name=model_names::$model_names"
-        echo "::set-output name=model_versions::$model_versions"
-        echo "::set-output name=system_uids::$system_uids"
-        echo "::set-output name=testing_times::$testing_times"
+        echo "testing_times: '$testing_times'"
 
-    - name: Use the outputs
-      run: |
-        echo "environment: ${{ steps.build.outputs.environment }}"
-        echo "deployment_context: ${{ steps.build.outputs.deployment_context }}"
-        echo "model_names: ${{ steps.build.outputs.model_names }}"
-        echo "model_versions: ${{ steps.build.outputs.model_versions }}"
-        echo "system_uids: ${{ steps.build.outputs.system_uids }}"
-        echo "testing_times: ${{ steps.build.outputs.testing_times }}"
+
+    # - name: Use the outputs
+    #   run: |
+    #     echo "environment: ${{ steps.build.outputs.environment }}"
+    #     echo "deployment_context: ${{ steps.build.outputs.deployment_context }}"
+    #     echo "model_names: ${{ steps.build.outputs.model_names }}"
+    #     echo "model_versions: ${{ steps.build.outputs.model_versions }}"
+    #     echo "system_uids: ${{ steps.build.outputs.system_uids }}"
+    #     echo "testing_times: ${{ steps.build.outputs.testing_times }}"
