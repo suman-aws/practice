@@ -21,12 +21,12 @@ jobs:
         system_uids=$(echo "$output" | grep 'SYSTEM_UIDS:' | awk '{print $2}' | tr -d '[],')
         testing_times=$(echo "$output" | grep 'TESTING_TIMES:' | awk '{print $2}' | tr -d '[],')
 
-        echo "::set-env name=ENVIRONMENT::$environment"
-        echo "::set-env name=DEPLOYMENT_CONTEXT::$deployment_context"
-        echo "::set-env name=MODEL_NAMES::$model_names"
-        echo "::set-env name=MODEL_VERSIONS::$model_versions"
-        echo "::set-env name=SYSTEM_UIDS::$system_uids"
-        echo "::set-env name=TESTING_TIMES::$testing_times"
+        echo "ENVIRONMENT=$environment" >> $GITHUB_ENV
+        echo "DEPLOYMENT_CONTEXT=$deployment_context" >> $GITHUB_ENV
+        echo "MODEL_NAMES=$model_names" >> $GITHUB_ENV
+        echo "MODEL_VERSIONS=$model_versions" >> $GITHUB_ENV
+        echo "SYSTEM_UIDS=$system_uids" >> $GITHUB_ENV
+        echo "TESTING_TIMES=$testing_times" >> $GITHUB_ENV
 
 
     # - name: Use the outputs
