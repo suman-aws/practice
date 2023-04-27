@@ -1,24 +1,84 @@
-import re
+import yaml
 
-output = """
-ENVironment: ['QA', 'QA']
-DEPLOYMENT_CONTEXT: ['RW', 'RW+RS']
-MODEL_NAMES: ['T-PR', 'LR']
-MODEL_VERSIONS: ['1.0', '1.0']
-SYSTEM_UIDS: ['77276535', '77276535']
-TESTING_TIMES: ['20230218-235959', '20230218-235959']
-"""
+# with open("model_list_for_deployment.yml") as file:
+#     document = yaml.safe_load(file)
 
-environment = re.findall(r"ENVironment: (\[.*?\])", output)[0]
-deployment_context = re.findall(r"DEPLOYMENT_CONTEXT: (\[.*?\])", output)[0]
-model_names = re.findall(r"MODEL_NAMES: (\[.*?\])", output)[0]
-model_versions = re.findall(r"MODEL_VERSIONS: (\[.*?\])", output)[0]
-system_uids = re.findall(r"SYSTEM_UIDS: (\[.*?\])", output)[0]
-testing_times = re.findall(r"TESTING_TIMES: (\[.*?\])", output)[0]
 
-print("environment:", environment)
-print("deployment_context:", deployment_context)
-print("model_names:", model_names)
-print("model_versions:", model_versions)
-print("system_uids:", system_uids)
-print("testing_times:", testing_times)
+# env = []
+# context = []
+# modellist = []
+# version = []
+
+# for i in range (len(document)):
+#     for j in document[i].items():
+#         for d in j[1].items():
+#             for m in d[1]:
+#                 for v in m.items():
+#                     env.append(j[0])
+#                     context.append(d[0])
+#                     modellist.append(v[0])
+#                     version.append(v[1])
+
+#                    #print(j[0]+'='+d[0]+'='+v[0]+'='+v[1])  #env, context, model name, version
+
+# with open("model_details_for_deployment.yml") as f:
+#     doc = yaml.safe_load(f)
+
+# sysuid = []
+# testingtime = []
+# for key, value in doc.items():
+#     for k,v in value.items():
+#             if k == 'SystemUIDs':
+#                 sysuid.append(v)
+#             if k == 'TestingTime':
+#                 testingtime.append(v)
+
+
+# for i in range(len(modellist)):
+#     print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
+
+# # print(sysuid)
+# # print(testingtime)
+
+with open("model_detailsdeployment.yml") as f:
+    doc = yaml.safe_load(f)
+
+sysuid = []
+testingtime = []
+env = []
+context = []
+modellist = []
+version = []
+for key, value in doc.items():
+    for k,v in value.items():
+            if k == 'SystemUIDs':
+                sysuid.append(v)
+            if k == 'TestingTime':
+                testingtime.append(v)
+            if k == 'DeploymentEnv':
+                env.append(v)
+            if k == 'DeploymentContext':
+                context.append(v)
+            if k == 'ModelUID':
+                modellist.append(v)
+            if k == 'ModelVersion':
+                version.append(v)
+
+# for i in range(len(modellist)):
+    # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
+# model_names = [name.strip() for name in env]
+
+# models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
+# versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
+# env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
+# context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
+# sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
+# testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
+
+print("ENVironment:",env)
+print("DEPLOYMENT_CONTEXT:",context)
+print("MODEL_NAMES:",modellist)
+print("MODEL_VERSIONS:",version)
+print("SYSTEM_UIDS:",sysuid)
+print("TESTING_TIMES:",testingtime)
+# print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))

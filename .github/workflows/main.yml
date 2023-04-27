@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Python script
-        run: |
-          python prepare_new_deployment.py
+        run: python test.py
         id: python-script
       - name: Extract values
         run: |
