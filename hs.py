@@ -1,6 +1,7 @@
 import sys
-output = sys.argv[1]
-lines = output.splitlines()
+# output = sys.argv[1]
+MODEL = ("T-PR" "LR")
+lines = MODEL.splitlines()
 MODEL_NAMES = ''
 for line in lines:
     # print(line.split(': ')[1])
