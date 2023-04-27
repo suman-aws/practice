@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Python script
-        run: python test.py
         id: python-script
+        run: |
+          python test.py
+        
       - name: Extract values
         run: |
           environment=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
