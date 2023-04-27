@@ -1,30 +1,38 @@
 name: My Workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  my_job:
+  my-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # - name: Run Python script
-      #   id: run-python
-      #   run: python prepare_new_deployment.py
-
-      - name: Display variables
+      - name: Run Python script
+        run: python prepare_new_deployment.py.py
+        id: python-script
+      - name: Extract values
         run: |
-          output=$(python prepare_new_deployment.py)
-          environment=$(echo "$output" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
-          deployment_context=$(echo "$output" | grep -oP 'DEPLOYMENT_CONTEXT: \[\K[^]]+' | tr '\n' ' ')
-          model_names=$(echo "$output" | grep -oP 'MODEL_NAMES: \[\K[^]]+' | tr '\n' ' ')
-          model_versions=$(echo "$output" | grep -oP 'MODEL_VERSIONS: \[\K[^]]+' | tr '\n' ' ')
-          system_uids=$(echo "$output" | grep -oP 'SYSTEM_UIDS: \[\K[^]]+' | tr '\n' ' ')
-          testing_times=$(echo "$output" | grep -oP 'TESTING_TIMES: \[\K[^]]+' | tr '\n' ' ')
-
-          echo "environment: $environment"
-          echo "deployment_context: $deployment_context"
-          echo "model_names: $model_names"
-          echo "model_versions: $model_versions"
-          echo "system_uids: $system_uids"
+          environment=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'ENVironment: \[\K[^]]+' | tr '\n' ' ')
+          deployment_context=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'DEPLOYMENT_CONTEXT: \[\K[^]]+' | tr '\n' ' ')
+          model_names=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'MODEL_NAMES: \[\K[^]]+' | tr '\n' ' ')
+          model_versions=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'MODEL_VERSIONS: \[\K[^]]+' | tr '\n' ' ')
+          system_uids=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'SYSTEM_UIDS: \[\K[^]]+' | tr '\n' ' ')
+          testing_times=$(echo "${{ steps.python-script.outputs.stdout }}" | grep -oP 'TESTING_TIMES: \[\K[^]]+' | tr '\n' ' ')
+        id: extract-values
+      - name: Set environment variables
+        run: |
+          echo "ENVIRONMENT=${{ env.environment }}" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=${{ env.deployment_context }}" >> $GITHUB_ENV
+          echo "MODEL_NAMES=${{ env.model_names }}" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=${{ env.model_versions }}" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=${{ env.system_uids }}" >> $GITHUB_ENV
+          echo "TESTING_TIMES=${{ env.testing_times }}" >> $GITHUB_ENV
+        env:
+          environment: ${{ steps.extract-values.outputs.environment }}
+          deployment_context: ${{ steps.extract-values.outputs.deployment_context }}
+          model_names: ${{ steps.extract-values.outputs.model_names }}
+          model_versions: ${{ steps.extract-values.outputs.model_versions }}
+          system_uids: ${{ steps.extract-values.outputs.system_uids }}
+          testing_times: ${{ steps.extract-values.outputs.testing_times }}
