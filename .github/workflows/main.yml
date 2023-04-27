@@ -40,21 +40,21 @@ jobs:
 
     - name: Use the outputs
       run: |
-        if [[ $ENVironment =~ "INT" ]]; then
+        if [[ $ENVIRONMENT =~ "INT" ]]; then
           echo "INT models present; Authenticating for SI"
           # Add authentication steps for SI INT
         else
           echo "No INT models present; hence not authenticating for SI"
         fi
 
-        if [[ $ENVironment =~ "QA" ]]; then
+        if [[ $ENVIRONMENT =~ "QA" ]]; then
           echo "QA models present; Authenticating for SI"
           # Add authentication steps for SI QA
         else
           echo "No QA models present; hence not authenticating for SI"
         fi
 
-        if [[ $ENVironment =~ "PROD" ]]; then
+        if [[ $ENVIRONMENT =~ "PROD" ]]; then
           echo "PROD models present; Authenticating for SI"
           # Add authentication steps for SI PROD
         else
