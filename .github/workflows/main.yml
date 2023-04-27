@@ -11,11 +11,12 @@ jobs:
 
       - name: Run Python script
         id: run-python
-        run: python test.py
+        run: python prepare_new_deployment.py
 
       - name: Display variables
         run: |
-          for ((i=0; i<${#{{ steps.run-python.outputs.environment }}[@]}; i++)); do
+          len=${{ env.ARRAY_LENGTH }}
+          for ((i=0; i<$len; i++)); do
             echo "Environment: '${{ steps.run-python.outputs.environment }}[$i]',"
             echo "Deployment context: '${{ steps.run-python.outputs.deployment-context }}[$i]',"
             echo "Model names: '${{ steps.run-python.outputs.model-names }}[$i]',"
