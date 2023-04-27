@@ -26,3 +26,11 @@ jobs:
           echo "::set-output name=model-versions::$model_versions"
           echo "::set-output name=system-uids::$system_uids"
           echo "::set-output name=testing-times::$testing_times"
+      - name: Display variables
+        run: |
+          echo "Environment: ${{ steps.run-python.outputs.environment }}"
+          echo "Deployment context: ${{ steps.run-python.outputs.deployment-context }}"
+          echo "Model names: ${{ steps.run-python.outputs.model-names }}"
+          echo "Model versions: ${{ steps.run-python.outputs.model-versions }}"
+          echo "System UIDs: ${{ steps.run-python.outputs.system-uids }}"
+          echo "Testing times: ${{ steps.run-python.outputs.testing-times }}"
