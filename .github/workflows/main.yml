@@ -40,7 +40,7 @@ jobs:
 
     - name: Use environment variables
       env:
-        envi="${{ env.ENVIRONMENT }}"
+        envi:"${{ env.ENVIRONMENT }}"
       run: |
         if [[ envi == "QA" ]]; then
             echo "ENVIRONMENT is QA"
