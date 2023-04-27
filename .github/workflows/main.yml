@@ -25,13 +25,12 @@ jobs:
         echo "::set-output name=model_versions::$model_versions"
         echo "::set-output name=system_uids::$system_uids"
         echo "::set-output name=testing_times::$testing_times"
-        echo "::set-output environment=$environment deployment_context=$deployment_context model_names=$model_names model_versions=$model_versions system_uids=$system_uids testing_times=$testing_times"
 
-    - name: Use outputs in another step
+    - name: Use the outputs
       run: |
-        echo "environment: ${{ env.outputs.environment }}"
-        echo "deployment_context: ${{ env.outputs.deployment_context }}"
-        echo "model_names: ${{ env.outputs.model_names }}"
-        echo "model_versions: ${{ env.outputs.model_versions }}"
-        echo "system_uids: ${{ env.outputs.system_uids }}"
-        echo "testing_times: ${{ env.outputs.testing_times }}"
+        echo "environment: ${{ steps.build.outputs.environment }}"
+        echo "deployment_context: ${{ steps.build.outputs.deployment_context }}"
+        echo "model_names: ${{ steps.build.outputs.model_names }}"
+        echo "model_versions: ${{ steps.build.outputs.model_versions }}"
+        echo "system_uids: ${{ steps.build.outputs.system_uids }}"
+        echo "testing_times: ${{ steps.build.outputs.testing_times }}"
