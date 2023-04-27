@@ -9,13 +9,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Python script
-        id: python_script
-        run: |
-          output=$(python prepare_new_deployment.py)
-          environment=$(echo "$output" | grep -oP "ENVironment: \[\K[^\]]+" | awk '{print $1}')
-          deployment_context=$(echo "$output" | grep -oP "DEPLOYMENT_CONTEXT: \[\K[^\]]+" | awk '{print $1}')
-          model_names=$(echo "$output" | grep -oP "MODEL_NAMES: \[\K[^\]]+" | awk '{print $1}')
-          model_versions=$(echo "$output" | grep -oP "MODEL_VERSIONS: \[\K[^\]]+" | awk '{print $1}')
-          system_uids=$(echo "$output" | grep -oP "SYSTEM_UIDS: \[\K[^\]]+" | awk '{print $1}')
-          testing_times=$(echo "$output" | grep -oP "TESTING_TIMES: \[\K[^\]]+" | awk '{print $1}')
+      - name: Run Python script and set outputs
+      id: run-python
+      run: |
+      output=$(python prepare_new_deployment.py)
+      environment=$(echo "$output" | grep -oP "ENVironment: \[\K[^\]]+" | awk '{print $1}')
+      deployment_context=$(echo "$output" | grep -oP "DEPLOYMENT_CONTEXT: \[\K[^\]]+" | awk '{print $1}')
+      model_names=$(echo "$output" | grep -oP "MODEL_NAMES: \[\K[^\]]+" | awk '{print $1}')
+      model_versions=$(echo "$output" | grep -oP "MODEL_VERSIONS: \[\K[^\]]+" | awk '{print $1}')
+      system_uids=$(echo "$output" | grep -oP "SYSTEM_UIDS: \[\K[^\]]+" | awk '{print $1}')
+      testing_times=$(echo "$output" | grep -oP "TESTING_TIMES: \[\K[^\]]+" | awk '{print $1}')
+
+      echo "::set-output name=environment::$environment"
+      echo "::set-output name=deployment-context::$deployment_context"
+      echo "::set-output name=model-names::$model_names"
+      echo "::set-output name=model-versions::$model_versions"
+      echo "::set-output name=system-uids::$system_uids"
+      echo "::set-output name=testing-times::$testing_times"
