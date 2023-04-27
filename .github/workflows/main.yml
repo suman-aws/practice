@@ -38,11 +38,6 @@ jobs:
         echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
-    # - name: Use the outputs
-    #   run: |
-    #     echo "environment: ${{ steps.build.outputs.environment }}"
-    #     echo "deployment_context: ${{ steps.build.outputs.deployment_context }}"
-    #     echo "model_names: ${{ steps.build.outputs.model_names }}"
-    #     echo "model_versions: ${{ steps.build.outputs.model_versions }}"
-    #     echo "system_uids: ${{ steps.build.outputs.system_uids }}"
-    #     echo "testing_times: ${{ steps.build.outputs.testing_times }}"
+    - name: Use the outputs
+      run: |
+        echo "DEPLOYMENT_CONTEXT=${{ env.DEPLOYMENT_CONTEXT }}"
