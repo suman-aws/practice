@@ -38,6 +38,7 @@ jobs:
         echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
         echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
 
-
-      - name: Run Python script
-        run: python script.py --var1 $ENVIRONMENT --var2 $DEPLOYMENT_CONTEXT
+    - name: Use the outputs
+      run: |
+        echo "DEPLOYMENT_CONTEXT=${{ env.DEPLOYMENT_CONTEXT }}"
+      
