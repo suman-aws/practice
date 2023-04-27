@@ -1,10 +1,10 @@
 import sys
 output = sys.argv[1]
 lines = output.splitlines()
-ENVironment = ''
+MODEL_VERSIONS = ''
 for line in lines:
     # print(line.split(': ')[1])
-    if 'ENVironment' in line:
-        ENVironment=line.split(': ')[1]
+    if 'MODEL_VERSIONS' in line:
+        MODEL_VERSIONS=line.split(': ')[1]
        
-print(ENVironment)
+print(MODEL_VERSIONS)
