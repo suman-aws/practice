@@ -66,7 +66,7 @@ for key, value in doc.items():
 
 # for i in range(len(modellist)):
     # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
-model_names = [name.strip() for name in env]
+# model_names = [name.strip() for name in env]
 
 # models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
 # versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
@@ -77,7 +77,7 @@ model_names = [name.strip() for name in env]
 
 print("ENVironment:",env)
 print("DEPLOYMENT_CONTEXT:",context)
-print("MODEL_NAMES:",model_names)
+print("MODEL_NAMES:",modellist)
 print("MODEL_VERSIONS:",version)
 print("SYSTEM_UIDS:",sysuid)
 print("TESTING_TIMES:",testingtime)
