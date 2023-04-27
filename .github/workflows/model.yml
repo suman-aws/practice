@@ -22,13 +22,14 @@ jobs:
         echo $models
         # python host.py "$envi" "$context" "$models"
         length=${#models[@]}
+        
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
            echo "equal"
         else
-          for ((i=0; i<length; i++));do
-            echo "{models[$i]}"
-            echo "{versions[$i]}"
-          done
+           for ((i=0; i<length; i++));do
+             echo "{models[$i]}"
+             echo "{versions[$i]}"
+           done
         fi
 
       
