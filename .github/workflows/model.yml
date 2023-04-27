@@ -21,12 +21,12 @@ jobs:
         models=$(python hs.py "$out") 
         echo $models
         # python host.py "$envi" "$context" "$models"
-        length=${#models[@]}
+        # length=${#models[@]}
         
         if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
            echo "equal"
         else
-           for ((i=0; i<length; i++));do
+           for (( i=0; i<${#models[@]}; i++ ));do
              echo "{models[$i]}"
              echo "{versions[$i]}"
            done
