@@ -12,7 +12,34 @@ jobs:
 
     - name: Extract variables
       run: |
-        output=$(python prepare_new_deployment.py)          
+        output=$(python prepare_new_deployment.py)  
+        VAR1=$(echo $output | cut -d'=' -f1)
+        VAR2=$(echo $output | cut -d'=' -f2)
+        VAR3=$(echo $output | cut -d'=' -f3)
+        VAR4=$(echo $output | cut -d'=' -f4)
+        VAR5=$(echo $output | cut -d'=' -f5)
+        VAR6=$(echo $output | cut -d'=' -f6)
+        VAR7=$(echo $output | cut -d'=' -f7)
+        VAR8=$(echo $output | cut -d'=' -f8)
+        echo "VAR1=$VAR1" >> $GITHUB_ENV
+        echo "VAR2=$VAR2" >> $GITHUB_ENV
+        echo "VAR3=$VAR3" >> $GITHUB_ENV
+        echo "VAR4=$VAR4" >> $GITHUB_ENV
+        echo "VAR5=$VAR5" >> $GITHUB_ENV
+        echo "VAR6=$VAR6" >> $GITHUB_ENV
+        echo "VAR7=$VAR7" >> $GITHUB_ENV
+        echo "VAR8=$VAR8" >> $GITHUB_ENV
+
+    - name: Display Environment Variables
+      run: |
+        echo "VAR1=${{ env.VAR1 }}"
+        echo "VAR2=${{ env.VAR2 }}"
+        echo "VAR3=${{ env.VAR3 }}"
+        echo "VAR4=${{ env.VAR4 }}"
+        echo "VAR5=${{ env.VAR5 }}"
+        echo "VAR6=${{ env.VAR6 }}"
+        echo "VAR7=${{ env.VAR7 }}"
+        echo "VAR8=${{ env.VAR8 }}"        
         IFS='=' read -ra arr <<< "$output"
         VAR1=$(echo "${arr[0]}" | tr -d '[],')
         VAR2=$(echo "${arr[1]}" | tr -d '[],')
