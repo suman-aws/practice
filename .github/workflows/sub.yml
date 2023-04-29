@@ -31,7 +31,7 @@ jobs:
           echo "VAR7=$(echo $output | awk '{print $7}')" >> $GITHUB_ENV
           echo "VAR8=abc5.com" >> $GITHUB_ENV
 
-      - name: Display Values
+      - name: Display Environment Variables
         run: |
           echo "VAR1=${{ env.VAR1 }}"
           echo "VAR2=${{ env.VAR2 }}"
@@ -41,7 +41,6 @@ jobs:
           echo "VAR6=${{ env.VAR6 }}"
           echo "VAR7=${{ env.VAR7 }}"
           echo "VAR8=${{ env.VAR8 }}"
-
 
 
 
