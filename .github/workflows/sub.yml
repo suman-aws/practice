@@ -21,36 +21,21 @@ jobs:
 
       - name: Set environment variables
         run: |
-          output_string=$(python prepare_new_deployment.py)
-          values = output_string .split(",")
-          ENVironment = values[0].strip("[]'")
-          Envi = values[1].strip("[]'")
-          DEPLOYMENT_CONTEXT = values[2].strip("[]'")
-          MODEL_NAMES = values[3].strip("[]'")
-          MODEL_VERSIONS = values[4].strip("[]'")
-          SYSTEM_UIDS = values[5].strip("[]'")
-          TESTING_TIMES = values[6].strip("[]'")
-          host = values[7].strip()
+          output=$(python prepare_new_deployment.py)
+          echo "VAR1=$(echo $output | awk '{print $1}')" >> $GITHUB_ENV
+          echo "VAR2=$(echo $output | awk '{print $2}')" >> $GITHUB_ENV
+          echo "VAR3=$(echo $output | awk '{print $3}')" >> $GITHUB_ENV
+          echo "VAR4=$(echo $output | awk '{print $4}')" >> $GITHUB_ENV
+          echo "VAR5=$(echo $output | awk '{print $5}')" >> $GITHUB_ENV
+          echo "VAR6=$(echo $output | awk '{print $6}')" >> $GITHUB_ENV
+          echo "VAR7=$(echo $output | awk '{print $7}')" >> $GITHUB_ENV
+          echo "VAR8=abc5.com" >> $GITHUB_ENV
 
-          echo "ENVironment=${ENVironment}" >> $GITHUB_ENV
-          echo "Envi=${Envi}" >> $GITHUB_ENV
-          echo "DEPLOYMENT_CONTEXT=${DEPLOYMENT_CONTEXT}" >> $GITHUB_ENV
-          echo "MODEL_NAMES=${MODEL_NAMES}" >> $GITHUB_ENV
-          echo "MODEL_VERSIONS=${MODEL_VERSIONS}" >> $GITHUB_ENV
-          echo "SYSTEM_UIDS=${SYSTEM_UIDS}" >> $GITHUB_ENV
-          echo "TESTING_TIMES=${TESTING_TIMES}" >> $GITHUB_ENV
-          echo "host=${host}" >> $GITHUB_ENV
-          
-      - name: Print environment variables
-        run: |
-          echo "ENVironment: $ENVironment"
-          echo "Envi: $Envi"
-          echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
-          echo "MODEL_NAMES: $MODEL_NAMES"
-          echo "MODEL_VERSIONS: $MODEL_VERSIONS"
-          echo "SYSTEM_UIDS: $SYSTEM_UIDS"
-          echo "TESTING_TIMES: $TESTING_TIMES"
-          echo "host: $host"
+
+
+
+
+
       
     # - name: authunticate
     #   run: |
