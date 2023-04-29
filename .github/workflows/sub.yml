@@ -21,9 +21,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          IFS=',' read -ra env_arr <<< "$env_str"
           values = env_str.split(",")
-
           ENVironment = values[0].strip("[]'")
           Envi = values[1].strip("[]'")
           DEPLOYMENT_CONTEXT = values[2].strip("[]'")
