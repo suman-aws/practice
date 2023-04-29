@@ -12,34 +12,20 @@ jobs:
 
     - name: Extract variables
       run: |
-
         output=$(python prepare_new_deployment.py)          
-        for var in $(echo $output | tr '=' '\n'); do
-          value=$(echo $var | awk -F'[=]' '{print $2}')
-          case $(echo $var | awk -F'[=]' '{print $1}') in
-            "QA")
-              echo "VAR1=$value" >> $GITHUB_ENV
-              ;;
-            "ABC QA")
-              echo "VAR2=$value" >> $GITHUB_ENV
-              ;;
-            "RW")
-              echo "VAR3=$value" >> $GITHUB_ENV
-              ;;
-            "T-PR")
-              echo "VAR4=$value" >> $GITHUB_ENV
-              ;;
-            "1.0")
-              echo "VAR5=$value" >> $GITHUB_ENV
-              ;;
-            "77276535")
-              echo "VAR6=$value" >> $GITHUB_ENV
-              ;;
-            "20230218-235959")
-              echo "VAR7=$value" >> $GITHUB_ENV
-              ;;
-            "abc5.com")
-              echo "VAR8=$value" >> $GITHUB_ENV
-              ;;
-          esac
-        done
+        VAR1=$(echo $output | cut -d '=' -f 1 | awk '{print $1}')
+        VAR2=$(echo $output | cut -d '=' -f 2 | awk '{print $1}')
+        VAR3=$(echo $output | cut -d '=' -f 3 | awk '{print $1}')
+        VAR4=$(echo $output | cut -d '=' -f 4 | awk '{print $1}')
+        VAR5=$(echo $output | cut -d '=' -f 5 | awk '{print $1}')
+        VAR6=$(echo $output | cut -d '=' -f 6 | awk '{print $1}')
+        VAR7=$(echo $output | cut -d '=' -f 7 | awk '{print $1}')
+        VAR8=abc5.com
+        echo "VAR1=$VAR1" >> $GITHUB_ENV
+        echo "VAR2=$VAR2" >> $GITHUB_ENV
+        echo "VAR3=$VAR3" >> $GITHUB_ENV
+        echo "VAR4=$VAR4" >> $GITHUB_ENV
+        echo "VAR5=$VAR5" >> $GITHUB_ENV
+        echo "VAR6=$VAR6" >> $GITHUB_ENV
+        echo "VAR7=$VAR7" >> $GITHUB_ENV
+        echo "VAR8=$VAR8" >> $GITHUB_ENV
