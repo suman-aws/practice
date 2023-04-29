@@ -84,4 +84,4 @@ host = 'abc5.com'
 # print("SYSTEM_UIDS:",sysuid)
 # print("TESTING_TIMES:",testingtime)
 # print(host)
-print(str(env)+','+str(envi)+','+str(context)+','+str(modellist)+','+str(version)+','+str(sysuid)+','+str(testingtime)+','+str(host))
+print(str(env)+'='+str(envi)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime)+'='+str(host))

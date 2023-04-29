@@ -13,38 +13,33 @@ jobs:
     - name: Extract variables
       run: |
 
-        python_output=$(python prepare_new_deployment.py)
-        environment=$(echo "$python_output" | awk -F": " '/ENVironment/ {print $2}')
-        deployment_context=$(echo "$python_output" | awk -F": " '/DEPLOYMENT_CONTEXT/ {print $2}')
-        model_names=$(echo "$python_output" | awk -F": " '/MODEL_NAMES/ {print $2}')
-        model_versions=$(echo "$python_output" | awk -F": " '/MODEL_VERSIONS/ {print $2}')
-        system_uids=$(echo "$python_output" | awk -F": " '/SYSTEM_UIDS/ {print $2}')
-        testing_times=$(echo "$python_output" | awk -F": " '/TESTING_TIMES/ {print $2}')
-
-        # Set the environment variables in the GitHub Actions environment
-        echo "ENVironment=$environment" >> $GITHUB_ENV
-        echo "DEPLOYMENT_CONTEXT=$deployment_context" >> $GITHUB_ENV
-        echo "MODEL_NAMES=$model_names" >> $GITHUB_ENV
-        echo "MODEL_VERSIONS=$model_versions" >> $GITHUB_ENV
-        echo "SYSTEM_UIDS=$system_uids" >> $GITHUB_ENV
-        echo "TESTING_TIMES=$testing_times" >> $GITHUB_ENV
-
-    - name: Display environment variables
-      run: |
-        echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
-        echo "DEPLOYMENT_CONTEXT=${{ env.DEPLOYMENT_CONTEXT }}"
-        echo "MODEL_NAMES=${{ env.MODEL_NAMES }}"
-        echo "MODEL_VERSIONS=${{ env.MODEL_VERSIONS }}"
-        echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
-        echo "TESTING_TIMES=${{ env.TESTING_TIMES }}"
-
-    - name: Use environment variables
-      env:
-        envi:"${{ env.ENVIRONMENT }}"
-      run: |
-        if [[ envi == "QA" ]]; then
-            echo "ENVIRONMENT is QA"
-        else
-            echo "ENVIRONMENT is not QA"
-        fi
-              
+        output=$(python prepare_new_deployment.py)          
+        for var in $(echo $output | tr '=' '\n'); do
+          value=$(echo $var | awk -F'[=]' '{print $2}')
+          case $(echo $var | awk -F'[=]' '{print $1}') in
+            "QA")
+              echo "VAR1=$value" >> $GITHUB_ENV
+              ;;
+            "ABC QA")
+              echo "VAR2=$value" >> $GITHUB_ENV
+              ;;
+            "RW")
+              echo "VAR3=$value" >> $GITHUB_ENV
+              ;;
+            "T-PR")
+              echo "VAR4=$value" >> $GITHUB_ENV
+              ;;
+            "1.0")
+              echo "VAR5=$value" >> $GITHUB_ENV
+              ;;
+            "77276535")
+              echo "VAR6=$value" >> $GITHUB_ENV
+              ;;
+            "20230218-235959")
+              echo "VAR7=$value" >> $GITHUB_ENV
+              ;;
+            "abc5.com")
+              echo "VAR8=$value" >> $GITHUB_ENV
+              ;;
+          esac
+        done
