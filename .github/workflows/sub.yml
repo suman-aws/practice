@@ -1,4 +1,4 @@
-name: Set Environment Variables
+name: Store Python Output as Github Environment Variables
 
 on:
   push:
@@ -6,60 +6,82 @@ on:
       - main
 
 jobs:
-  set-env:
+  store_output:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Git Sumbodule Update
-      run: |
-        pwd
-        ls
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Python script
+        run: |
+          # Run your Python script here and store the output in a variable
+          # python_output = "ENVi: ['QA', 'QA']\nEnvi:['ABC QA','ABC QA']\nDEPLOYMENT_CONTEXT: ['RW', 'RW+RS']\nMODEL_NAMES: ['T-PR', 'LR']\nMODEL_VERSIONS: ['1.0', '1.0']\nSYSTEM_UIDS: ['77276535', '77276535']\nTESTING_TIMES: ['20230218-235959', '20230218-235959']\nhost: abc5.com"
+          python_output=$(python prepare_new_deployment.py)
+          # Split the Python output into separate lists
+          environment = [x.strip() for x in python_output.split("\n")[0].split(":")[1][1:-1].split(",")]
+          envi = [x.strip() for x in python_output.split("\n")[1].split(":")[1][1:-1].split(",")]
+          deployment_context = [x.strip() for x in python_output.split("\n")[2].split(":")[1][1:-1].split(",")]
+          model_names = [x.strip() for x in python_output.split("\n")[3].split(":")[1][1:-1].split(",")]
+          model_versions = [x.strip() for x in python_output.split("\n")[4].split(":")[1][1:-1].split(",")]
+          system_uids = [x.strip() for x in python_output.split("\n")[5].split(":")[1][1:-1].split(",")]
+          testing_times = [x.strip() for x in python_output.split("\n")[6].split(":")[1][1:-1].split(",")]
 
-    # - name: Run Python script
+          # Set the environment variables
+          print(f"::set-env name=ENVironment::{environment}")
+          print(f"::set-env name=ENVi::{envi}")
+          print(f"::set-env name=DEPLOYMENT_CONTEXT::{deployment_context}")
+          print(f"::set-env name=MODEL_NAMES::{model_names}")
+          print(f"::set-env name=MODEL_VERSIONS::{model_versions}")
+          print(f"::set-env name=SYSTEM_UIDS::{system_uids}")
+          print(f"::set-env name=TESTING_TIMES::{testing_times}")
+          
+      - name: Print environment variables
+        run: |
+          echo "ENVironment: $ENVironment"
+          echo "ENVi: $ENVi"
+          echo "DEPLOYMENT_CONTEXT: $DEPLOYMENT_CONTEXT"
+          echo "MODEL_NAMES: $MODEL_NAMES"
+          echo "MODEL_VERSIONS: $MODEL_VERSIONS"
+          echo "SYSTEM_UIDS: $SYSTEM_UIDS"
+          echo "TESTING_TIMES: $TESTING_TIMES"
+
+    # - name: authunticate
     #   run: |
-    #     # output=$(python prepare_new_deployment.py)
-    #     # mkdir ~/inputfolder
-    #     # echo "$output" > ~/inputfolder/input.txt
-    #     # cat ~/inputfolder/input.txt
-    #     pwd
-    - name: authunticate
-      run: |
-        output=$(python prepare_new_deployment.py)
-        ENVironment=$(cut -d '=' -f1 <<< "$output")
-        echo $ENVironment
+    #     output=$(python prepare_new_deployment.py)
+    #     ENVironment=$(cut -d '=' -f1 <<< "$output")
+    #     echo $ENVironment
 
-        if [[ $ENVironment =~ "INT" ]]; then
-          echo "INT models present; Authenticating for SI"
-          # Add authentication steps for SI INT
-        else
-          echo "No INT models present; hence not authenticating for SI"
-        fi
+    #     if [[ $ENVironment =~ "INT" ]]; then
+    #       echo "INT models present; Authenticating for SI"
+    #       # Add authentication steps for SI INT
+    #     else
+    #       echo "No INT models present; hence not authenticating for SI"
+    #     fi
 
-        if [[ $ENVironment =~ "QA" ]]; then
-          echo "QA models present; Authenticating for SI"
-          # Add authentication steps for SI QA
-        else
-          echo "No QA models present; hence not authenticating for SI"
-        fi
+    #     if [[ $ENVironment =~ "QA" ]]; then
+    #       echo "QA models present; Authenticating for SI"
+    #       # Add authentication steps for SI QA
+    #     else
+    #       echo "No QA models present; hence not authenticating for SI"
+    #     fi
 
-        if [[ $ENVironment =~ "PROD" ]]; then
-          echo "PROD models present; Authenticating for SI"
-          # Add authentication steps for SI PROD
-        else
-          echo "No PROD models present; hence not authenticating for SI"
-        fi
+    #     if [[ $ENVironment =~ "PROD" ]]; then
+    #       echo "PROD models present; Authenticating for SI"
+    #       # Add authentication steps for SI PROD
+    #     else
+    #       echo "No PROD models present; hence not authenticating for SI"
+    #     fi
 
-    - name: Verify environment variables
-      run: |
-        output=$(python prepare_new_deployment.py)
-        ENVironment=$(cut -d '=' -f1 <<< "$output")
-        context=$(cut -d '=' -f2 <<< "$output")
-        models=$(cut -d '=' -f3 <<< "$output")
-        # echo $ENVironment
-        # echo $context
-        # echo $models
-        python host.py "$ENVironment" "$context" "$models"
+    # - name: Verify environment variables
+    #   run: |
+    #     output=$(python prepare_new_deployment.py)
+    #     ENVironment=$(cut -d '=' -f1 <<< "$output")
+    #     context=$(cut -d '=' -f2 <<< "$output")
+    #     models=$(cut -d '=' -f3 <<< "$output")
+    #     # echo $ENVironment
+    #     # echo $context
+    #     # echo $models
+    #     python host.py "$ENVironment" "$context" "$models"
 
 
     # - name: Verify environment variables
