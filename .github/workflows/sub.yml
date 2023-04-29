@@ -22,14 +22,25 @@ jobs:
       - name: Set environment variables
         run: |
           IFS=',' read -ra env_arr <<< "$env_str"
-          export ENVironment=${env_arr[0]}
-          export Envi=${env_arr[1]}
-          export DEPLOYMENT_CONTEXT=${env_arr[2]}
-          export MODEL_NAMES=${env_arr[3]}
-          export MODEL_VERSIONS=${env_arr[4]}
-          export SYSTEM_UIDS=${env_arr[5]}
-          export TESTING_TIMES=${env_arr[6]}
-          export host=${env_arr[7]}
+          values = env_str.split(",")
+
+          ENVironment = values[0].strip("[]'")
+          Envi = values[1].strip("[]'")
+          DEPLOYMENT_CONTEXT = values[2].strip("[]'")
+          MODEL_NAMES = values[3].strip("[]'")
+          MODEL_VERSIONS = values[4].strip("[]'")
+          SYSTEM_UIDS = values[5].strip("[]'")
+          TESTING_TIMES = values[6].strip("[]'")
+          host = values[7].strip()
+
+          echo "ENVironment=${ENVironment}" >> $GITHUB_ENV
+          echo "Envi=${Envi}" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=${DEPLOYMENT_CONTEXT}" >> $GITHUB_ENV
+          echo "MODEL_NAMES=${MODEL_NAMES}" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=${MODEL_VERSIONS}" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=${SYSTEM_UIDS}" >> $GITHUB_ENV
+          echo "TESTING_TIMES=${TESTING_TIMES}" >> $GITHUB_ENV
+          echo "host=${host}" >> $GITHUB_ENV
           
       - name: Print environment variables
         run: |
