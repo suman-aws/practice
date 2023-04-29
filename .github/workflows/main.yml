@@ -13,14 +13,15 @@ jobs:
     - name: Extract variables
       run: |
         output=$(python prepare_new_deployment.py)          
-        VAR1=$(echo $output | cut -d '=' -f 1 | awk '{print $1}')
-        VAR2=$(echo $output | cut -d '=' -f 2 | awk '{print $1}')
-        VAR3=$(echo $output | cut -d '=' -f 3 | awk '{print $1}')
-        VAR4=$(echo $output | cut -d '=' -f 4 | awk '{print $1}')
-        VAR5=$(echo $output | cut -d '=' -f 5 | awk '{print $1}')
-        VAR6=$(echo $output | cut -d '=' -f 6 | awk '{print $1}')
-        VAR7=$(echo $output | cut -d '=' -f 7 | awk '{print $1}')
-        VAR8=abc5.com
+        IFS='=' read -ra arr <<< "$output"
+        VAR1=$(echo "${arr[0]}" | tr -d '[],')
+        VAR2=$(echo "${arr[1]}" | tr -d '[],')
+        VAR3=$(echo "${arr[2]}" | tr -d '[],')
+        VAR4=$(echo "${arr[3]}" | tr -d '[],')
+        VAR5=$(echo "${arr[4]}" | tr -d '[],')
+        VAR6=$(echo "${arr[5]}" | tr -d '[],')
+        VAR7=$(echo "${arr[6]}" | tr -d '[],')
+        VAR8="abc5.com"
         echo "VAR1=$VAR1" >> $GITHUB_ENV
         echo "VAR2=$VAR2" >> $GITHUB_ENV
         echo "VAR3=$VAR3" >> $GITHUB_ENV
