@@ -1,4 +1,4 @@
-name: Store Python Output as Github Environment Variables
+name: Read YAML file and set env vars
 
 on:
   push:
@@ -6,139 +6,34 @@ on:
       - main
 
 jobs:
-  store_output:
+  read-yaml-file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      # - name: Run Python script
-      #   run: python prepare_new_deployment.py > output.txt
-
-      # - name: Read output file
-      #   run: |
-      #     output_string =$(python prepare_new_deployment.py)
-      #     # echo "Output string: $env_str"
-
-      - name: Set environment variables
-        run: |
-          output=$(python prepare_new_deployment.py)
-          echo "VAR1=$(echo $output | awk '{print $1}')" >> $GITHUB_ENV
-          echo "VAR2=$(echo $output | awk '{print $2}')" >> $GITHUB_ENV
-          echo "VAR3=$(echo $output | awk '{print $3}')" >> $GITHUB_ENV
-          echo "VAR4=$(echo $output | awk '{print $4}')" >> $GITHUB_ENV
-          echo "VAR5=$(echo $output | awk '{print $5}')" >> $GITHUB_ENV
-          echo "VAR6=$(echo $output | awk '{print $6}')" >> $GITHUB_ENV
-          echo "VAR7=$(echo $output | awk '{print $7}')" >> $GITHUB_ENV
-          echo "VAR8=abc5.com" >> $GITHUB_ENV
-
-      - name: Display Environment Variables
-        run: |
-          echo "VAR1=${{ env.VAR1 }}"
-          echo "VAR2=${{ env.VAR2 }}"
-          echo "VAR3=${{ env.VAR3 }}"
-          echo "VAR4=${{ env.VAR4 }}"
-          echo "VAR5=${{ env.VAR5 }}"
-          echo "VAR6=${{ env.VAR6 }}"
-          echo "VAR7=${{ env.VAR7 }}"
-          echo "VAR8=${{ env.VAR8 }}"
-
-
-
-
       
-    # - name: authunticate
-    #   run: |
-    #     output=$(python prepare_new_deployment.py)
-    #     ENVironment=$(cut -d '=' -f1 <<< "$output")
-    #     echo $ENVironment
+      - name: Install jq and envfile
+        run: |
+          sudo apt-get install -y jq
+          curl -sSL https://github.com/alexkasko/envfile/releases/download/v1.2.0/envfile_linux_amd64 -o envfile
+          chmod +x envfile
 
-    #     if [[ $ENVironment =~ "INT" ]]; then
-    #       echo "INT models present; Authenticating for SI"
-    #       # Add authentication steps for SI INT
-    #     else
-    #       echo "No INT models present; hence not authenticating for SI"
-    #     fi
+      - name: Read YAML file and set env vars
+        run: |
+          # Read the YAML file and extract the desired values
+          DEPLOYMENT_CONTEXT=$(cat model_detailsdeployment.yml | jq -r '.[].DeploymentContext')
+          MODEL_NAME=$(cat model_detailsdeployment.yml | jq -r '.[].ModelName')
+          MODEL_VERSION=$(cat model_detailsdeployment.yml | jq -r '.[].ModelVersion')
+          
+          # Write the values to a temporary file
+          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" > tmp_envfile
+          echo "MODEL_NAME=$MODEL_NAME" >> tmp_envfile
+          echo "MODEL_VERSION=$MODEL_VERSION" >> tmp_envfile
+          
+          # Load the temporary file into GitHub environment variables
+          ./envfile tmp_envfile
 
-    #     if [[ $ENVironment =~ "QA" ]]; then
-    #       echo "QA models present; Authenticating for SI"
-    #       # Add authentication steps for SI QA
-    #     else
-    #       echo "No QA models present; hence not authenticating for SI"
-    #     fi
-
-    #     if [[ $ENVironment =~ "PROD" ]]; then
-    #       echo "PROD models present; Authenticating for SI"
-    #       # Add authentication steps for SI PROD
-    #     else
-    #       echo "No PROD models present; hence not authenticating for SI"
-    #     fi
-
-    # - name: Verify environment variables
-    #   run: |
-    #     output=$(python prepare_new_deployment.py)
-    #     ENVironment=$(cut -d '=' -f1 <<< "$output")
-    #     context=$(cut -d '=' -f2 <<< "$output")
-    #     models=$(cut -d '=' -f3 <<< "$output")
-    #     # echo $ENVironment
-    #     # echo $context
-    #     # echo $models
-    #     python host.py "$ENVironment" "$context" "$models"
-
-
-    # - name: Verify environment variables
-    #   run: |
-    #     # echo "ENVironment=$ENVironment"
-    #     #echo "MODEL_NAMES=$MODEL_NAMES"
-    #     #echo "MODEL_VERSIONS=$MODEL_VERSIONS"
-    #     echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
-    #     #echo "SYSTEM_UIDS=$SYSTEM_UIDS"
-    #     #echo "TESTING_TIMES=$TESTING_TIMES"
-    # - name: Run script
-    #   run: |
-
-
-    #     if [[ $ENVironment =~ "INT" ]]; then
-    #       echo "INT models present; Authenticating for SI"
-    #       # Add authentication steps for SI INT
-    #     else
-    #       echo "No INT models present; hence not authenticating for SI"
-    #     fi
-
-    #     if [[ $ENVironment =~ "QA" ]]; then
-    #       echo "QA models present; Authenticating for SI"
-    #       # Add authentication steps for SI QA
-    #     else
-    #       echo "No QA models present; hence not authenticating for SI"
-    #     fi
-
-    #     if [[ $ENVironment =~ "PROD" ]]; then
-    #       echo "PROD models present; Authenticating for SI"
-    #       # Add authentication steps for SI PROD
-    #     else
-    #       echo "No PROD models present; hence not authenticating for SI"
-    #     fi
-    #   env:
-    #     ENVironment: ${{ env.ENVironment }}
-    # - name: Deploy to environment
-    #   env:
-    #     ENVironment: ${{ env.ENVironment }}
-    #   run: |
-    #       for i in "${!ENVironment[@]}"; do
-    #         parts=(${ENVironment[$i]// / })
-    #         case "${parts[1]}" in
-    #           INT)
-    #             HOST="hsi7.com"
-    #             ;;
-    #           QA)
-    #             HOST="3.com"
-    #             ;;
-    #           PROD)
-    #             HOST="5.com"
-    #             ;;
-    #         esac
-    #         echo "Deploying to ${parts[1]} environment on host ${HOST}"
-    #         # Add your deployment commands here using $HOST
-    #       done
-
-
-
+          # Print the values to verify
+          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
+          echo "MODEL_NAME=$MODEL_NAME"
+          echo "MODEL_VERSION=$MODEL_VERSION"
