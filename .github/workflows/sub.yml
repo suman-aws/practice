@@ -14,10 +14,8 @@ jobs:
       
       - name: Run Python script
         run: |
-          # Run your Python script here and store the output in a variable
-          # python_output = "ENVi: ['QA', 'QA']\nEnvi:['ABC QA','ABC QA']\nDEPLOYMENT_CONTEXT: ['RW', 'RW+RS']\nMODEL_NAMES: ['T-PR', 'LR']\nMODEL_VERSIONS: ['1.0', '1.0']\nSYSTEM_UIDS: ['77276535', '77276535']\nTESTING_TIMES: ['20230218-235959', '20230218-235959']\nhost: abc5.com"
+         
           python_output=$(python prepare_new_deployment.py)
-          # Split the Python output into separate lists
           environment = [x.strip() for x in python_output.split("\n")[0].split(":")[1][1:-1].split(",")]
           envi = [x.strip() for x in python_output.split("\n")[1].split(":")[1][1:-1].split(",")]
           deployment_context = [x.strip() for x in python_output.split("\n")[2].split(":")[1][1:-1].split(",")]
