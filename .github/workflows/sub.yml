@@ -21,7 +21,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          output_string =$(python prepare_new_deployment.py)
+          output_string=$(python prepare_new_deployment.py)
           values = output_string .split(",")
           ENVironment = values[0].strip("[]'")
           Envi = values[1].strip("[]'")
