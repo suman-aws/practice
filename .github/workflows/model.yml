@@ -14,8 +14,8 @@ jobs:
       shell: python
       id: script1
       run: |
-        pip install pyyaml
-        import yaml
+        # pip install pyyaml
+        # import yaml
         with open("model_detailsdeployment.yml") as f:
             doc = yaml.safe_load(f)
 
