@@ -74,14 +74,14 @@ for key, value in doc.items():
 # context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
 # sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
 # testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
-envi = ['ABC QA','ABC QA']
-host = 'abc5.com'
-print("ENVironment:",env)
-print("ENVir:",envi)
-print("DEPLOYMENT_CONTEXT:",context)
-print("MODEL_NAMES:",modellist)
-print("MODEL_VERSIONS:",version)
-print("SYSTEM_UIDS:",sysuid)
-print("TESTING_TIMES:",testingtime)
-print(host)
-print(str(env)+'='+str(envi)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime)+'='+str(host))
+# envi = ['ABC QA','ABC QA']
+# host = 'abc5.com'
+# print("ENVironment:",env)
+# # print("ENVir:",envi)
+# print("DEPLOYMENT_CONTEXT:",context)
+# print("MODEL_NAMES:",modellist)
+# print("MODEL_VERSIONS:",version)
+# print("SYSTEM_UIDS:",sysuid)
+# print("TESTING_TIMES:",testingtime)
+# # print(host)
+print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))
