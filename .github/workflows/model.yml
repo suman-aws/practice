@@ -26,20 +26,20 @@ jobs:
             doc = yaml.safe_load(f)
 
 
-          for key, value in doc.items():
-              for k,v in value.items():
-                      if k == 'SystemUIDs':
-                          sysuid.append(v)
-                      if k == 'TestingTime':
-                          testingtime.append(v)
-                      if k == 'DeploymentEnv':
-                          envs.append(v)
-                      if k == 'DeploymentContext':
-                          context.append(v)
-                      if k == 'ModelUID':
-                          modellist.append(v)
-                      if k == 'ModelVersion':
-                          version.append(v)
+        for key, value in doc.items():
+            for k,v in value.items():
+                    if k == 'SystemUIDs':
+                        sysuid.append(v)
+                    if k == 'TestingTime':
+                        testingtime.append(v)
+                    if k == 'DeploymentEnv':
+                        envs.append(v)
+                    if k == 'DeploymentContext':
+                        context.append(v)
+                    if k == 'ModelUID':
+                        modellist.append(v)
+                    if k == 'ModelVersion':
+                        version.append(v)
 
           # for i in range(len(modellist)):
               # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
