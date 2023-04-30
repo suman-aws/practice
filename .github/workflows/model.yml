@@ -51,8 +51,8 @@ jobs:
           # context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
           # sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
           # testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
-          envi = ['ABC QA','ABC QA']
-          host = 'abc5.com'
+          # envi = ['ABC QA','ABC QA']
+          # host = 'abc5.com'
           # print("ENVironment:",envs)
           # print("ENVir:",envi)
           # print("DEPLOYMENT_CONTEXT:",context)
@@ -87,13 +87,13 @@ jobs:
         #    done
         # fi
         echo "envs=$envs" >> $GITHUB_ENV
-        echo "envi=$envi" >> $GITHUB_ENV
+        # echo "envi=$envi" >> $GITHUB_ENV
         echo "context=$context" >> $GITHUB_ENV
         echo "modellist=$modellist" >> $GITHUB_ENV
         echo "version=$version" >> $GITHUB_ENV
         echo "sysuid=$sysuid" >> $GITHUB_ENV
         echo "testingtime=$testingtime" >> $GITHUB_ENV
-        echo "host=$host" >> $GITHUB_ENV
+        # echo "host=$host" >> $GITHUB_ENV
       
 
         
