@@ -11,7 +11,6 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run script 1
-      shell: python
       id: script1
       run: |
         # pip install pyyaml
@@ -40,9 +39,10 @@ jobs:
                         modellist.append(v)
                     if k == 'ModelVersion':
                         version.append(v)
-        echo "envs=$envs" >> $GITHUB_ENV
-        echo "context=$context" >> $GITHUB_ENV
-        echo "modellist=$modellist" >> $GITHUB_ENV
+       
+        echo "envs=$envs">>$GITHUB_ENV
+        echo "context=$context">>$GITHUB_ENV
+        echo "modellist=$modellist">>$GITHUB_ENV
         echo "version=$version" >> $GITHUB_ENV
         echo "sysuid=$sysuid" >> $GITHUB_ENV
         echo "testingtime=$testingtime" >> $GITHUB_ENV
