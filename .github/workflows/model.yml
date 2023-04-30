@@ -40,6 +40,12 @@ jobs:
                         modellist.append(v)
                     if k == 'ModelVersion':
                         version.append(v)
+        echo "envs=$envs" >> $GITHUB_ENV
+        echo "context=$context" >> $GITHUB_ENV
+        echo "modellist=$modellist" >> $GITHUB_ENV
+        echo "version=$version" >> $GITHUB_ENV
+        echo "sysuid=$sysuid" >> $GITHUB_ENV
+        echo "testingtime=$testingtime" >> $GITHUB_ENV
 
           # for i in range(len(modellist)):
               # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
@@ -86,13 +92,7 @@ jobs:
         #       echo $versionss
         #    done
         # fi
-        echo "envs=$envs" >> $GITHUB_ENV
-        # echo "envi=$envi" >> $GITHUB_ENV
-        echo "context=$context" >> $GITHUB_ENV
-        echo "modellist=$modellist" >> $GITHUB_ENV
-        echo "version=$version" >> $GITHUB_ENV
-        echo "sysuid=$sysuid" >> $GITHUB_ENV
-        echo "testingtime=$testingtime" >> $GITHUB_ENV
+
         # echo "host=$host" >> $GITHUB_ENV
       
 
