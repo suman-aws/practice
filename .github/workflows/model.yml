@@ -9,41 +9,36 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Run script 1
-      shell: python
-      id: script1
+    - name: Prepare new deployment
+      id: prepare-deployment
       run: |
-  - name: Prepare new deployment
-        id: prepare-deployment
-        run: |
-          output=$(python3 prepare_new_deployment.py)
-          echo "::set-output name=output::$output"
+        output=$(python3 prepare_new_deployment.py)
+        echo "::set-output name=output::$output"
 
-      - name: Parse output
-        run: |
-          for line in ${{ steps.prepare-deployment.outputs.output }}; do
-            IFS='=' read -ra parts <<< "$line"
-            case "${parts[0]}" in
-              env) export ENV="${parts[1]}" ;;
-              context) export CONTEXT="${parts[1]}" ;;
-              model) export MODEL="${parts[1]}" ;;
-              version) export VERSION="${parts[1]}" ;;
-              sysuid) export SYSUID="${parts[1]}" ;;
-              testingtime) export TESTINGTIME="${parts[1]}" ;;
-              *) echo "Unknown variable: ${parts[0]}=${parts[1]}" ;;
-            esac
-          done
+    - name: Parse output
+      run: |
+        for line in ${{ steps.prepare-deployment.outputs.output }}; do
+        IFS='=' read -ra parts <<< "$line"
+        case "${parts[0]}" in
+            env) export ENV="${parts[1]}" ;;
+            context) export CONTEXT="${parts[1]}" ;;
+            model) export MODEL="${parts[1]}" ;;
+            version) export VERSION="${parts[1]}" ;;
+            sysuid) export SYSUID="${parts[1]}" ;;
+            testingtime) export TESTINGTIME="${parts[1]}" ;;
+            *) echo "Unknown variable: ${parts[0]}=${parts[1]}" ;;
+        esac
+        done
 
-      - name: Deploy app
-        run: |
-          # Use the environment variables or arrays set in the previous step to deploy the app
-          echo "ENV=$ENV"
-          echo "CONTEXT=$CONTEXT"
-          echo "MODEL=$MODEL"
-          echo "VERSION=$VERSION"
-          echo "SYSUID=$SYSUID"
-          echo "TESTINGTIME=$TESTINGTIME"
+    - name: Deploy app
+      run: |
+        # Use the environment variables or arrays set in the previous step to deploy the app
+        echo "ENV=$ENV"
+        echo "CONTEXT=$CONTEXT"
+        echo "MODEL=$MODEL"
+        echo "VERSION=$VERSION"
+        echo "SYSUID=$SYSUID"
+        echo "TESTINGTIME=$TESTINGTIME"
 
 
 
