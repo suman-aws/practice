@@ -13,32 +13,84 @@ jobs:
     - name: Run script 1
       id: script1
       run: |
-        out=$(python prepare_new_deployment.py)
-        echo $out
-        version=$(python new.py "$out")
-        echo $version
-        # context=$(python deploy.py "$out") 
-        # echo $context
-        model=$(python hs.py "$out") 
-        echo $model
-        # python host.py "$envi" "$context" "$models"
-        model=$(tr -d '[]' <<< "$model")
-        IFS=',' read -r -a models <<< "$model"
-        version=$(tr -d '[]' <<< "$version")
-        IFS=',' read -r -a versions <<< "$version"
-        length=${#models[@]}
-        
-        if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
-           echo "equal"
-        else
-           for (( i=0; i<length; i++ ));do
-              modelname="${models[$i]//\'/}"
-              versionss="${versions[$i]//\'/}"
-              echo $modelname
-              echo $versionss
-           done
-        fi
+        import yaml
+        with open("model_detailsdeployment.yml") as f:
+            doc = yaml.safe_load(f)
 
+          sysuid = []
+          testingtime = []
+          envs = []
+          context = []
+          modellist = []
+          version = []
+          for key, value in doc.items():
+              for k,v in value.items():
+                      if k == 'SystemUIDs':
+                          sysuid.append(v)
+                      if k == 'TestingTime':
+                          testingtime.append(v)
+                      if k == 'DeploymentEnv':
+                          envs.append(v)
+                      if k == 'DeploymentContext':
+                          context.append(v)
+                      if k == 'ModelUID':
+                          modellist.append(v)
+                      if k == 'ModelVersion':
+                          version.append(v)
+
+          # for i in range(len(modellist)):
+              # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
+          # model_names = [name.strip() for name in env]
+
+          # models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
+          # versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
+          # env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
+          # context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
+          # sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
+          # testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
+          envi = ['ABC QA','ABC QA']
+          host = 'abc5.com'
+          # print("ENVironment:",envs)
+          # print("ENVir:",envi)
+          # print("DEPLOYMENT_CONTEXT:",context)
+          # print("MODEL_NAMES:",modellist)
+          # print("MODEL_VERSIONS:",version)
+          # print("SYSTEM_UIDS:",sysuid)
+          # print("TESTING_TIMES:",testingtime)
+          # print(host)
+            # # out=$(python prepare_new_deployment.py)
+        # echo $out
+        # version=$(python new.py "$out")
+        # echo $version
+        # # context=$(python deploy.py "$out") 
+        # # echo $context
+        # model=$(python hs.py "$out") 
+        # echo $model
+        # # python host.py "$envi" "$context" "$models"
+        # model=$(tr -d '[]' <<< "$model")
+        # IFS=',' read -r -a models <<< "$model"
+        # version=$(tr -d '[]' <<< "$version")
+        # IFS=',' read -r -a versions <<< "$version"
+        # length=${#models[@]}
+        
+        # if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
+        #    echo "equal"
+        # else
+        #    for (( i=0; i<length; i++ ));do
+        #       modelname="${models[$i]//\'/}"
+        #       versionss="${versions[$i]//\'/}"
+        #       echo $modelname
+        #       echo $versionss
+        #    done
+        # fi
+        echo "envs=$envs" >> $GITHUB_ENV
+        echo "envi=$envi" >> $GITHUB_ENV
+        echo "context=$context" >> $GITHUB_ENV
+        echo "modellist=$modellist" >> $GITHUB_ENV
+        echo "version=$version" >> $GITHUB_ENV
+        echo "sysuid=$sysuid" >> $GITHUB_ENV
+        echo "testingtime=$testingtime" >> $GITHUB_ENV
+        echo "host=$host" >> $GITHUB_ENV
       
 
         
