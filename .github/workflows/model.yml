@@ -35,19 +35,26 @@ jobs:
           
       - name: new models 
         run: |
-          for model in $MODEL_NAMES; do
-               echo $model
-                if [[ $model == T* ]]; then
-                    bash test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES    
-                fi
+          for env in "${ENVIRONMENT[@]}"
+          do
+              parts=($env)
+              e=${parts[1]}
+
+              case $e in
+                  INT) 
+                      host="hsi7..com"
+                      ;;
+                  QA)
+                      host="hsi3..com"
+                      ;;
+                  PROD)
+                      host="hsi5..com"
+                      ;;
+                  *)
+                      echo "Invalid environment"
+                      exit 1
+                      ;;
+              esac
+
+              echo "Host for $env: $host"
           done
-      # - name: new models 
-      #   run: |
-      #              for model in $MODEL_NAMES; do
-      #          echo $model
-      #           if [[ $model == T* ]]; then
-      #             # echo "--------------------------------Model: $model-----------------------------------------"
-      #             bash test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
-      #           fi
-      #     done
-          
