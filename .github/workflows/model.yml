@@ -47,7 +47,7 @@ jobs:
                    for model in $MODEL_NAMES; do
                echo $model
                 if [[ $model == T* ]]; then
-                  echo "--------------------------------Model: $model-----------------------------------------"
+                  # echo "--------------------------------Model: $model-----------------------------------------"
                   bash test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
                 fi
           done
