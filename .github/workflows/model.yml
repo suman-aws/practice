@@ -13,14 +13,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Python script
         run: |
-          python prepare_new_deployment.py > output.txt
+          python my_script.py > output.txt
           OUTPUT=$(cat output.txt | tr '\n' ' ' | sed 's/\"/\\\"/g')
-          ENVIRONMENT=$(echo $OUTPUT | jq -r '.ENVIRONMENT | join(",")')
-          DEPLOYMENT_CONTEXT=$(echo $OUTPUT | jq -r '.DEPLOYMENT_CONTEXT | join(",")')
-          MODEL_NAMES=$(echo $OUTPUT | jq -r '.MODEL_NAMES | join(",")')
-          MODEL_VERSIONS=$(echo $OUTPUT | jq -r '.MODEL_VERSIONS | join(",")')
-          SYSTEM_UIDS=$(echo $OUTPUT | jq -r '.SYSTEM_UIDS | join(",")')
-          TESTING_TIMES=$(echo $OUTPUT | jq -r '.TESTING_TIMES | join(",")')
+          ENVIRONMENT=$(echo $OUTPUT | jq -r '.ENVIRONMENT | map(if type == "number" then tostring else . end) | join(",")')
+          DEPLOYMENT_CONTEXT=$(echo $OUTPUT | jq -r '.DEPLOYMENT_CONTEXT | map(if type == "number" then tostring else . end) | join(",")')
+          MODEL_NAMES=$(echo $OUTPUT | jq -r '.MODEL_NAMES | map(if type == "number" then tostring else . end) | join(",")')
+          MODEL_VERSIONS=$(echo $OUTPUT | jq -r '.MODEL_VERSIONS | map(if type == "number" then tostring else . end) | join(",")')
+          SYSTEM_UIDS=$(echo $OUTPUT | jq -r '.SYSTEM_UIDS | map(if type == "number" then tostring else . end) | join(",")')
+          TESTING_TIMES=$(echo $OUTPUT | jq -r '.TESTING_TIMES | map(if type == "number" then tostring else . end) | join(",")')
           echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
           echo "DEPLOYMENT_CONTEXT=${DEPLOYMENT_CONTEXT}" >> $GITHUB_ENV
           echo "MODEL_NAMES=${MODEL_NAMES}" >> $GITHUB_ENV
