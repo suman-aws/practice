@@ -9,32 +9,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Python script and capture output
-        id: output
+
+      - name: Example Step
+        shell: bash
         run: |
           output=$(python prepare_new_deployment.py)
-          echo "::set-output name=env_output::$output"
-
-      - name: Set environment variables
-        run: |
           # Parse output and set environment variables
-          output=${{ steps.output.outputs.env_output }}
-          ENVIRONMENT=$(echo "$output" | grep -oP "ENVironment: \[\K[^]]*")
-          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "DEPLOYMENT_CONTEXT: \[\K[^]]*")
-          MODEL_NAMES=$(echo "$output" | grep -oP "MODEL_NAMES: \[\K[^]]*")
-          MODEL_VERSIONS=$(echo "$output" | grep -oP "MODEL_VERSIONS: \[\K[^]]*")
-          SYSTEM_UIDS=$(echo "$output" | grep -oP "SYSTEM_UIDS: \[\K[^]]*")
-          TESTING_TIMES=$(echo "$output" | grep -oP "TESTING_TIMES: \[\K[^]]*")
-          # echo "::set-env name=::$ENVIRONMENT"
-          # echo "::set-env name=DEPLOYMENT_CONTEXT::$DEPLOYMENT_CONTEXT"
-          # echo "::set-env name=MODEL_NAMES::$MODEL_NAMES"
-          # echo "::set-env name=MODEL_VERSIONS::$MODEL_VERSIONS"
-          # echo "::set-env name=SYSTEM_UIDS::$SYSTEM_UIDS"
-          # echo "::set-env name=TESTING_TIMES::$TESTING_TIMES"
+          ENVIRONMENT=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          
           echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
           echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
           echo "MODEL_NAMES=$MODEL_NAMES" >> $GITHUB_ENV
           echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
           echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
- 
+          
+           
+          
