@@ -30,7 +30,7 @@ jobs:
           echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
       - name: Display Environment Variables
         run: |
-          echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
+          # echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
           echo "TESTING_TIMES=${{ env.TESTING_TIMES}}"
            
           
