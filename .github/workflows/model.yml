@@ -28,11 +28,15 @@ jobs:
           echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
           echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
+      strategy:
+        matrix: 
+          model: ${{ env.MODEL_NAMES }}
+          version: ${{ env.MODEL_VERSIONS }}
       - name: Display Environment Variables
         run: |
           # echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
           echo "TESTING_TIMES=${{ env.TESTING_TIMES}}"
-          
+
       - name: new models 
         run: |
           for env in "${ENVIRONMENT[@]}"
