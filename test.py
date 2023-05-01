@@ -1,84 +1,36 @@
-import yaml
+output_string = "ENVironment: ['QA', 'QA']\nDEPLOYMENT_CONTEXT: ['RW', 'RW+RS']\nMODEL_NAMES: ['T-PR', 'LR']\nMODEL_VERSIONS: ['1.0', '1.0']\nSYSTEM_UIDS: ['77276535', '77276535']\nTESTING_TIMES: ['20230218-235959', '20230218-235959']"
 
-# with open("model_list_for_deployment.yml") as file:
-#     document = yaml.safe_load(file)
+# Split the output string by newline character to get separate lines
+output_lines = output_string.split("\n")
 
+# Create an empty dictionary to store variable name and value pairs
+output_dict = {}
 
-# env = []
-# context = []
-# modellist = []
-# version = []
+# Iterate over each line in the output and split the variable name and value
+for line in output_lines:
+    # Split the line by colon character to get the variable name and value
+    variable_name, value_string = line.split(": ")
+    # Remove any whitespace around the variable name
+    variable_name = variable_name.strip()
+    # Remove the square brackets and single quotes around the value
+    value_string = value_string.strip("[]").replace("'", "")
+    # Split the value string by comma to get separate values
+    values = value_string.split(", ")
+    # Store the variable name and values in the output dictionary
+    output_dict[variable_name] = values
 
-# for i in range (len(document)):
-#     for j in document[i].items():
-#         for d in j[1].items():
-#             for m in d[1]:
-#                 for v in m.items():
-#                     env.append(j[0])
-#                     context.append(d[0])
-#                     modellist.append(v[0])
-#                     version.append(v[1])
+# Create separate variables for each value in the output dictionary
+environment = output_dict["ENVironment"]
+deployment_context = output_dict["DEPLOYMENT_CONTEXT"]
+model_names = output_dict["MODEL_NAMES"]
+model_versions = output_dict["MODEL_VERSIONS"]
+system_uids = output_dict["SYSTEM_UIDS"]
+testing_times = output_dict["TESTING_TIMES"]
 
-#                    #print(j[0]+'='+d[0]+'='+v[0]+'='+v[1])  #env, context, model name, version
-
-# with open("model_details_for_deployment.yml") as f:
-#     doc = yaml.safe_load(f)
-
-# sysuid = []
-# testingtime = []
-# for key, value in doc.items():
-#     for k,v in value.items():
-#             if k == 'SystemUIDs':
-#                 sysuid.append(v)
-#             if k == 'TestingTime':
-#                 testingtime.append(v)
-
-
-# for i in range(len(modellist)):
-#     print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
-
-# # print(sysuid)
-# # print(testingtime)
-
-with open("model_detailsdeployment.yml") as f:
-    doc = yaml.safe_load(f)
-
-sysuid = []
-testingtime = []
-env = []
-context = []
-modellist = []
-version = []
-for key, value in doc.items():
-    for k,v in value.items():
-            if k == 'SystemUIDs':
-                sysuid.append(v)
-            if k == 'TestingTime':
-                testingtime.append(v)
-            if k == 'DeploymentEnv':
-                env.append(v)
-            if k == 'DeploymentContext':
-                context.append(v)
-            if k == 'ModelUID':
-                modellist.append(v)
-            if k == 'ModelVersion':
-                version.append(v)
-
-# for i in range(len(modellist)):
-    # print(env[i]+'='+context[i]+'='+modellist[i]+'='+version[i]+'='+str(sysuid[i])+'='+str(testingtime[i]))
-# model_names = [name.strip() for name in env]
-
-# models_str = '(' + ' '.join(['"{}"'.format(x) for x in modellist]) + ')'
-# versions_str = '(' + ' '.join(['"{}"'.format(x) for x in version]) + ')'
-# env_str = '(' + ' '.join(['"{}"'.format(x) for x in env]) + ')'
-# context_str = '(' + ' '.join(['"{}"'.format(x) for x in context]) + ')'
-# sysuid_str = '(' + ' '.join(['"{}"'.format(x) for x in sysuid]) + ')'
-# testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
-
-print("ENVironment:",env)
-print("DEPLOYMENT_CONTEXT:",context)
-print("MODEL_NAMES:",modellist)
-print("MODEL_VERSIONS:",version)
-print("SYSTEM_UIDS:",sysuid)
-print("TESTING_TIMES:",testingtime)
-# print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))
+# Print the values of the separate variables
+print(environment)
+print(deployment_context)
+print(model_names)
+print(model_versions)
+print(system_uids)
+print(testing_times)
