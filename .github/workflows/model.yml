@@ -38,7 +38,8 @@ jobs:
           MODEL_NAMES=${{ env.MODEL_NAMES}}
         run: |
           for model in $MODEL_NAMES; do
-                if [[ $model == XR* ]]; then
+               echo $model
+                if [[ $model == T* ]]; then
                   echo "--------------------------------Model: $model-----------------------------------------"
                 fi
           done
