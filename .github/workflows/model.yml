@@ -1,44 +1,29 @@
-name: Run Python scripts and store outputs
+name: Store lists in GitHub env
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  run-scripts:
+  store_lists:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Prepare new deployment
-      id: prepare-deployment
-      run: |
-        output=$(python3 prepare_new_deployment.py)
-        echo "::set-output name=output::$output"
-
-    - name: Parse output
-      run: |
-        for line in ${{ steps.prepare-deployment.outputs.output }}; do
-        IFS='=' read -ra parts <<< "$line"
-        case "${parts[0]}" in
-            env) export ENV="${parts[1]}" ;;
-            context) export CONTEXT="${parts[1]}" ;;
-            model) export MODEL="${parts[1]}" ;;
-            version) export VERSION="${parts[1]}" ;;
-            sysuid) export SYSUID="${parts[1]}" ;;
-            testingtime) export TESTINGTIME="${parts[1]}" ;;
-            *) echo "Unknown variable: ${parts[0]}=${parts[1]}" ;;
-        esac
-        done
-
-    - name: Deploy app
-      run: |
-        # Use the environment variables or arrays set in the previous step to deploy the app
-        echo "ENV=$ENV"
-        echo "CONTEXT=$CONTEXT"
-        echo "MODEL=$MODEL"
-        echo "VERSION=$VERSION"
-        echo "SYSUID=$SYSUID"
-        echo "TESTINGTIME=$TESTINGTIME"
-
-
-
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Python script
+        run: |
+          python prepare_new_deployment.py > output.txt
+          OUTPUT=$(cat output.txt | tr '\n' ' ' | sed 's/\"/\\\"/g')
+          ENVIRONMENT=$(echo $OUTPUT | jq -r '.ENVIRONMENT | join(",")')
+          DEPLOYMENT_CONTEXT=$(echo $OUTPUT | jq -r '.DEPLOYMENT_CONTEXT | join(",")')
+          MODEL_NAMES=$(echo $OUTPUT | jq -r '.MODEL_NAMES | join(",")')
+          MODEL_VERSIONS=$(echo $OUTPUT | jq -r '.MODEL_VERSIONS | join(",")')
+          SYSTEM_UIDS=$(echo $OUTPUT | jq -r '.SYSTEM_UIDS | join(",")')
+          TESTING_TIMES=$(echo $OUTPUT | jq -r '.TESTING_TIMES | join(",")')
+          echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=${DEPLOYMENT_CONTEXT}" >> $GITHUB_ENV
+          echo "MODEL_NAMES=${MODEL_NAMES}" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=${MODEL_VERSIONS}" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=${SYSTEM_UIDS}" >> $GITHUB_ENV
+          echo "TESTING_TIMES=${TESTING_TIMES}" >> $GITHUB_ENV

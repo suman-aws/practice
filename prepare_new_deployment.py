@@ -76,12 +76,12 @@ for key, value in doc.items():
 # testingtime_str = '(' + ' '.join(['"{}"'.format(x) for x in testingtime]) + ')'
 # envi = ['ABC QA','ABC QA']
 # host = 'abc5.com'
-# print("ENVironment:",env)
-# # print("ENVir:",envi)
-# print("DEPLOYMENT_CONTEXT:",context)
-# print("MODEL_NAMES:",modellist)
-# print("MODEL_VERSIONS:",version)
-# print("SYSTEM_UIDS:",sysuid)
-# print("TESTING_TIMES:",testingtime)
-# # print(host)
+print("ENVironment:",env)
+# print("ENVir:",envi)
+print("DEPLOYMENT_CONTEXT:",context)
+print("MODEL_NAMES:",modellist)
+print("MODEL_VERSIONS:",version)
+print("SYSTEM_UIDS:",sysuid)
+print("TESTING_TIMES:",testingtime)
+# print(host)
 print(str(env)+'='+str(context)+'='+str(modellist)+'='+str(version)+'='+str(sysuid)+'='+str(testingtime))
