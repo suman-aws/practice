@@ -34,8 +34,6 @@ jobs:
           echo "TESTING_TIMES=${{ env.TESTING_TIMES}}"
           
       - name: Display Environment Variables
-        env:
-          MODEL_NAMES=${{ env.MODEL_NAMES}}
         run: |
           for model in $MODEL_NAMES; do
                echo $model
