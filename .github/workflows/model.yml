@@ -61,5 +61,4 @@ jobs:
             echo "host=$host" >> $GITHUB_ENV
       - name: Display host details
         run: |
-          # echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
           echo "host=${{ env.host}}"
