@@ -42,3 +42,6 @@ jobs:
                   echo $MODEL_VERSIONS
                 fi
           done
+      - name: new models 
+        run: |
+          ./deploy.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
