@@ -39,5 +39,6 @@ jobs:
                echo $model
                 if [[ $model == T* ]]; then
                   echo "--------------------------------Model: $model-----------------------------------------"
+                  echo $version
                 fi
           done
