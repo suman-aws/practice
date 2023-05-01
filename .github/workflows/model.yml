@@ -44,4 +44,5 @@ jobs:
           done
       - name: new models 
         run: |
-          ./test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
+          chmod +x test.sh
+          ./.test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
