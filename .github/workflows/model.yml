@@ -33,7 +33,7 @@ jobs:
           # echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
           echo "TESTING_TIMES=${{ env.TESTING_TIMES}}"
           
-      - name: Display Environment Variables
+      - name: new models 
         run: |
           for model in $MODEL_NAMES; do
                echo $model
