@@ -12,7 +12,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::201135917397:instance-profile/ecr
-          aws-region: us-east-1
+          aws-region: eu-west-1
           mask-aws-account-id: 'false'
       - name: Login to Amazon ECR
         id: login-ecr
