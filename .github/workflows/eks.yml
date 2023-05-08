@@ -1,0 +1,16 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Assume IAM Role
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        iam-role-to-assume: arn:aws:iam::201135917397:instance-profile/ecr

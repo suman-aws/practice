@@ -1,15 +1,11 @@
-import yaml
+env = ['ABC INT', 'ABC INT']
+host = []
+for e in env:
+    if 'QA' in e:
+        host.append(  'qa.example.com')
+    elif 'PROD' in e:
+        host.append( 'prod.example.com')
+    else:
+        host.append( 'int.example.com')
 
-with open('model_detailsdeployment.yml') as file:
-    data = yaml.load(file, Loader=yaml.FullLoader)
-
-model_name = data['ModelName']
-model_version = data['ModelVersion']
-system_uids = data['SystemUIDs']
-testing_time = data['TestingTime']
-
-print(f"Model Name: {model_name}")
-print(f"Model Version: {model_version}")
-print(f"System UIDs: {system_uids}")
-print(f"Testing Time: {testing_time}")
-
+print(host[0])
