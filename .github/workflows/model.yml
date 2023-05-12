@@ -67,5 +67,8 @@ jobs:
           siuid=12345
           echo "SI UID is: $siuid"
           siuidlist=()
-          siuidlist+=("$siuid")
+          siuidlist+=("'$siuid'")
+          echo "${siuidlist[@]}"
+          siuid=45678
+          siuidlist+=("'$siuid'")
           echo "${siuidlist[@]}"
