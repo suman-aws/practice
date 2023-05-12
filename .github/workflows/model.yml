@@ -64,4 +64,8 @@ jobs:
             echo "host=$host" >> $GITHUB_ENV
       - name: Display host details
         run: |
-          echo "host=${{ env.host}}"
+          siuid=12345
+          echo "SI UID is: $siuid"
+          siuidlist=()
+          siuidlist+=("$siuid")
+          echo "${siuidlist[@]}"
