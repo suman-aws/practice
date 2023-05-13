@@ -44,3 +44,4 @@ jobs:
         env:
           ECR_REGISTRY: 201135917397.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: test
+          
