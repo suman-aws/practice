@@ -31,7 +31,7 @@ jobs:
           push: false
           tags: |
             201135917397.dkr.ecr.us-east-1.amazonaws.com/test:${{ github.sha }}
-            201135917397.dkr.ecr.us-east-1.amazonaws.com/test:latest
+            # 201135917397.dkr.ecr.us-east-1.amazonaws.com/test:latest
 
       - name: Push Docker image to Amazon ECR
         uses: docker/build-push-action@v2
@@ -40,8 +40,8 @@ jobs:
           push: true
           tags: |
             201135917397.dkr.ecr.us-east-1.amazonaws.com/test:${{ github.sha }}
-            201135917397.dkr.ecr.us-east-1.amazonaws.com/test:latest
+            # 201135917397.dkr.ecr.us-east-1.amazonaws.com/test:latest
         env:
           ECR_REGISTRY: 201135917397.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: test
-          
+
