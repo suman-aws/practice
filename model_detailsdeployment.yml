@@ -3,8 +3,8 @@
   DeploymentContext: RW
   DeploymentEnv: QA
   Modality: TR
-  ModelName: T-PR
-  ModelUID: T-PR
+  ModelName: IX-PR
+  ModelUID: IX-PR
   ModelVersion: '1.1'
   SystemUIDs: '77276535'
   TestingTime: 20230218-235959
@@ -13,8 +13,8 @@
   DeploymentContext: RW+RS
   DeploymentEnv: QA
   Modality: R
-  ModelName: T-LR
-  ModelUID: T-LR
+  ModelName: DX-LR
+  ModelUID: DX-LR
   ModelVersion: '1.0'
   SystemUIDs: '77276535'
   TestingTime: 20230218-235959

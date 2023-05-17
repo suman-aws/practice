@@ -31,10 +31,9 @@ jobs:
 
       - name: Display Environment Variables
         run: |
-          # echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
-          MODEL_NAMES=($env.MODEL_NAMES)
-          echo ${MODEL_NAMES[0]}
-          echo "MODEL_VERSIONS=${{ env.MODEL_VERSIONS}}"
+          echo "ENVIRONMENT=${{ env.ENVIRONMENT }}"
+          echo "SYSTEM_UIDS=${{ env.SYSTEM_UIDS }}"
+
 
       - name: new models 
         run: |
