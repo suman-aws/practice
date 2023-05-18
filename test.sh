@@ -24,7 +24,7 @@ echo "Model Versions: $MODEL_VERSIONS"
 echo "System UIDs: $SYSTEM_UIDS"
 echo "Testing Times: $TESTING_TIMES"
 
-siuid=(python --version)
+siuid=$(python -V)
 echo $siuid
 
 # # rest of deployment script
