@@ -65,8 +65,9 @@ jobs:
         run: |
           for models in $MODEL_NAMES 
           do 
-            echo "---------------------------------$models-------------------"
+
             if [[ $models == IX* ]] ; then
+                echo "---------------------------------$models-------------------"
                 echo "model starts with $models"
             fi
           done 
