@@ -83,3 +83,6 @@ jobs:
           # siuid=45678
           # siuidlist+=("'$siuid'")
           # echo "${siuidlist[@]}"
+      - name: testing
+        run: |
+          bash test.sh $DEPLOYMENT_CONTEXT $MODEL_NAMES $MODEL_VERSIONS $SYSTEM_UIDS $TESTING_TIMES
