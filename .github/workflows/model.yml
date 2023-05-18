@@ -66,8 +66,7 @@ jobs:
           for models in $MODEL_NAMES 
           do 
             if [[ $models == IX* ]] ; then
-            
-              model starts with $MODEL_NAMES
+                model starts with $models
             fi
           done 
            # siuid=12345
