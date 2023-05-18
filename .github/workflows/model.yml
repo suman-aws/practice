@@ -65,8 +65,8 @@ jobs:
         run: |
           for models in $MODEL_NAMES 
           do 
-            if [[ $models == IX*]];
-            then
+            if [[ $models == IX* ]] ; then
+            
               model starts with $MODEL_NAMES
             fi
           done 
