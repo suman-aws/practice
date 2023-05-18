@@ -70,6 +70,10 @@ jobs:
                 echo "---------------------------------$models-------------------"
                 echo "model starts with $models"
             fi
+            if [[ $models == DX* ]] ; then
+                 echo "---------------------------------$models-------------------"
+                 echo "model starts with $models"
+            fi
           done 
            # siuid=12345
           # echo "SI UID is: $siuid"
