@@ -66,6 +66,7 @@ jobs:
           for models in $MODEL_NAMES  for versions in $MODEL_VERSIONS
           do 
            for versions in $MODEL_VERSIONS
+            do
              if [[ $models == IX* ]] ; then
                 echo "---------------------------------$models-------------------"
                 echo "model starts with $models:$versions"
