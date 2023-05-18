@@ -1,5 +1,4 @@
 134:
-
   DeploymentContext: RW
   DeploymentEnv: QA
   Modality: TR
@@ -8,13 +7,22 @@
   ModelVersion: '1.1'
   SystemUIDs: '77276535'
   TestingTime: 20230218-235959
-135:
 
+135:
   DeploymentContext: RW+RS
   DeploymentEnv: QA
   Modality: R
   ModelName: DX-LR
   ModelUID: DX-LR
   ModelVersion: '1.0'
+  SystemUIDs: '77276535'
+  TestingTime: 20230218-235959
+136:
+  DeploymentContext: RW
+  DeploymentEnv: QA
+  Modality: TR
+  ModelName: IX-NS
+  ModelUID: IX-NS
+  ModelVersion: '1.2'
   SystemUIDs: '77276535'
   TestingTime: 20230218-235959
