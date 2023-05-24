@@ -65,15 +65,17 @@ jobs:
         run: |
           for models in $MODEL_NAMES; 
           do 
-            if [[ $models == IX* ]] ; then
-              echo "---------------------------------$models-------------------"
-              echo "model starts with $models:$versions"
-            fi
-            if [[ $models == DX* ]] ; then
+            for versions in MODEL_VERSIONS;
+            do
+              if [[ $models == IX* ]] ; then
                 echo "---------------------------------$models-------------------"
                 echo "model starts with $models:$versions"
-            fi
-      
+              fi
+              if [[ $models == DX* ]] ; then
+                  echo "---------------------------------$models-------------------"
+                  echo "model starts with $models:$versions"
+              fi
+            done
           done 
            # siuid=12345
           # echo "SI UID is: $siuid"
