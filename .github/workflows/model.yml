@@ -63,19 +63,18 @@ jobs:
             echo "host=$host" >> $GITHUB_ENV
       - name: Display host details
         run: |
-          for models in $MODEL_NAMES  for versions in $MODEL_VERSIONS
+          for models in $MODEL_NAMES;  for versions in $MODEL_VERSIONS
           do 
-           for versions in $MODEL_VERSIONS
-            do
-             if [[ $models == IX* ]] ; then
+            length
+            if [[ $models == IX* ]] ; then
+              echo "---------------------------------$models-------------------"
+              echo "model starts with $models:$versions"
+            fi
+            if [[ $models == DX* ]] ; then
                 echo "---------------------------------$models-------------------"
                 echo "model starts with $models:$versions"
-             fi
-             if [[ $models == DX* ]] ; then
-                 echo "---------------------------------$models-------------------"
-                 echo "model starts with $models:$versions"
-             fi
-            done
+            fi
+      
           done 
            # siuid=12345
           # echo "SI UID is: $siuid"

@@ -1,4 +1,4 @@
-name: Read YAML file and set env vars
+name: Python Script
 
 on:
   push:
@@ -6,34 +6,32 @@ on:
       - main
 
 jobs:
-  read-yaml-file:
+  run_script:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Install jq and envfile
+      - name: Example Step
+        shell: bash
         run: |
-          sudo apt-get install -y jq
-          curl -sSL https://github.com/alexkasko/envfile/releases/download/v1.2.0/envfile_linux_amd64 -o envfile
-          chmod +x envfile
-
-      - name: Read YAML file and set env vars
-        run: |
-          # Read the YAML file and extract the desired values
-          DEPLOYMENT_CONTEXT=$(cat model_detailsdeployment.yml | jq -r '.[].DeploymentContext')
-          MODEL_NAME=$(cat model_detailsdeployment.yml | jq -r '.[].ModelName')
-          MODEL_VERSION=$(cat model_detailsdeployment.yml | jq -r '.[].ModelVersion')
+          output=$(python prepare_new_deployment.py)
+          # Parse output and set environment variables
+          ENVIRONMENT=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
           
-          # Write the values to a temporary file
-          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" > tmp_envfile
-          echo "MODEL_NAME=$MODEL_NAME" >> tmp_envfile
-          echo "MODEL_VERSION=$MODEL_VERSION" >> tmp_envfile
-          
-          # Load the temporary file into GitHub environment variables
-          ./envfile tmp_envfile
-
-          # Print the values to verify
-          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT"
-          echo "MODEL_NAME=$MODEL_NAME"
-          echo "MODEL_VERSION=$MODEL_VERSION"
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
+          echo "MODEL_NAMES=$MODEL_NAMES" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
+          echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
+      - name: Run Python script
+        env:
+          context: ${{ env.DEPLOYMENT_CONTEXT}}
+          models: ${{ env.MODEL_NAMES}}
+        run: python script.py $context $models
