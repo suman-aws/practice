@@ -65,7 +65,7 @@ jobs:
         run: |
           for models in $MODEL_NAMES; 
           do 
-            for versions in MODEL_VERSIONS;
+            for versions in $MODEL_VERSIONS;
             do
               if [[ $models == IX* ]] ; then
                 echo "---------------------------------$models-------------------"
