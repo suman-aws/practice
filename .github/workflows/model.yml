@@ -63,7 +63,7 @@ jobs:
             echo "host=$host" >> $GITHUB_ENV
       - name: Display host details
         run: |
-          for models in $MODEL_NAMES;  for versions in $MODEL_VERSIONS
+          for models in $MODEL_NAMES; 
           do 
             length
             if [[ $models == IX* ]] ; then
