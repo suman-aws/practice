@@ -66,13 +66,13 @@ jobs:
           for ((i=0; i<${#models[@]}; i++))
           do
             if [[ $models == IX* ]] ; then
-            echo "---------------------------------$models-------------------"
+            echo "---------------------------------$models[$i]-------------------"
               model=${models[$i]}
               version=${versions[$i]}
               echo "$model:$version"
             fi
             if [[ $models == DX* ]] ; then
-              echo "---------------------------------$models-------------------"
+              echo "---------------------------------$models[$i]-------------------"
               model=${models[$i]}
               version=${versions[$i]}
               echo "$model:$version"
