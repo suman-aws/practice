@@ -24,8 +24,8 @@ jobs:
           
           echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
           echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
-          echo "MODEL_NAMES=$MODEL_NAMES" >> $GITHUB_ENV
-          echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
+          echo "models=$MODEL_NAMES" >> $GITHUB_ENV
+          echo "versions=$MODEL_VERSIONS" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
           echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
 
