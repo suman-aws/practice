@@ -38,8 +38,9 @@ jobs:
         run: |
           #python script.py $context $models
           #length=${#models[@]}
-              for i in "${models[@]}"
+              for i in "${models[@]}" 
+              do
                     echo "--------------------------------Model:$models-----------------------------------------"
-            done
+             done
       
         
