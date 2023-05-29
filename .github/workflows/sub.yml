@@ -36,9 +36,9 @@ jobs:
           models: ${{ env.MODEL_NAMES}}
           versions: ${{ env.MODEL_VERSIONS}}
         run: |
-          python script.py $context $models
-          length=${#models[@]}
-            for (( i=0; i<length; i++ ));do
+          #python script.py $context $models
+          #length=${#models[@]}
+            for (( i=0; i<$models; i++ ));do
               if [[ $models == *"IX"* ]]; then 
                     echo "--------------------------------Model:$models-----------------------------------------"
               fi
