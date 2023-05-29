@@ -38,13 +38,10 @@ jobs:
         run: |
           python script.py $context $models
           length=${#models[@]}
-          if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
-            echo "equal"
-          else
             for (( i=0; i<length; i++ ));do
               if [[ $models == *"IX"* ]]; then 
                     echo "--------------------------------Model:$models-----------------------------------------"
               fi
             done
-          fi
+      
         
