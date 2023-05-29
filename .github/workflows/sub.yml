@@ -34,4 +34,17 @@ jobs:
         env:
           context: ${{ env.DEPLOYMENT_CONTEXT}}
           models: ${{ env.MODEL_NAMES}}
-        run: python script.py $context $models
+          versions: ${{ env.MODEL_VERSIONS}}
+        run: |
+          python script.py $context $models
+          length=${#models[@]}
+          if [[ ${#models[@]} -ne ${#versions[@]} ]]; then
+            echo "equal"
+          else
+            for (( i=0; i<length; i++ ));do
+              if [[ $models == *"IX"* ]]; then 
+                    echo "--------------------------------Model:$model-----------------------------------------"
+              fi
+            done
+          fi
+        
