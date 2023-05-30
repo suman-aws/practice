@@ -58,7 +58,7 @@ jobs:
         run: |
           echo $MODEL_NAMES
           read -ra models <<< "$MODEL_NAMES"
-          echo $models
+          echo $model[$i]
           for ((i=0; i<${#model[@]}; i++)); do
           if [[ ${model[$i]} == IX* ]]; then
             echo "--------------------------------Model: ${model[$i]}-----------------------------------------"
