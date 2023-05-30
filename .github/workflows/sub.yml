@@ -57,17 +57,11 @@ jobs:
       - name: authentication to env
         run: |
           echo $MODEL_NAMES
-          length=${#MODEL_NAMES[@]}
-          echo $length
-          read -ra MODEL_NAMES <<< "$MODEL_NAMES"
-          for ((i=0; i<length; i++)); do
-            if [[ MODEL_NAMES == IX* ]]; then
-                echo "$i"
-                echo "${MODEL_NAMES[i]}"
-            elif [[ MODEL_NAMES == DX* ]]; then
-                echo "$i"
-                echo "${MODEL_NAMES[i]}"
-            fi
+          read -ra models <<< "$MODEL_NAMES"
+          echo $models
+          for ((i=0; i<${#model[@]}; i++)); do
+          if [[ ${model[$i]} == IX* ]]; then
+            echo "--------------------------------Model: ${model[$i]}-----------------------------------------"
+          fi
           done
-
-    
+        
