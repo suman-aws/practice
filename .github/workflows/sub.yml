@@ -59,11 +59,20 @@ jobs:
           echo $MODEL_NAMES
           read -ra MODEL_NAMES <<< "$MODEL_NAMES"
           # echo $model
-          for model in "${MODEL_NAMES[@]}"; do
-          if [[ $model == IX* ]]; then
-            echo "Model $model starts with IX"
-            # Code to execute if model starts with IX
-          else
-            echo "IX models present"
+          # for model in "${MODEL_NAMES[@]}"; do
+          # if [[ $model == IX* ]]; then
+          #   echo "Model $model starts with IX"
+          #   # Code to execute if model starts with IX
+          # else
+          #   echo "IX models not present"
+          # fi
+          # done
+          for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
+          if [[ "${MODEL_NAMES[i]}" == IXR* ]]; then
+              echo "$i"
+              echo "${MODEL_NAMES[i]}"
+          elif [[ "${MODEL_NAMES[i]}" == MR* ]]; then
+              echo "$i"
+              echo "${MODEL_NAMES[i]}"
           fi
           done
