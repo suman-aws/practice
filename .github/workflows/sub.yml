@@ -71,11 +71,11 @@ jobs:
           for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
           if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
               echo "$i"
-              echo "${MODEL_NAMES[i]}":"${MODEL_NAMES[i]}"
-              python test.py "${MODEL_NAMES[i]}" "${MODEL_NAMES[i]}"
+              echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+
           elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
               echo "$i"
-              echo "${MODEL_NAMES[i]}":"${MODEL_NAMES[i]}"
-              python test.py "${MODEL_NAMES[i]}" "${MODEL_NAMES[i]}"
+              echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+ 
           fi
           done
