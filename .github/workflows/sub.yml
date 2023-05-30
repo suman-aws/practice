@@ -58,6 +58,7 @@ jobs:
         run: |
           echo $MODEL_NAMES
           length=${#MODEL_NAMES[@]}
+          echo $length
           for ((i=0; i<length; i++)); do
             if [[ MODEL_NAMES == IX* ]]; then
                 echo "$i"
