@@ -23,15 +23,14 @@ jobs:
           MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
           SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
           TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
-          
+    
           echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
           echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
           echo "MODEL_NAMES=$MODEL_NAMES" >> $GITHUB_ENV
           echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
           echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
           echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
-      - name: Run Python script
-        env:
-          context: ${{ env.DEPLOYMENT_CONTEXT}}
-          models: ${{ env.MODEL_NAMES}}
-        run: python script.py $context $models
+
+      - name: Display Environment Variables
+        run: |
+            echo "MODEL_NAMES=${{ env.MODEL_NAMES}}"
