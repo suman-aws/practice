@@ -17,12 +17,12 @@ jobs:
         run: |
           output=$(python prepare_new_deployment.py)
           # Parse output and set environment variables
-          ENVIRONMENT=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g" )
-          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g" )
-          MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g")
-          MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g" )
-          SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g")
-          TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/,/ /g" )
+          ENVIRONMENT=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
+          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
+          SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
     
           echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
           echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
