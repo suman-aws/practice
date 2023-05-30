@@ -60,7 +60,7 @@ jobs:
           read -ra model <<< "$MODEL_NAMES"
           echo $model
           for ((i=0; i<${#model[@]}; i++)); do
-            echo $model
+            echo $model[i]
           if [[ "${model[i]}" == CT* ]]; then
             echo "--------------------------------Model: ${model[i]}-----------------------------------------"
           fi
