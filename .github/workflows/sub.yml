@@ -58,12 +58,14 @@ jobs:
         run: |
           echo $MODEL_NAMES
           for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
-            if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
+            if [[ ${MODEL_NAMES[i]} == IX* ]]; then
                 echo "$i"
                 echo "${MODEL_NAMES[i]}"
-            elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+            elif [[ ${MODEL_NAMES[i]} == DX* ]]; then
                 echo "$i"
                 echo "${MODEL_NAMES[i]}"
             fi
+
           done
+
     
