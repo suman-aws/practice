@@ -64,7 +64,6 @@ jobs:
             echo "Model $model starts with IX"
             # Code to execute if model starts with IX
           else
-            echo "Model $model does not start with IX"
-            # Code to execute if model does not start with IX
+            IX models present
           fi
           done
