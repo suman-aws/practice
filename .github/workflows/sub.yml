@@ -77,7 +77,7 @@ jobs:
               elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
                   echo "$i"
                   echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
-              elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+              elif [[ "${MODEL_NAMES[i]}" == MIR* ]]; then
               echo "$i"
               echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
     
