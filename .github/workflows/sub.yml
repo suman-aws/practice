@@ -36,19 +36,19 @@ jobs:
           echo "MODEL_NAMES=${{ env.MODEL_NAMES}}"
       - name: authentication to env
         run: |
-          if [[ $environ =~ "INT" ]]; then
+          if [[ $ENVIRONMENT =~ "INT" ]]; then
           
           echo "INT models present"
           else
              echo "No INT models present"
           fi
-          if [[ $environ =~ "QA" ]]; then
+          if [[ $ENVIRONMENT =~ "QA" ]]; then
           
           echo "QA models present"
           else
              echo "No QA models present"
           fi
-          if [[ $environ =~ "PROD" ]]; then
+          if [[ $ENVIRONMENT =~ "PROD" ]]; then
           
           echo "PROD models present"
           else
@@ -68,16 +68,16 @@ jobs:
           #   echo "IX models not present"
           # fi
           # done
-          if [[ $environ =~ "QA" ]]; then
-          for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
-          if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
-              echo "$i"
-              echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+          if [[ $ENVIRONMENT =~ "QA" ]]; then
+              for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
+              if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
+                  echo "$i"
+                  echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
 
-          elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
-              echo "$i"
-              echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
- 
-          fi
-          done
+              elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+                  echo "$i"
+                  echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+    
+              fi
+              done
           fi
