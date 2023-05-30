@@ -59,7 +59,7 @@ jobs:
           echo $MODEL_NAMES
           read -ra MODEL_NAMES <<< "$MODEL_NAMES"
           read -ra MODEL_VERSIONS <<< "$MODEL_VERSIONS"
-          # echo $model
+          echo $MODEL_NAMES
           # for model in "${MODEL_NAMES[@]}"; do
           # if [[ $model == IX* ]]; then
           #   echo "Model $model starts with IX"
