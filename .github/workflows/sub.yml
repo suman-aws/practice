@@ -57,11 +57,10 @@ jobs:
       - name: authentication to env
         run: |
           echo $MODEL_NAMES
-          read -ra models <<< "$MODEL_NAMES"
+          read -ra model <<< "$MODEL_NAMES"
           echo $model[$i]
           for ((i=0; i<${#model[@]}; i++)); do
-          if [[ ${model[$i]} == IX* ]]; then
-            echo "--------------------------------Model: ${model[$i]}-----------------------------------------"
+          if [[ "${model[i]}" == CT* ]]; then
+            echo "--------------------------------Model: ${model[i]}-----------------------------------------"
           fi
           done
-        
