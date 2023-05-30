@@ -59,6 +59,7 @@ jobs:
           echo $MODEL_NAMES
           length=${#MODEL_NAMES[@]}
           echo $length
+          read -ra MODEL_NAMES <<< "$MODEL_NAMES"
           for ((i=0; i<length; i++)); do
             if [[ MODEL_NAMES == IX* ]]; then
                 echo "$i"
