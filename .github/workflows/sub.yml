@@ -68,10 +68,10 @@ jobs:
           # fi
           # done
           for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
-          if [[ "${MODEL_NAMES[i]}" == IXR* ]]; then
+          if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
               echo "$i"
               echo "${MODEL_NAMES[i]}"
-          elif [[ "${MODEL_NAMES[i]}" == MR* ]]; then
+          elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
               echo "$i"
               echo "${MODEL_NAMES[i]}"
           fi
