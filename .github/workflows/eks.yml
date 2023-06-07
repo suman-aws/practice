@@ -23,4 +23,4 @@ jobs:
         aws-region: us-east-1
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws iam list-users
+        aws s3 ls
