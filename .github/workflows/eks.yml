@@ -19,7 +19,7 @@ jobs:
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::201135917397:instance-profile/ecr
+        role-to-assume: arn:aws:iam::201135917397:role/test
         aws-region: us-east-1
     - name: Copy files to the test website with the AWS CLI
       run: |
