@@ -1,9 +1,6 @@
 name: Python Script
 
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
 
 jobs:
   run_script:
