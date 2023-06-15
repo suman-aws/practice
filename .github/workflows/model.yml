@@ -1,6 +1,6 @@
 name: Parse Output
 
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   parse_output:
