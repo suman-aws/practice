@@ -1,10 +1,11 @@
 name: deployment on new model
 
-on: 
-  push:
-    branches: [ model ]
+#on: 
+ # push:
+ on: [workflow_dispatch]
+  #  branches: [ model ]
 
-jobs:
+jobon: [workflow_dispatch]s:
   run_script:
     runs-on: ubuntu-latest
 
