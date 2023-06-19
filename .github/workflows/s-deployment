@@ -1,0 +1,114 @@
+name: deployment on new models
+
+on: [workflow_dispatch]
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Example Step
+        shell: bash
+        run: |
+          output=$(python prepare_new_deployment.py)
+          # Parse output and set environment variables
+          ENVIRONMENT=$(echo "$output" | grep -oP "(?<=ENVironment: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
+          DEPLOYMENT_CONTEXT=$(echo "$output" | grep -oP "(?<=DEPLOYMENT_CONTEXT: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_NAMES=$(echo "$output" | grep -oP "(?<=MODEL_NAMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          MODEL_VERSIONS=$(echo "$output" | grep -oP "(?<=MODEL_VERSIONS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
+          SYSTEM_UIDS=$(echo "$output" | grep -oP "(?<=SYSTEM_UIDS: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g")
+          TESTING_TIMES=$(echo "$output" | grep -oP "(?<=TESTING_TIMES: ).*?(?=\])" | tr -d "[]" | sed "s/'//g" | sed "s/,/ /g" )
+    
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
+          echo "DEPLOYMENT_CONTEXT=$DEPLOYMENT_CONTEXT" >> $GITHUB_ENV
+          echo "MODEL_NAMES=$MODEL_NAMES" >> $GITHUB_ENV
+          echo "MODEL_VERSIONS=$MODEL_VERSIONS" >> $GITHUB_ENV
+          echo "SYSTEM_UIDS=$SYSTEM_UIDS" >> $GITHUB_ENV
+          echo "TESTING_TIMES=$TESTING_TIMES" >> $GITHUB_ENV
+
+      - name: Display Environment Variables
+        run: |
+          echo "MODEL_NAMES=${{ env.MODEL_NAMES}}"
+      - name: authentication to env
+        run: |
+          if [[ $ENVIRONMENT =~ "INT" ]]; then
+          
+          echo "INT models present"
+          else
+             echo "No INT models present"
+          fi
+          if [[ $ENVIRONMENT =~ "QA" ]]; then
+          
+          echo "QA models present"
+          else
+             echo "No QA models present"
+          fi
+          if [[ $ENVIRONMENT =~ "PROD" ]]; then
+          
+          echo "PROD models present"
+          else
+             echo "No PROD models present"
+          fi
+      - name: upload to env
+        run: |
+          echo $MODEL_NAMES
+          read -ra MODEL_NAMES <<< "$MODEL_NAMES"
+          read -ra MODEL_VERSIONS <<< "$MODEL_VERSIONS"
+          echo $MODEL_NAMES
+          # for model in "${MODEL_NAMES[@]}"; do
+          # if [[ $model == IX* ]]; then
+          #   echo "Model $model starts with IX"
+          #   # Code to execute if model starts with IX
+          # else
+          #   echo "IX models not present"
+          # fi
+          # done
+          if [[ $ENVIRONMENT =~ "QA" ]]; then
+              for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
+                if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
+                    echo "$i"
+                    echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+                elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+                    echo "$i"
+                    echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+                elif [[ "${MODEL_NAMES[i]}" == MIR* ]]; then
+                echo "$i"
+                echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+                fi
+              done
+          fi
+          if [[ $ENVIRONMENT =~ "INT" ]]; then
+              for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
+              if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
+                  echo "$i"
+                  echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+
+              elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+                  echo "$i"
+                  echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+              elif [[ "${MODEL_NAMES[i]}" == MIR* ]]; then
+              echo "$i"
+              echo "${MODEL_NAMES[i]}":"${MODEL_VERSIONS[i]}"
+
+              fi
+              done
+          fi
+      - name: upload to env
+        run: |
+          read -ra MODEL_NAMES <<< "$MODEL_NAMES"
+          read -ra MODEL_VERSIONS <<< "$MODEL_VERSIONS"
+          if [[ $ENVIRONMENT =~ "QA" ]]; then
+            for ((i=0; i<${#MODEL_NAMES[@]}; i++)); do
+            if [[ "${MODEL_NAMES[i]}" == IX* ]]; then
+                bash test.sh
+
+            elif [[ "${MODEL_NAMES[i]}" == DX* ]]; then
+                bash test.sh
+            elif [[ "${MODEL_NAMES[i]}" == MIR* ]]; then
+                bash test.sh
+
+            fi
+            done
+          fi
