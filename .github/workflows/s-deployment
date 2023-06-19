@@ -1,4 +1,4 @@
-name: deployment on new models
+name: deployment on new model
 
 on: [workflow_dispatch]
 
