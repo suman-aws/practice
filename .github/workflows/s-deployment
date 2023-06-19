@@ -1,8 +1,8 @@
 name: deployment on new model
 
 on: 
- push:
-   model
+  push:
+    branches: [ model ]
 
 jobs:
   run_script:
