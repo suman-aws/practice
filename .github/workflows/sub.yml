@@ -1,6 +1,11 @@
 name: Python Script
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: deploy1
+        required: true
 
 jobs:
   run_script:
