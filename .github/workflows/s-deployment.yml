@@ -1,6 +1,6 @@
 name: deployment on new model
 
-on: [workflow_dispatch]
+on: push
 
 jobs:
   parse_output:
