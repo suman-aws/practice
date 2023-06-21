@@ -17,21 +17,4 @@
   ModelVersion: '1.0'
   SystemUIDs: '77276535'
   TestingTime: 20230218-235959
-136:
-  DeploymentContext: RW
-  DeploymentEnv: QA
-  Modality: TR
-  ModelName: IX-NS
-  ModelUID: IX-NS
-  ModelVersion: '1.2'
-  SystemUIDs: '77276535'
-  TestingTime: 20230218-235959
-137:
-  DeploymentContext: RW
-  DeploymentEnv: QA
-  Modality: TR
-  ModelName: MIR-PR
-  ModelUID: MIR-PR
-  ModelVersion: '1.1'
-  SystemUIDs: '77276535'
-  TestingTime: 20230218-235959
+
