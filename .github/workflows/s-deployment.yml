@@ -1,7 +1,7 @@
 name: deployment on new model
 
 on: 
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   parse_output:
