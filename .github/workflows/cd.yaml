@@ -59,4 +59,5 @@ jobs:
         run: |
             sed -i "s|image:.*|image: $ECR_REGISTRY/your-app-name:$GITHUB_SHA|" deployment.yaml
             cat deployment.yaml
-            #ws eks update-kubeconfig --region us-east-2 --name eks-demo
+            aws eks update-kubeconfig --region us-east-2 --name eks-demo
+            kubectl apply -f deployment.yml
