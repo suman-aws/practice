@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: my-container  # Replace this with the name you want to give your container
-          image: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/my-docker-image:${{ steps.build-image.outputs.image_tag }}
+          image: "sampleimage"
           ports:
             - containerPort: 80  # The port on which your web server is listening

@@ -51,10 +51,11 @@ jobs:
           aws eks update-kubeconfig --region us-east-2 --name eks-demo
           # kubectl config use-context eks-demo
           kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=${IMAGE_URI} -n ${K8S_NAMESPACE}
-
+          cat deployment.yaml
       - name: Update Kubernetes Deployment YAML
         env:
           IMAGE_URI: ${{ env.IMAGE_URI }}
         run: |
             sed -i "s|image:.*|image: $ECR_REGISTRY/your-app-name:$GITHUB_SHA|" deployment.yaml
-            aws eks update-kubeconfig --region us-east-2 --name eks-demo
+            cat deployment.yaml
+            # aws eks update-kubeconfig --region us-east-2 --name eks-demo
