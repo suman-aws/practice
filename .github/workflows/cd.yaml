@@ -33,12 +33,14 @@ jobs:
           docker push $ECR_REGISTRY:$IMAGE_TAG
           echo "::set-output name=image-uri::$ECR_REGISTRY:$IMAGE_TAG"
 
-      - name: Install and configure AWS CLI
+      - name: Install and Configure kubectl
         run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
-          aws configure set default.region us-east-2
+          echo "Installing kubectl..."
+          sudo apt-get update && sudo apt-get install -y apt-transport-https
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+          sudo apt-get update
+          sudo apt-get install -y kubectl
 
       - name: Deploy to EKS
         env:
@@ -46,5 +48,6 @@ jobs:
           K8S_DEPLOYMENT_NAME: sample
           IMAGE_URI: ${{ steps.build-and-push.outputs.image-uri }}
         run: |
+          aws eks update-kubeconfig --region us-east-2 --name eks-demo
           kubectl config use-context your-eks-cluster-name
           kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=${IMAGE_URI} -n ${K8S_NAMESPACE}
