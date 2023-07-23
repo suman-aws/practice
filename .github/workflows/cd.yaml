@@ -6,7 +6,7 @@ on:
       - eks
 
 env:
-  ECR_REGISTRY: 201135917397.dkr.ecr.us-east-2.amazonaws.com/demo
+  ECR_REGISTRY:  201135917397.dkr.ecr.us-east-2.amazonaws.com/demo
   IMAGE_NAME: my-docker-image
   EKS_CLUSTER_NAME: eks-demo
   AWS_REGION: us-east-2
