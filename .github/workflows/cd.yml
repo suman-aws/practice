@@ -9,15 +9,13 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
     
-      - name: Set up AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # Change this to your desired region
-
-      - name: SSH into EC2 instance
+      - name: Connect to EC2 and Check Hostname
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          EC2_PUBLIC_IP: YOUR_EC2_PUBLIC_IP  # Replace with your EC2's public IP
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@ec2-184-73-30-8.compute-1.amazonaws.com "hostname"
-        continue-on-error: true  # Continue even if the command fails
+          echo "$PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+
+          ssh -i private_key.pem ec2-user@ec2-184-73-30-8.compute-1.amazonaws.com 'hostname'
     
