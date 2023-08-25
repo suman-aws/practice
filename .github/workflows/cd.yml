@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to ECR
+name: Build EC2
 on: [workflow_dispatch]
 
 jobs:
@@ -8,13 +8,14 @@ jobs:
     steps:
       - name: Checkout the files
         uses: actions/checkout@v2
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ec2-184-73-30-8.compute-1.amazonaws.com
-          REMOTE_USER: ec2-user
-    run: | 
-      hostname
+      - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ec2-184-73-30-8.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
+      - name: SSH into EC2 Instance and Check Hostname
+        run: |
+          ssh -i ~/.ssh/id_rsa ec2-user@ec2-184-73-30-8.compute-1.amazonaws.com "hostname"
     
