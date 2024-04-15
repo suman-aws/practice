@@ -21,7 +21,7 @@ jobs:
 
     - name: Create new-branch based on master
       run: |
-        git checkout main
+        git pull
         git checkout -b new-branch
 
     - name: Checkout to qa branch
