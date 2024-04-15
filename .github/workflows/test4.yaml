@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Trigger on push to master branch
+      - model
 
 jobs:
   copy-to-new-branch:
@@ -25,7 +26,7 @@ jobs:
 
     - name: Checkout to qa branch
       run: |
-        git checkout test1 
+        git checkout model 
 
     - name: Copy folders to new-branch
       run: |
