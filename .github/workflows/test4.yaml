@@ -1,0 +1,38 @@
+name: Copy Folders to New Branch
+
+on:
+  push:
+    branches:
+      - master  # Trigger on push to master branch
+
+jobs:
+  copy-to-new-branch:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.email "ss.devops@outlook.com"
+        git config --global user.name "suman-aws"
+
+    - name: Create new-branch based on master
+      run: |
+        git checkout main
+        git checkout -b new-branch
+
+    - name: Checkout to qa branch
+      run: |
+        git checkout main
+        git checkout qa
+
+    - name: Copy folders to new-branch
+      run: |
+        mkdir new
+        cp -r one two ./new
+        git checkout new-branch
+        git add .
+        git commit -m "Copy specific folders to new-branch"
+        git push origin new-branch
