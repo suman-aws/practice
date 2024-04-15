@@ -25,7 +25,6 @@ jobs:
 
     - name: Checkout to qa branch
       run: |
-        git checkout main
         git checkout test1 
 
     - name: Copy folders to new-branch
