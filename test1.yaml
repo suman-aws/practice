@@ -1,5 +1,5 @@
 ---
-iam_name: 
-iam_pass: 
-dbname: 
-dbpassword: 
+iam_name: abc
+iam_pass: abc@123
+dbname: dbs
+dbpassword: Db@123
